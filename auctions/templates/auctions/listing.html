@@ -1,0 +1,123 @@
+{% extends "auctions/layout.html" %}
+{% load humanize %}
+
+{% block body %}
+
+    {% if messages %}
+        <div class="flex">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+<div class="flex">
+    <div class="row">
+        <div class="card-img-top" style="width: auto; height: auto;">
+            <img class="card-img-top" style="width: auto; height: auto;" src="{{ listing.image.url }}" alt="Image" />         
+        </div>  
+
+        <div class="card text-dark bg-light mb-3 col col-12 col-lg-4 col-md-4 col-sm-12">
+            <div class="card-body">
+                <h5 class="card-title h1">
+                    {{ listing.title }}
+                </h5>
+
+                {% if user.is_authenticated %}
+                <a class="btn btn-danger btn-sm" href="{% url 'update_watchlist' listing.id 'listings' %}" role="button">
+                {% else %}
+                    <a href="{% url 'login' %}" class="card-link">
+                {% endif %}
+                    
+                {% if listing.watched %}
+                    Remove from watchlist
+                {% else %}
+                    Add to watchlist
+                {% endif %}
+                </a>
+                <p>
+            
+                <p class="card-text">{{ listing.description }}</p>
+
+                {% if listing.bid_current is None %}
+                    <p class="card-text price">Starting price: ${{ listing.bid_start |floatformat:2|intcomma}}</p>
+                {% endif %}
+
+                <p class="card-text">Listed By: {{ listing.creator }}</p>
+                <p class="card-text">Category: {{ listing.category }}</p>
+                
+                {% if listing.bid_current is None %}
+                    {% if listing.creator != user  %}
+                        <p class="card-text">Make the initial bid!</p>
+                    {% endif %}                
+                {% elif listing.buyer is not None %}
+                    {% if listing.creator == user %}
+                        <p class="card-text price">You've sold this item to {{listing.buyer}} for ${{ listing.bid_current |floatformat:2|intcomma}}</p>
+                    {% elif listing.buyer == user %}
+                        <p class="card-text">You've won this auction!</p>
+                    {% else %}   
+                        <p class="card-text">This item is already sold</p>
+                    {% endif %}
+                {% else %}
+                    <p class="card-text price">Current price: ${{ listing.bid_current |floatformat:2|intcomma}}</p>
+                {% endif %}
+                
+                {% if listing.active and listing.creator != user %}
+                    <div class="form-group">
+                        <form action="{% url 'bid' listing.id %}" method="post">
+                            {% csrf_token %}
+                            {{ form }}        
+                            <input type = submit value="Bid Now!">
+                        </form>                    
+                    </div>            
+                {% endif %}
+
+                {% if min_error %}
+                    <p class="card-text">
+                        {% if listing.bid_current %}
+                            <div class="alert alert-warning" role="alert">Your bid must be bigger than {{ listing.bid_current|default:listing.bid_start |floatformat:2|intcomma}}</div>
+                        {% else %}
+                            <div class="alert alert-warning" role="alert">Your bid must be equal or bigger than {{ listing.bid_current|default:listing.bid_start |floatformat:2|intcomma}}</div>
+                        {% endif %}
+                    </p>
+                {% endif %}
+
+                {% if  listing.creator == user and listing.active %}
+                <a class="btn btn-danger btn-sm" href="{% url 'close_listing' listing.id %}" role="button">Close Listing</a>
+            {% endif %}
+
+                <p class="card-text"><small class="text-muted">Created on {{ listing.created_date|date:"M, d, Y g:i a" }} </small></p>
+            </div>
+        </div>
+
+        <div class="card border-light col col-12 col-lg-12 col-md-12 col-sm-12">
+            <h4>Comments</h4>
+            {% if listing.active %}
+                <div class="form-group">
+                    <form action="{% url 'comment' listing.id %}" method="post">
+                        {% csrf_token %}
+                        {{ form_comment }}       
+                        <br> 
+                        <input type="submit" value="Comment">
+                    </form> 
+                </div>   
+            {% endif %}         
+            <hr/>
+            {% for comment in comments %}        
+                <div class="card border-scondary ">
+                <div class="card-header">{{ comment.user|default:"Unknown auctor" }} commented on {{ comment.createdDate|date:"M, d"  }}</div>
+                    <div class="card-body">
+                        <h5 class="card-title"> {{ comment.comment }}</h5>                        
+                    </div>
+                    <footer class="card-footer text-muted"><small>Created on {{ comment.created_date|date:"M, d, Y g:i a" }}</small></footer>
+                </div>
+                <hr/>
+            {% endfor %}
+        </div>
+
+    </div> 
+      
+</div>    
+{% endblock %}

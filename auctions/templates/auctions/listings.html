@@ -1,0 +1,67 @@
+{% extends "auctions/layout.html" %} {% block body %}
+{% load humanize %}
+
+{% if listings|length > 0 %}
+    <h2>{{ title }}</h2>
+{% else %}
+    <h2>No Listings</h2>
+{% endif %}
+
+<hr />
+
+<div class="flex">
+  
+    {% for listing in listings %}
+            <div class="card bg-light" style="width: 100%; height: auto;">
+                <div class="row no-gutters">
+
+                    <div class="col-sm-3">
+                        <img class="card-img-top" style="width: auto; height: auto; padding: 25px 25px 25px 25px;" src="{{ listing.image.url }}" alt="Image" />
+                    </div>
+
+                    <div class="col-sm-5">
+                        <div class="card-body">
+                            <a href="{% url 'listing' listing.id %}" class="link">
+                                <h5 class="card-title">{{ listing.title }}</h5>
+                            </a>
+                                <p class="card-text">{{ listing.description }}</p>
+                                {% if listing.bid_current is None %}
+                                    <h4 class="card-title price">USD ${{ listing.bid_start |floatformat:2|intcomma}}</h4>
+                                {% else %}
+                                    <h4 class="card-title price">USD ${{ listing.bid_current |floatformat:2|intcomma}}</h4>
+                                {% endif %}
+                            <p>
+                                <footer class="card-footer text-muted"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>
+                            <p>
+                        </div>
+                    
+                        <div class="col-sm-5">
+                            {% if user.is_authenticated %}
+                                <a class="btn btn-danger btn-sm" href="{% url 'update_watchlist' listing.id 'listings' %}" role="button">
+                            {% else %}
+                                <a href="{% url 'login' %}" class="card-link">
+                            {% endif %}
+                                
+                            
+
+                            {% if user.is_authenticated %}
+                                {% if listing.watched %}
+                                    Remove from watchlist
+                                {% else %}
+                                    Add to watchlist
+                                {% endif %}
+                            {% endif %}
+
+                            </a>
+                            <p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

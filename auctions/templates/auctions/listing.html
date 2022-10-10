@@ -13,30 +13,30 @@
         </div>
     {% endif %}
 
-<div class="flex">
-    <div class="row">
-        <div class="card-img-top" style="width: auto; height: auto;">
-            <img class="card-img-top" style="width: auto; height: auto;" src="{{ listing.image.url }}" alt="Image" />         
-        </div>  
-
-        <div class="card text-dark bg-light mb-3 col col-12 col-lg-4 col-md-4 col-sm-12">
+{% comment %} <div class="flex listings"> {% endcomment %}
+    {% comment %} <div class="row"> {% endcomment %}
+        <div class="card">
+            
             <div class="card-body">
                 <h5 class="card-title h1">
                     {{ listing.title }}
                 </h5>
-
+                <div>
+                    <img class="listing_image" src="{{ listing.image.url }}" alt="Image" />         
+                </div>  
                 {% if user.is_authenticated %}
                 <a class="btn btn-danger btn-sm" href="{% url 'update_watchlist' listing.id 'listings' %}" role="button">
-                {% else %}
-                    <a href="{% url 'login' %}" class="card-link">
-                {% endif %}
-                    
-                {% if listing.watched %}
-                    Remove from watchlist
-                {% else %}
-                    Add to watchlist
-                {% endif %}
+                    {% else %}
+                        <a href="{% url 'login' %}" class="card-link">
+                    {% endif %}
+                        
+                    {% if listing.watched %}
+                        Remove from watchlist
+                    {% else %}
+                        Add to watchlist
+                    {% endif %}
                 </a>
+
                 <p>
             
                 <p class="card-text">{{ listing.description }}</p>
@@ -84,15 +84,32 @@
                     </p>
                 {% endif %}
 
-                {% if  listing.creator == user and listing.active %}
-                <a class="btn btn-danger btn-sm" href="{% url 'close_listing' listing.id %}" role="button">Close Listing</a>
-            {% endif %}
+                {% comment %} Alert the user the listing will be sold to highest bidder before closing {% endcomment %}
 
-                <p class="card-text"><small class="text-muted">Created on {{ listing.created_date|date:"M, d, Y g:i a" }} </small></p>
+
+                {% if  listing.creator == user and listing.active %}
+                    <a class="btn btn-danger btn-sm" href="{% url 'close_listing' listing.id %}" 
+                    onclick="return confirm('❗ Are you sure want to close this listing? The item will be sold to the highest bidder!');"
+                    role="button">Close Listing</a>
+                {% endif %}
+
+                {% if listing.creator == user and listing.active %}
+                    <a class="btn btn-danger btn-sm" href="{% url 'delete_listing' listing.id %}" 
+                    onclick="return confirm('❗ Are you sure want to delete this listing?');" role="button">Delete Listing</a>
+                {% endif %}
+
+                {% comment %} Add a button to edit a listing if logged in user is the creator {% endcomment %}
+                {% if listing.creator == user and listing.active %}
+                    <a class="btn btn-danger btn-sm" href="{% url 'edit_listing' listing.id %}" role="button">Edit Listing</a>
+                {% endif %}
+
+                <br>
+                <br>
+                <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>
             </div>
         </div>
 
-        <div class="card border-light col col-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
             <h4>Comments</h4>
             {% if listing.active %}
                 <div class="form-group">
@@ -105,19 +122,19 @@
                 </div>   
             {% endif %}         
             <hr/>
-            {% for comment in comments %}        
-                <div class="card border-scondary ">
-                <div class="card-header">{{ comment.user|default:"Unknown auctor" }} commented on {{ comment.createdDate|date:"M, d"  }}</div>
+            
+            {% for comment in comments %}   
+            <div class="card">     
+                    <div class="card-header">
+                        {{ comment.user|default:"Unknown auctor" }} commented on {{ comment.createdDate|date:"M, d"  }}
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title"> {{ comment.comment }}</h5>                        
                     </div>
-                    <footer class="card-footer text-muted"><small>Created on {{ comment.created_date|date:"M, d, Y g:i a" }}</small></footer>
-                </div>
+                    
+                    <footer class="footer_text card-footer"><small>Created on {{ comment.created_date|date:"M, d, Y g:i a" }}</small></footer>
                 <hr/>
+            </div>
             {% endfor %}
         </div>
-
-    </div> 
-      
-</div>    
 {% endblock %}

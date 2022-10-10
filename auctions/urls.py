@@ -2,12 +2,16 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("search", views.search, name="search"),
     path("listings", views.listings, name="listings"),
+    path("delete_listing/<int:listing_id>",
+         views.delete_listing, name="delete_listing"),
+    path("edit_listing/<int:listing_id>",
+         views.edit_listing, name="edit_listing"),
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),

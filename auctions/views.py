@@ -10,6 +10,8 @@ from .models import User, Listing, Bid, Category, Comment
 
 from django.contrib.auth.decorators import login_required
 
+# TODO - Editing a Listing
+
 
 class NewBidForm(forms.ModelForm):
     class Meta:
@@ -69,6 +71,29 @@ def listing(request, listing_id):
     })
 
 
+def delete_listing(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
+
+    if request.user == listing.creator:
+        listing.delete()
+        return HttpResponseRedirect(reverse("listings"))
+    else:
+        return HttpResponseRedirect(reverse("listing", args=[listing_id]))
+
+
+def edit_listing(request, listing_id):
+    pass
+
+
+def search(request):
+    query = request.GET.get('q')
+    listings = Listing.objects.filter(title__icontains=query, active=True)
+    return render(request, "auctions/listings.html", {
+        "listings": listings,
+        "title": "Search Results"
+    })
+
+
 def categories(request):
     all_categories = Category.objects.all()
     category_id = request.GET.get("category", None)
@@ -81,7 +106,7 @@ def categories(request):
     else:
         return render(request, "auctions/listings.html", {
             "listings": listings,
-            "title": "Active Listings"
+            "title": Category.objects.get(id=category_id)
         })
 
 

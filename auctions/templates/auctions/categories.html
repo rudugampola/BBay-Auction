@@ -5,6 +5,7 @@
     {% for category in all_categories %}
     <div class="col-sm-4">
       <div class="card">
+        
         <div class="card-body">
           <h5 class="card-title d-flex justify-content-center">
             <a class="link" href="{% url 'categories' %}?category={{category.id}}"

@@ -1,8 +1,21 @@
-{% extends "auctions/layout.html" %}
+{% extends "auctions/layout.html" %} {% block body %} {% comment %} Search bar
+to return listings matching search keywords {% endcomment %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <form action="/search" method="get">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            name="q"
+            placeholder="Search for Listings..."
+          />
+          <button class="btn btn-primary" type="submit">Go!</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-{% block body %}
-
-    <h2>Welcome to Auctions</h2>
-
-    
-{% endblock %}
+  {% endblock %}
+</div>

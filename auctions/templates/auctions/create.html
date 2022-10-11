@@ -1,26 +1,35 @@
-{% extends "auctions/layout.html" %}
-
-{% load crispy_forms_tags %}
-
-{% block body %}
+{% extends "auctions/layout.html" %} {% load crispy_forms_tags %} {% block body %}
 
 <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
 
-    {% csrf_token %}
-
-    <div class="form-control">
-        {{ form.title |as_crispy_field }}
-
-        {{ form.description |as_crispy_field }}
-
-        {{ form.bid_start |as_crispy_field }}
-
-        {{ form.category |as_crispy_field }}
-
-        {{ form.image|as_crispy_field }}
+  <div class="form-control">
+        {{ form.title |as_crispy_field }} 
         <br>
-        <input type="submit" class="btn btn-success">
+        {{ form.description |as_crispy_field }}
+        <br>
+        {{form.bid_start |as_crispy_field }} 
+        <br>
+        {{ form.category |as_crispy_field }} 
+        <br>
+        {{form.image|as_crispy_field }}
+        <br>
+        
+    
+        <div>
+            <input data-toggle="tooltip" data-placement="right" title="Submit a Listing."type="submit" class="btn btn-success" style="margin-right: 80%"/> 
+            <a data-toggle="tooltip" data-placement="top" title="Import a Listing from a CSV file. Use the predefined template." class="btn btn-primary btn-sm" href= "{% url 'import_csv' %}"> Import from a CSV </a>
+        </div>
+        <br>
+
     </div>
+
 </form>
+
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 
 {% endblock %}

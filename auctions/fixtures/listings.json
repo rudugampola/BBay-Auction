@@ -1,0 +1,155 @@
+[
+    {
+        "model": "auctions.listing",
+        "pk": 15,
+        "fields": {
+            "title": "Invisibility Cloak",
+            "description": "An invisibility cloak was a magical garment which rendered whomever or whatever it covered invisible. Invisibility cloaks were exceptionally rare and valuable within the wizarding world.",
+            "bid_start": 120.99,
+            "bid_current": 1000.0,
+            "created_date": "2022-03-27T23:39:14.838Z",
+            "creator": 1,
+            "category": 2,
+            "image": "upload/invisi_cloak.png",
+            "buyer": 2,
+            "active": false,
+            "watchers": []
+        }
+    },
+    {
+        "model": "auctions.listing",
+        "pk": 16,
+        "fields": {
+            "title": "Nimbus 2000",
+            "description": "One of the Nimbus Racing Broom Company's most successful models. Highly reliable with good speed and exceptional handling ù not for beginners!",
+            "bid_start": 1024.5,
+            "bid_current": 2000.0,
+            "created_date": "2022-03-27T23:39:14.838Z",
+            "creator": 1,
+            "category": 6,
+            "image": "upload/Nimbus_2000.png",
+            "buyer": null,
+            "active": true,
+            "watchers": []
+        }
+    },
+    {
+        "model": "auctions.listing",
+        "pk": 18,
+        "fields": {
+            "title": "Philosopher's Stone",
+            "description": "The ancient study of alchemy is concerned with making the Philosopher's Stone, a legendary substance with astonishing powers. The Stone will transform any metal into pure gold. It also produces the Elixir of Life, which will make the drinker immortal.",
+            "bid_start": 1200.99,
+            "bid_current": null,
+            "created_date": "2022-03-27T23:39:14.838Z",
+            "creator": 1,
+            "category": 11,
+            "image": "upload/philosopher-removebg-preview.png",
+            "buyer": null,
+            "active": true,
+            "watchers": []
+        }
+    },
+    {
+        "model": "auctions.listing",
+        "pk": 19,
+        "fields": {
+            "title": "Sorting Hat",
+            "description": "The Sorting Hat was a sentient magical hat at Hogwarts that determined which of the four school Houses each new student belonged most to. These four Houses were Gryffindor, Hufflepuff, Ravenclaw, and Slytherin. The Sorting Hat originally belonged to Godric Gryffindor, one of the four founders of Hogwarts. It normally stayed in the Headmaster's office until it was needed.",
+            "bid_start": 2000.5,
+            "bid_current": null,
+            "created_date": "2022-03-27T23:39:14.838Z",
+            "creator": 1,
+            "category": 2,
+            "image": "upload/Sorting_Hat.png",
+            "buyer": null,
+            "active": true,
+            "watchers": []
+        }
+    },
+    {
+        "model": "auctions.listing",
+        "pk": 20,
+        "fields": {
+            "title": "Sword of Gryffindor",
+            "description": "The Sword of Gryffindor was a thousand-year-old, goblin-made magical sword owned by the famed wizard Godric Gryffindor, one of the four founders of Hogwarts School of Witchcraft and Wizardry.",
+            "bid_start": 780.55,
+            "bid_current": null,
+            "created_date": "2022-03-27T23:39:14.838Z",
+            "creator": 1,
+            "category": 6,
+            "image": "upload/main-qimg-4ded52644ba8e25c81bbf83845969f5f-removebg-preview.png",
+            "buyer": null,
+            "active": true,
+            "watchers": []
+        }
+    },
+    {
+        "model": "auctions.listing",
+        "pk": 21,
+        "fields": {
+            "title": "Marauder's Map",
+            "description": "The Marauder's Map was a magical document that revealed all of Hogwarts School of Witchcraft and Wizardry. Not only did it show every classroom, every hallway, and every corner of the castle, but it also showed every inch of the grounds, as well as all the secret passages that were hidden within its walls and the location of every person in the grounds, portrayed by a dot. It was also capable of accurately identifying each person, and was not fooled by animagi, Polyjuice Potions, or invisibility cloaks; even the Hogwarts ghosts were not exempt.",
+            "bid_start": 150.99,
+            "bid_current": null,
+            "created_date": "2022-03-27T23:39:14.838Z",
+            "creator": 1,
+            "category": 4,
+            "image": "upload/81hXyIewnxL._AC_SL1000_-removebg-preview.png",
+            "buyer": null,
+            "active": true,
+            "watchers": []
+        }
+    },
+    {
+        "model": "auctions.listing",
+        "pk": 22,
+        "fields": {
+            "title": "Wizard's Chess Set",
+            "description": "Wizard's Chess was the magical variant of the classic board game Chess, in which the pieces were enchanted to move of their own accord when commanded by the player. When a piece was taken, it was removed by the attacking piece, often in a barbaric manner where the losing piece was smashed violently by the winning piece.",
+            "bid_start": 1500.0,
+            "bid_current": null,
+            "created_date": "2022-03-27T23:39:14.838Z",
+            "creator": 1,
+            "category": 7,
+            "image": "upload/91kl77BOd7L._AC_SL1500_.jpg",
+            "buyer": null,
+            "active": true,
+            "watchers": []
+        }
+    },
+    {
+        "model": "auctions.listing",
+        "pk": 23,
+        "fields": {
+            "title": "Mirror of Erised",
+            "description": "The Mirror of Erised was a magical mirror, which, according to Albus Dumbledore, showed the \"deepest, most desperate desire of our hearts.\" The name \"Erised\" was \"desire\" spelled backwards, as if reflected in a mirror. The happiest and most satisfied person in the world would look in the mirror and see a reflection of them, exactly as they were, for they would then have no one and nothing more to yearn or desire for that the mirror could ever show them. But of course, it was intrinsically inherent for human nature to desire something greater than one's own self ù meaning that an event wherein the mirror failed to carry out its intended purpose rarely, if at all, happened.",
+            "bid_start": 500.55,
+            "bid_current": null,
+            "created_date": "2022-03-27T23:39:14.838Z",
+            "creator": 1,
+            "category": 4,
+            "image": "upload/58f1cc3cf4a97268160cb98ab6622498-removebg-preview.png",
+            "buyer": null,
+            "active": true,
+            "watchers": []
+        }
+    },
+    {
+        "model": "auctions.listing",
+        "pk": 24,
+        "fields": {
+            "title": "Portion Set",
+            "description": "Harry's Portion set.",
+            "bid_start": 140.55,
+            "bid_current": 145.0,
+            "created_date": "2022-03-27T23:39:14.838Z",
+            "creator": 1,
+            "category": 9,
+            "image": "upload/b09c61a59db75ae1fe214f3cb0f57a848a45d301_00-removebg-preview.png",
+            "buyer": 2,
+            "active": false,
+            "watchers": []
+        }
+    }
+]

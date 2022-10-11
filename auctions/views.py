@@ -1,3 +1,4 @@
+import io
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
@@ -5,12 +6,14 @@ from django.shortcuts import render
 from django.urls import reverse
 from django import forms
 from django.contrib import messages
+import csv
 
 from .models import User, Listing, Bid, Category, Comment
 
 from django.contrib.auth.decorators import login_required
 
-# TODO - Editing a Listing
+# TODO - Editing a Listing If Owner
+# TODO - Run a report on all listings and their bids and comments and watchers
 
 
 class NewBidForm(forms.ModelForm):
@@ -84,6 +87,40 @@ def delete_listing(request, listing_id):
 def edit_listing(request, listing_id):
     pass
 
+# Import CSV data that user uploads into Listings table
+
+
+def import_csv(request):
+    if request.method == 'POST':
+        csv_file = request.FILES['csv_file']
+
+        if not csv_file.name.endswith('.csv'):
+            return render(request, "auctions/import_csv.html", {
+                "message": "Error: File is not CSV type!"
+            })
+
+        data_set = csv_file.read().decode('UTF-8')
+        io_string = io.StringIO(data_set)
+        next(io_string)
+
+        print("Importing CSV: " + csv_file.name)
+
+        for column in csv.reader(io_string, delimiter=',', quotechar="|"):
+            _, created = Listing.objects.update_or_create(
+                title=column[0],
+                description=column[1],
+                bid_start=column[2],
+                image=column[3],
+                category=Category.objects.get(id=column[4]),
+                creator=request.user,
+                active=True,
+            )
+        context = {}
+        context['success'] = True  # Set to True if successful
+
+        return render(request, 'auctions/listings.html', context)
+    return render(request, 'auctions/import_csv.html')
+
 
 def search(request):
     query = request.GET.get('q')
@@ -137,7 +174,8 @@ def comment(request, listing_id):
     newComment = form.save(commit=False)
     newComment.user = request.user
     newComment.listing = listing
-    messages.success(request, message='You\'ve commented successfully.')
+    messages.success(
+        request, message='Success: You\'ve commented successfully.')
 
     newComment.save()
 
@@ -232,7 +270,7 @@ def login_view(request):
             return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, "auctions/login.html", {
-                "message": "Invalid username and/or password."
+                "message": "Error: Invalid username and/or password."
             })
     else:
         return render(request, "auctions/login.html")
@@ -253,7 +291,7 @@ def register(request):
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(request, "auctions/register.html", {
-                "message": "Passwords must match."
+                "message": "Error: Passwords must match."
             })
 
         # Attempt to create new user
@@ -262,7 +300,7 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {
-                "message": "Username already taken."
+                "message": "Error: Username already taken."
             })
         login(request, user)
         return HttpResponseRedirect(reverse("index"))

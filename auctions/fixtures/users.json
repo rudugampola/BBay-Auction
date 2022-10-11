@@ -1,0 +1,56 @@
+[
+    {
+        "model": "auctions.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$390000$FxrgF3ChcvtkIwoNChkMJk$YIE7L0qWEbEMEy9bvFYd7c33Ii/GOWDjUmpA2m+RfGo=",
+            "last_login": "2022-10-10T20:33:48.390Z",
+            "is_superuser": true,
+            "username": "Ravi",
+            "first_name": "",
+            "last_name": "",
+            "email": "ravi@example.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2022-03-21T01:28:40.311Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auctions.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$390000$cGEI2ONRvY44MS3GqI6Zyn$+kL//8EDGquan/SbVPtm9W1XuewxghfqQ3lP+k3q9q8=",
+            "last_login": "2022-10-10T21:00:34.095Z",
+            "is_superuser": false,
+            "username": "Harry",
+            "first_name": "",
+            "last_name": "",
+            "email": "harry@example.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-03-21T23:45:52.763Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auctions.user",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$390000$jb9pfTJieRAkfLJQpmfSD7$3D5Mpfh6ZPiIeaxegXIG/w6mSWC4ALs1SrOV+weL5pA=",
+            "last_login": "2022-10-10T19:56:47.773Z",
+            "is_superuser": false,
+            "username": "sd",
+            "first_name": "",
+            "last_name": "",
+            "email": "ravindu365@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-10-10T19:56:47.404Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]

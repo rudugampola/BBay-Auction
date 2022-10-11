@@ -25,7 +25,7 @@
   </head>
 
   <body class="body">
-    <div class="ms-auto">
+    <div class="ms-auto ">
         {% if user.is_authenticated %} 
             Signed In As <strong>{{ user.username }}</strong>. 
         {% else %} 
@@ -72,7 +72,7 @@
       {% comment %} send the last item to the right corner {% endcomment %}      
       <li class="nav-item ms-auto">
         <img src="{% static 'img/moon.png' %}/" id="icon">
-    </li>
+      </li>
     </ul>
     <hr />
     {% block body %} {% endblock %}
@@ -83,14 +83,91 @@
     <br>
     <div class="footer">
       <p class="text-center">
-        <a class="footer_text" href="{% url 'index' %}">Home</a> |
-        <a class="footer_text" href="{% url 'index' %}">About Us</a> |
-        <a class="footer_text" href="{% url 'index' %}">FAQ</a>
+        <a class="footer_text" href="{% url 'index' %}">Home 🏠</a> |
+        <a class="footer_text" href="{% url 'index' %}">About Us 👋</a> |
+        <a class="footer_text" data-bs-toggle="modal"
+        data-bs-target="#faqModal">FAQ ❔</a>
       </p>
         <p class="text-center footer_text">©Ravindu Udugampola 2022</p> 
     </div>
   </footer>
 
+<div
+  class="modal fade"
+  id="faqModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="faqModalTitle"
+  aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <h5 class="modal-title" id="faqModalTitle"><strong>FAQ</strong></h5>
+                    <button
+                    type="button"
+                    class="close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    >
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+              <ul>
+                    <li>
+                      <h6>How do I create a listing?</h6>
+                      <p>
+                        To create a listing, click on the <b>"Create Listing"</b> button on the navigation bar. Then, fill in the form with the required information and click on the <b>"Create"</b> button.
+                      </p>
+                    </li>
+                    <li>
+                      <h6>How do I add an item to my watchlist?</h6>
+                      <p>
+                        To add an item to your watchlist, click on the <b>"Add to Watchlist"</b> button on the listing page. To remove an item from your watchlist, click on the <b>"Remove from Watchlist"</b> button on the listing page.
+                      </p>
+                    </li>
+                    <li>
+                      <h6>How do I bid on an item?</h6>
+                      <p>
+                        To bid on an item, click on the <b>"Bid"</b> button on the listing page. Then, fill in the form with the required information and click on the <b>"Bid"</b> button.
+                      </p>
+                    </li>
+                    <li>
+                      <h6>How do I close a listing?</h6>
+                      <p>
+                        To close a listing, click on the <b>"Close Listing"</b> button on the listing page.
+                      </p>
+                    </li>
+                    <li>
+                      <h6>How do I comment on a listing?</h6>
+                      <p>
+                        To comment on a listing, click on the <b>"Comment"</b> button on the listing page. Then, fill in the form with the required information and click on the <b>"Comment"</b> button.
+                      </p>
+                    </li>
+                    <li>
+                      <h6>How do I view my watchlist?</h6>
+                      <p>
+                        To view your watchlist, click on the <b>"Watchlist"</b> button on the navigation bar.
+                      </p>
+                    </li>
+                    <li>
+                      <h6>How do I view my listings?</h6>
+                      <p>
+                        To view your listings, click on the <b>"My Listings"</b> button on the navigation bar.
+                      </p>  
+                    </li>
+                  </ul>
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    Close
+                    </button>
+                </div>
+
+        </div>
+    </div>
+</div>
   
 </html>
 

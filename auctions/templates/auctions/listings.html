@@ -14,9 +14,9 @@
                     <div class="col-sm-6">
                         <img class="item_image" class="card-img-top" src="{{ listing.image.url }}" alt="Image" />
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-6">
                         <div class="card-body">
-                            <a href="{% url 'listing' listing.id %}" class="link">
+                            <a data-toggle="tooltip" data-placement="top" title="{{ listing.title }}" href="{% url 'listing' listing.id %}" class="link">
                                 <h5 class="card-title">{{ listing.title }}</h5>
                             </a>
                                 <p class="card-text">{{ listing.description }}</p>
@@ -30,9 +30,9 @@
                             <p>
                         </div>
                     
-                        <div class="col-sm-4 ms-auto">
+                        <div class="col-sm-3 ms-auto">
                             {% if user.is_authenticated %}
-                                <a class="btn btn-danger btn-sm" href="{% url 'update_watchlist' listing.id 'listings' %}" role="button">
+                                <a data-toggle="tooltip" data-placement="top" title="Add this Listing to Watchlist." class="btn btn-danger btn-sm" href="{% url 'update_watchlist' listing.id 'listings' %}" role="button">
                             {% else %}
                                 <a href="{% url 'login' %}" class="card-link">
                             {% endif %}

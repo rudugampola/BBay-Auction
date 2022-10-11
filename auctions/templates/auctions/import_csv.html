@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %} {% block body %}
+{% load static %}
+
+<form
+  action="{% url 'import_csv' %}"
+  method="post"
+  enctype="multipart/form-data" 
+  class= "col-sm-4">
+  {% csrf_token %} 
+
+  {% if message %}
+  <div class="alert alert-danger" role="alert">{{ message }}</div>
+  {% endif %}
+
+  <div class="form-control">
+    <label for="csv_file" style="margin-left: 20px">CSV File</label>
+    <input type="file" name="csv_file" id="csv_file" style="margin-right: 30px"/>
+    <input type="submit" class="btn btn-success" />
+  </div>
+</form>
+<br>
+<a href="{% static 'files/listings_template.csv' %}">Download Template</a>
+
+{% endblock %}

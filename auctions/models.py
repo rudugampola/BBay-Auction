@@ -32,7 +32,7 @@ class Listing(models.Model):
     watchers = models.ManyToManyField(
         User, blank=True, related_name="watchlist")
 
-    def save(self):
+    def save(self, force_insert=False, force_update=False, using=None):
         super().save()  # saving image first
         img = Image.open(self.image.path)  # Open image using self
         if img.height > 300 or img.width > 300:

@@ -10,6 +10,8 @@ from django import forms
 from django.contrib import messages
 from django.core.files import File
 import csv
+from django.http import JsonResponse
+
 
 from .models import User, Listing, Bid, Category, Comment, Sales, Expenses, Profits
 
@@ -41,6 +43,10 @@ class NewCommentForm(forms.ModelForm):
                 'placeholder': 'Leave your comment here',
             })
         }
+
+
+def index(request):
+    return render(request, "auctions/index.html")
 
 
 @login_required
@@ -152,10 +158,6 @@ def categories(request):
         })
 
 
-def index(request):
-    return render(request, "auctions/index.html")
-
-
 def listings(request):
     listings = Listing.objects.filter(active=True)
     count = 0
@@ -246,24 +248,44 @@ def close_listing(request, listing_id):
         listing.watchers.add(request.user)
     return HttpResponseRedirect(reverse("watchlist"))
 
-# Return Profits for the user
-
-
-def profits(request):
-    profits = Profits.objects.filter(user=request.user)
-    return render(request, "auctions/profits.html", {
-        "profits": profits
-    })
-
-
-def expenses(request):
-    expenses = Expenses.objects.filter(user=request.user)
-    return render(request, "auctions/expenses.html", {
-        "expenses": expenses
-    })
-
 
 @login_required
+def profits(request):
+    profits = Profits.objects.filter(user=request.user)
+    #  Sum all profits
+    total = 0
+    for profit in profits:
+        total += profit.profit
+
+    # Create a JSON object to store the profits
+    data = profits.values('user', 'profit', 'date')
+    profitsJSON = (JsonResponse({'data': list(data)}))
+
+    return render(request, "auctions/profits.html", {
+        "profits": profits,
+        "total": total,
+    })
+
+
+@ login_required
+def expenses(request):
+    expenses = Expenses.objects.filter(user=request.user)
+    #  Sum all expenses
+    total = 0
+    for expense in expenses:
+        total += expense.expense
+
+    # Create a JSON object to store the expenses
+    data = expenses.values('user', 'expense', 'date')
+    expensesJSON = (JsonResponse({'data': list(data)}))
+
+    return render(request, "auctions/expenses.html", {
+        "expenses": expenses,
+        "total": total,
+    })
+
+
+@ login_required
 def watchlist(request):
     listings = request.user.watchlist.all()
 
@@ -279,7 +301,7 @@ def watchlist(request):
     })
 
 
-@login_required
+@ login_required
 def update_watchlist(request, listing_id, reverse_method):
     listing = Listing.objects.get(id=listing_id)
     if request.user in listing.watchers.all():

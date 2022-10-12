@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 from PIL import Image
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class User(AbstractUser):
@@ -61,11 +63,36 @@ class Comment(models.Model):
     def get_date(self):
         return self.created_date.strftime('%B %d %Y')
 
-# Model to record sales history
-
 
 class Sales(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    buyer = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now=True)
+    buyer = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="sale_buyer")
+    seller = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="sale_seller")
+    date = models.DateTimeField(default=timezone.localtime())
     price = models.FloatField()
+
+
+class Profits(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    profit = models.FloatField(default=0)
+    date = models.DateTimeField(default=timezone.localtime())
+
+    def __str__(self):
+        return f"User: {self.user} , Profit: {self.profit}"
+
+    def get_date(self):
+        return self.date.strftime('%B %d %Y')
+
+
+class Expenses(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    expense = models.FloatField(default=0)
+    date = models.DateTimeField(default=timezone.localtime())
+
+    def __str__(self):
+        return f"User: {self.user} , Expense: {self.expense}"
+
+    def get_date(self):
+        return self.date.strftime('%B %d %Y')

@@ -1,4 +1,6 @@
+import datetime
 import io
+from msilib.schema import File
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
@@ -6,13 +8,14 @@ from django.shortcuts import render
 from django.urls import reverse
 from django import forms
 from django.contrib import messages
+from django.core.files import File
 import csv
 
-from .models import User, Listing, Bid, Category, Comment
+from .models import User, Listing, Bid, Category, Comment, Sales, Expenses, Profits
 
 from django.contrib.auth.decorators import login_required
 
-# TODO - Editing a Listing If Owner
+
 # TODO - Run a report on all listings and their bids and comments and watchers
 
 
@@ -84,13 +87,13 @@ def delete_listing(request, listing_id):
         return HttpResponseRedirect(reverse("listing", args=[listing_id]))
 
 
+# TODO - Editing a Listing
 def edit_listing(request, listing_id):
     pass
 
-# Import CSV data that user uploads into Listings table
-
 
 def import_csv(request):
+    # Import CSV data that user uploads into Listings table
     if request.method == 'POST':
         csv_file = request.FILES['csv_file']
 
@@ -110,6 +113,8 @@ def import_csv(request):
                 title=column[0],
                 description=column[1],
                 bid_start=column[2],
+                # Convert the image to a File object to save images from CSV
+                # image=File(open(column[3], 'rb')),
                 image=column[3],
                 category=Category.objects.get(id=column[4]),
                 creator=request.user,
@@ -215,15 +220,47 @@ def bid_valid(offer, listing):
 
 def close_listing(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
+    buyer = Bid.objects.filter(auction_list=listing).last().user
     if request.user == listing.creator:
         listing.active = False
-        listing.buyer = Bid.objects.filter(auction_list=listing).last().user
+        listing.buyer = buyer
         listing.save()
+
+        # Create a new Sales transaction
+        sale = Sales.objects.create(
+            listing=listing, buyer=buyer, seller=request.user, price=listing.bid_current)
+        sale.save()
+
+        # Create a new profit for the seller
+        profit = Profits.objects.create(
+            user=request.user, profit=listing.bid_current)
+        profit.save()
+
+        # Create a new expense for the buyer
+        expense = Expenses.objects.create(
+            user=buyer, expense=listing.bid_current)
+        expense.save()
 
         return HttpResponseRedirect(reverse("listing", args=[listing_id]))
     else:
         listing.watchers.add(request.user)
     return HttpResponseRedirect(reverse("watchlist"))
+
+# Return Profits for the user
+
+
+def profits(request):
+    profits = Profits.objects.filter(user=request.user)
+    return render(request, "auctions/profits.html", {
+        "profits": profits
+    })
+
+
+def expenses(request):
+    expenses = Expenses.objects.filter(user=request.user)
+    return render(request, "auctions/expenses.html", {
+        "expenses": expenses
+    })
 
 
 @login_required

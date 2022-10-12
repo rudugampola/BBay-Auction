@@ -29,6 +29,8 @@ urlpatterns = [
     path("auction/watchlist", views.watchlist, name="watchlist"),
     path("auction/watchlist/<int:listing_id>/update/<str:reverse_method>",
          views.update_watchlist, name="update_watchlist"),
+    path("profits", views.profits, name="profits"),
+    path("expenses", views.expenses, name="expenses"),
 ]
 
 if settings.DEBUG:

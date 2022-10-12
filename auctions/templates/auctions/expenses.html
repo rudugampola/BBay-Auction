@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %} {% block body %}
+{% load static %}
+{% load humanize %}
+
+<h1> Expense Report </h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">User</th>
+            <th scope="col">Expense</th>
+            <th scope="col">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for expense in expenses %}
+        <tr>
+            <td>{{ expense.user }}</td>
+            <td>{{ expense.expense }}</td>
+            <td>{{ expense.date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "auctions/layout.html" %} {% block body %}
+{% load static %}
+{% load humanize %}
+
+<h1> Profit Report </h1>
+
+{% comment %} Create a Table with User, Profit, Date headers {% endcomment %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">User</th>
+            <th scope="col">Profit</th>
+            <th scope="col">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for profit in profits %}
+        <tr>
+            <td>{{ profit.user }}</td>
+            <td>{{ profit.profit }}</td>
+            <td>{{ profit.date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

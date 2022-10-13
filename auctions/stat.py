@@ -9,7 +9,7 @@ print("Initializing Statistics Service 🚀 ...")
 while True:
     time.sleep(0.5)
     try:
-        with open("C:/Users/ravin/CS361/BBay Auction/auctions/graphs/data.txt", "r+") as f:
+        with open("auctions/graphs/data.txt", "r+") as f:
             data = json.load(f)
             f.truncate(0)
     except:

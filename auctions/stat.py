@@ -5,11 +5,19 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
+read_loc = "auctions/graphs/data.txt"
+write_loc = "auctions/graphs/data.txt"
+
+# read_heroku = "auctions/graphs/data.txt"
+# write_heroku = "auctions/graphs/data.txt"
+# read_loc = "C:/Users/ravin/CS361/BBay Auction/auctions/graphs/data.txt"
+# write_loc = "C:/Users/ravin/CS361/BBay Auction/auctions/graphs/graph.png"
+
 print("Initializing Statistics Service 🚀 ...")
 while True:
     time.sleep(0.5)
     try:
-        with open("auctions/graphs/data.txt", "r+") as f:
+        with open(read_loc, "r+") as f:
             data = json.load(f)
             f.truncate(0)
     except:
@@ -90,5 +98,5 @@ while True:
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
 
-    fig.savefig("auctions/graphs/graph.png",
+    fig.savefig(write_loc,
                 dpi=100,  bbox_inches='tight')

@@ -285,12 +285,12 @@ def profits(request):
     profitsJSON = (JsonResponse({'data': list(data), 'type': 'profit'}))
 
     # Write the JSON object to a file
-    with open('C:/Users/ravin/CS361/BBay Auction/auctions/static/graphs/data.txt', 'w') as f:
+    with open('C:/Users/ravin/CS361/BBay Auction/auctions/graphs/data.txt', 'w') as f:
         f.write(profitsJSON.content.decode('utf-8'))
 
     # Read the image
     time.sleep(1)
-    with open('C:/Users/ravin/CS361/BBay Auction/auctions/static/graphs/graph.png', 'rb') as image_file:
+    with open('C:/Users/ravin/CS361/BBay Auction/auctions/graphs/graph.png', 'rb') as image_file:
         image = base64.b64encode(image_file.read()).decode('utf-8')
 
     return render(request, "auctions/profits.html", {
@@ -313,12 +313,12 @@ def expenses(request):
     expensesJSON = (JsonResponse({'data': list(data), 'type': 'expense'}))
 
     # Write the JSON object to a file
-    with open('C:/Users/ravin/CS361/BBay Auction/auctions/static/graphs/data.txt', 'w') as f:
+    with open('C:/Users/ravin/CS361/BBay Auction/auctions/graphs/data.txt', 'w') as f:
         f.write(expensesJSON.content.decode('utf-8'))
 
     # Read the image
     time.sleep(1)
-    with open('C:/Users/ravin/CS361/BBay Auction/auctions/static/graphs/graph.png', 'rb') as image_file:
+    with open('C:/Users/ravin/CS361/BBay Auction/auctions/graphs/graph.png', 'rb') as image_file:
         image = base64.b64encode(image_file.read()).decode('utf-8')
 
     return render(request, "auctions/expenses.html", {

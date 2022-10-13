@@ -21,7 +21,7 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 
 
-    <link rel="icon" href="{% static 'img/bbay.ico' %}/" />
+    <link rel="icon" href="{% static 'img/bbay.ico' %}" />
   </head>
 
   <body class="body">
@@ -34,7 +34,7 @@
     </div>
     <h1>
       <a class="link" href="{% url 'index' %}"
-        ><img class="logo_img" src="{% static 'img/bbay.png' %}/"
+        ><img class="logo_img" src="{% static 'img/bbay.png' %}"
       /></a>
     </h1>
     
@@ -84,7 +84,7 @@
       {% endif %}
       {% comment %} send the last item to the right corner {% endcomment %}      
       <li class="nav-item ms-auto">
-        <img src="{% static 'img/moon.svg' %}/" id="icon">
+        <img src="{% static 'img/moon.svg' %}" id="icon">
       </li>
     </ul>
     <hr />
@@ -189,9 +189,9 @@
     icon.onclick = function() {
         document.body.classList.toggle("darkmode");
         if (document.body.classList.contains("darkmode")) {
-            icon.src = "{% static 'img/sun.svg' %}/";
+            icon.src = "{% static 'img/sun.svg' %}";
         } else {
-            icon.src = "{% static 'img/moon.svg' %}/";
+            icon.src = "{% static 'img/moon.svg' %}";
         }
     } 
 </script>

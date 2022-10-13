@@ -1,30 +1,29 @@
 import base64
+import csv
 import io
-from msilib.schema import File
 import time
-from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
+from msilib.schema import File
+
 from django import forms
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.files import File
-import csv
-from django.http import JsonResponse
+from django.db import IntegrityError
+from django.http import FileResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import render
+from django.urls import reverse
 from PIL import Image
-from django.http import FileResponse
 from reportlab.pdfgen import canvas
 
-
-from .models import User, Listing, Bid, Category, Comment, Sales, Expenses, Profits
-
-from django.contrib.auth.decorators import login_required
-
+from .models import (Bid, Category, Comment, Expenses, Listing, Profits, Sales,
+                     User)
 
 # TODO - Run a report on all listings and their bids and comments and watchers
 
 # TODO - Editing a Listing
+
+
 def edit_listing(request, listing_id):
     pass
 

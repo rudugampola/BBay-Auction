@@ -7,3 +7,5 @@ gunicorn==20.1.0
 psycopg2==2.9.1
 django-crispy-forms==1.12.0
 django-import-export==2.6.0
+msilib==1.0.0 
+django-heroku==0.3.1

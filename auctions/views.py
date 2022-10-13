@@ -285,7 +285,7 @@ def profits(request):
     profitsJSON = (JsonResponse({'data': list(data), 'type': 'profit'}))
 
     # Write the JSON object to a file
-    with open('auctions/graphs/data.txt', 'w') as f:
+    with open('auctions/graphs/data.txt', 'w+') as f:
         f.write(profitsJSON.content.decode('utf-8'))
 
     # Read the image
@@ -313,7 +313,7 @@ def expenses(request):
     expensesJSON = (JsonResponse({'data': list(data), 'type': 'expense'}))
 
     # Write the JSON object to a file
-    with open('auctions/graphs/data.txt', 'w') as f:
+    with open('auctions/graphs/data.txt', 'w+') as f:
         f.write(expensesJSON.content.decode('utf-8'))
 
     # Read the image

@@ -16,18 +16,18 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="card-body">
-                            <a data-toggle="tooltip" data-placement="top" title="{{ listing.title }}" href="{% url 'listing' listing.id %}" class="link">
-                                <h5 class="card-title">{{ listing.title }}</h5>
-                            </a>
+                                <a href="{% url 'listing' listing.id %}" class="link">
+                                    <h5 class="card-title">{{ listing.title }}</h5>
+                                </a>
                                 <p class="card-text">{{ listing.description }}</p>
                                 {% if listing.bid_current is None %}
                                     <h4 class="card-title price">USD ${{ listing.bid_start |floatformat:2|intcomma}}</h4>
                                 {% else %}
                                     <h4 class="card-title price">USD ${{ listing.bid_current |floatformat:2|intcomma}}</h4>
                                 {% endif %}
-                            <p>
-                                <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>
-                            <p>
+                                <p>
+                                    <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>
+                                <p>
                         </div>
                     
                         <div class="col-sm-3 ms-auto">
@@ -53,4 +53,9 @@
             </div>
     {% endfor %}
 
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 {% endblock %}

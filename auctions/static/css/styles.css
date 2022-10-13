@@ -160,3 +160,23 @@ body {
 .table-striped>tbody>tr:nth-of-type(odd)>* {
     color: var(--clr-accent);
 }
+
+img.graph {
+    width: 60%;
+    margin: auto;
+    display: block;
+    border-radius: 5px;
+    background-color: var(--clr-primary);
+    /* add a shadow */
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.table_profit_expense {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    border: var(--clr-accent) solid 1px;
+    width: 50%;
+    margin: auto;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}

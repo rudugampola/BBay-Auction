@@ -1,6 +1,7 @@
-import datetime
+import base64
 import io
 from msilib.schema import File
+import time
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
@@ -11,6 +12,7 @@ from django.contrib import messages
 from django.core.files import File
 import csv
 from django.http import JsonResponse
+from PIL import Image
 
 
 from .models import User, Listing, Bid, Category, Comment, Sales, Expenses, Profits
@@ -259,11 +261,21 @@ def profits(request):
 
     # Create a JSON object to store the profits
     data = profits.values('user', 'profit', 'date')
-    profitsJSON = (JsonResponse({'data': list(data)}))
+    profitsJSON = (JsonResponse({'data': list(data), 'type': 'profit'}))
+
+    # Write the JSON object to a file
+    with open('C:/Users/ravin/CS361/BBay Auction/auctions/graphs/data.txt', 'w') as f:
+        f.write(profitsJSON.content.decode('utf-8'))
+
+    # Read the image
+    time.sleep(1)
+    with open('C:/Users/ravin/CS361/BBay Auction/auctions/graphs/graph.png', 'rb') as image_file:
+        image = base64.b64encode(image_file.read()).decode('utf-8')
 
     return render(request, "auctions/profits.html", {
         "profits": profits,
         "total": total,
+        "image": image
     })
 
 
@@ -277,11 +289,21 @@ def expenses(request):
 
     # Create a JSON object to store the expenses
     data = expenses.values('user', 'expense', 'date')
-    expensesJSON = (JsonResponse({'data': list(data)}))
+    expensesJSON = (JsonResponse({'data': list(data), 'type': 'expense'}))
+
+    # Write the JSON object to a file
+    with open('C:/Users/ravin/CS361/BBay Auction/auctions/graphs/data.txt', 'w') as f:
+        f.write(expensesJSON.content.decode('utf-8'))
+
+    # Read the image
+    time.sleep(1)
+    with open('C:/Users/ravin/CS361/BBay Auction/auctions/graphs/graph.png', 'rb') as image_file:
+        image = base64.b64encode(image_file.read()).decode('utf-8')
 
     return render(request, "auctions/expenses.html", {
         "expenses": expenses,
         "total": total,
+        "image": image
     })
 
 

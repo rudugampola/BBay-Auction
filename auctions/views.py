@@ -285,12 +285,12 @@ def profits(request):
     profitsJSON = (JsonResponse({'data': list(data), 'type': 'profit'}))
 
     # Write the JSON object to a file
-    with open('auctions/graphs/data.txt', 'w+') as f:
+    with open('media/graphs/data.txt', 'w+') as f:
         f.write(profitsJSON.content.decode('utf-8'))
 
     # Read the image
     time.sleep(1)
-    with open('auctions/graphs/graph.png', 'rb') as image_file:
+    with open('media/graphs/graph.png', 'rb') as image_file:
         image = base64.b64encode(image_file.read()).decode('utf-8')
 
     return render(request, "auctions/profits.html", {

@@ -5,8 +5,11 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
-read_loc = "auctions/graphs/data.txt"
-write_loc = "auctions/graphs/graph.png"
+read_loc = "media/graphs/data.txt"
+write_loc = "media/graphs/graph.png"
+
+# read_loc = "auctions/graphs/data.txt"
+# write_loc = "auctions/graphs/graph.png"
 
 # read_heroku = "auctions/graphs/data.txt"
 # write_heroku = "auctions/graphs/graph.png"

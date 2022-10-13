@@ -1,9 +1,9 @@
+import datetime
+import json
 import time
+
 import matplotlib.pyplot as plt
 import numpy as np
-import json
-import datetime
-
 
 print("Initializing Statistics Service 🚀 ...")
 while True:

@@ -2,7 +2,6 @@ import base64
 import csv
 import io
 import time
-from msilib.schema import File
 
 from django import forms
 from django.contrib import messages

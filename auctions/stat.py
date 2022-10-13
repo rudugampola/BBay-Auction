@@ -90,5 +90,5 @@ while True:
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
 
-    fig.savefig("C:/Users/ravin/CS361/BBay Auction/auctions/graphs/graph.png",
+    fig.savefig("auctions/graphs/graph.png",
                 dpi=100,  bbox_inches='tight')

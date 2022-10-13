@@ -186,3 +186,14 @@ img.graph {
         display: none;
     }
 }
+
+#aboutModalInner {
+    position: fixed;
+    width: auto;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 36%;
+    margin-top: 10%;
+}

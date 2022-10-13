@@ -1,6 +1,6 @@
-from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import path
 
 from . import views
 
@@ -21,6 +21,7 @@ urlpatterns = [
     path("import_csv", views.import_csv, name="import_csv"),
     path("categories", views.categories, name="categories"),
     path("categories/<int:category_id>", views.categories, name="categories"),
+    path("create_category", views.create_category, name="create_category"),
     path("auction/listing/<int:listing_id>/comment",
          views.comment, name="comment"),
     path("auction/listing/<int:listing_id>/bid", views.bid, name="bid"),

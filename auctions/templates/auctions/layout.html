@@ -64,7 +64,7 @@
         <a class="nav-link dropdown-toggle link" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           Reports
         </a>
-        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+        <ul class="dropdown-menu dropdown-menu-dark" style="z-index: 1000;" aria-labelledby="navbarDarkDropdownMenuLink">
           <li><a class="dropdown-item" href="{% url 'profits' %}">Profits 💰</a></li>
           <li><a class="dropdown-item" href="{% url 'expenses' %}">Expenses 💸</a></li>
         </ul>
@@ -96,14 +96,42 @@
     <br>
     <div class="footer">
       <p class="text-center">
-        <a class="footer_text" href="{% url 'index' %}">Home 🏠</a> |
-        <a class="footer_text" href="{% url 'index' %}">About Us 👋</a> |
-        <a class="footer_text" data-bs-toggle="modal"
-        data-bs-target="#faqModal">FAQ ❔</a>
+        <a class="footer_text" href="{% url 'index' %}">Home 🏠</a>
+         |
+        <a class="footer_text" data-bs-toggle="modal" data-bs-target="#aboutModal">About Us 👋</a>
+         |
+        <a class="footer_text" data-bs-toggle="modal" data-bs-target="#faqModal">FAQ ❔</a>
       </p>
         <p class="text-center footer_text">©Ravindu Udugampola 2022</p> 
     </div>
   </footer>
+
+<div class=" modal fade" id="aboutModal" role="dialog" tabindex="-1" aria-labelledby="aboutUsLabel" aria-hidden="true">
+  <div class="modal-dialog" id="aboutModalInner" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="aboutUsLabel">About Us 👋</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>From our humble beginnings in 2022, Bbay has grown to become the world's 
+        largest online 🌎 marketplace 🛒, where practically anyone 👫 can bid to buy and sell 💲
+        practically anything. We offer the greatest selection of new and used 
+        goods, at great prices, and with a service that is second to none 😊. </p>
+        <p>We are committed to providing our customers with the best possible online 
+        shopping experience 💯. We are constantly working to improve our site and 
+        our service, and we welcome your feedback 🔨. We hope you enjoy your shopping 
+        experience with us, and we look forward to serving you again soon 👋.</p>
+        <p><i>We're not like any other online marketplace. And we're proud of that.</i></p>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info btn-sm" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div
   class="modal fade"
@@ -113,18 +141,11 @@
   aria-labelledby="faqModalTitle"
   aria-hidden="true">
 
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                    <h5 class="modal-title" id="faqModalTitle"><strong>FAQ</strong></h5>
-                    <button
-                    type="button"
-                    class="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    >
-                    <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="faqModalTitle"><strong>FAQ ❔</strong></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <ul>
@@ -173,7 +194,7 @@
                   </ul>
             </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-info btn-sm" data-bs-dismiss="modal">
                     Close
                     </button>
                 </div>

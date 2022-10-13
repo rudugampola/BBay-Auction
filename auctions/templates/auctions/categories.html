@@ -2,10 +2,26 @@
 
 <div class="container">
   <div class="row">
+    {% if user.is_superuser %}
+     
+      <div class="form-control" style="margin-bottom: 20px; z-index: -1">
+        <form action="{% url 'create_category' %}" method='POST'>
+          {% csrf_token %}
+          <div class="input-group form-group">
+            <input type="text" class="form-control" id="category" name="category" placeholder="Category" required>
+            <button type="submit" class="btn btn-primary">Add Category</button> 
+          </div>
+        </form>
+      </div>
+    {% endif %}
+
     {% for category in all_categories %}
     <div class="col-sm-4">
-      <div class="card">
-        
+      <div class="card" style="margin-bottom: 20px">
+
+        {% comment %} Admin user can make categories {% endcomment %}
+
+
         <div class="card-body">
           <h5 class="card-title d-flex justify-content-center">
             <a class="link" href="{% url 'categories' %}?category={{category.id}}"

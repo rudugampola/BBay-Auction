@@ -106,7 +106,7 @@ def import_csv(request):
 
         if not csv_file.name.endswith('.csv'):
             return render(request, "auctions/import_csv.html", {
-                "message": "Error: File is not CSV type!"
+                "message": "Error 💥: File is not CSV type!"
             })
 
         data_set = csv_file.read().decode('UTF-8')
@@ -157,6 +157,17 @@ def categories(request):
             "listings": listings,
             "title": Category.objects.get(id=category_id)
         })
+
+
+def create_category(request):
+    print(request)
+    if request.method == 'POST':
+        category = request.POST['category']
+        new_category = Category(category=category)
+        new_category.save()
+        return HttpResponseRedirect(reverse("categories"))
+    else:
+        return render(request, "auctions/create_category.html")
 
 
 def listings(request):
@@ -372,7 +383,7 @@ def login_view(request):
             return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, "auctions/login.html", {
-                "message": "Error: Invalid username and/or password."
+                "message": "Error 💥: Invalid username and/or password."
             })
     else:
         return render(request, "auctions/login.html")
@@ -393,7 +404,7 @@ def register(request):
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(request, "auctions/register.html", {
-                "message": "Error: Passwords must match."
+                "message": "Error 💥: Passwords must match."
             })
 
         # Attempt to create new user
@@ -402,7 +413,7 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {
-                "message": "Error: Username already taken."
+                "message": "Error 💥: Username already taken."
             })
         login(request, user)
         return HttpResponseRedirect(reverse("index"))

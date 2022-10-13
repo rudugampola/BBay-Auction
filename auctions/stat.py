@@ -13,7 +13,7 @@ write_loc = "auctions/graphs/graph.png"
 # read_loc = "C:/Users/ravin/CS361/BBay Auction/auctions/graphs/data.txt"
 # write_loc = "C:/Users/ravin/CS361/BBay Auction/auctions/graphs/graph.png"
 
-print("Initializing Statistics Service 🚀 ...")
+print("Success ✅: Initializing Statistics Service 🚀 ...")
 while True:
     time.sleep(0.5)
     try:
@@ -21,6 +21,7 @@ while True:
             data = json.load(f)
             f.truncate(0)
     except:
+        print("Error 💥: Couldn't read data file... ")
         continue
 
     # Decide if profit or expense graph
@@ -32,7 +33,7 @@ while True:
         plotName = "Expense"
 
     # Get the data
-    print("Getting data ...")
+    print("Success ✅: Getting data ...")
 
     # Calculate the profit for each Month and Year
 

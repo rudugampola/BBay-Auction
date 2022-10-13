@@ -58,6 +58,19 @@
       <li class="nav-item">
         <a class="nav-link link" href="{% url 'create' %}">Create Listing</a>
       </li>
+
+
+      <li class="nav-item dropdown link">
+        <a class="nav-link dropdown-toggle link" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Reports
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+          <li><a class="dropdown-item" href="{% url 'profits' %}">Profits</a></li>
+          <li><a class="dropdown-item" href="{% url 'expenses' %}">Expenses</a></li>
+        </ul>
+      </li>
+
+
       <li class="nav-item">
         <a class="nav-link link" href="{% url 'logout' %}">Log Out</a>
       </li>

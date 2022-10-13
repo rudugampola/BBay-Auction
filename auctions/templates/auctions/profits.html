@@ -2,32 +2,42 @@
 {% load static %}
 {% load humanize %}
 
-<h1> Profit Report </h1>
+<div class="nav">
+    <div>
+    <h1> Profit Report </h1>
+    </div>
+    <div  class="ms-auto">
+        <form >
+            <input id="printPageButton" type=button value="Print me!" onClick="window.print()" >
+        </form>
+    </div>
+</div>
 
-{% comment %} Create a Table with User, Profit, Date headers {% endcomment %}
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">User</th>
-            <th scope="col">Profit</th>
-            <th scope="col">Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for profit in profits %}
-        <tr>
-            <td>{{ profit.user }}</td>
-            <td>{{ profit.profit }}</td>
-            <td>{{ profit.date }}</td>
-        </tr>
-        {% endfor %}
-        <tr>
-            <td><strong>Total Profits</strong></td>
-            <td><strong> $ {{ total }} </strong></td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
+<div class="table_profit_expense">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">User</th>
+                <th scope="col">Profit</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for profit in profits %}
+            <tr>
+                <td>{{ profit.user }}</td>
+                <td>{{ profit.profit }}</td>
+                <td>{{ profit.date }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td><strong>Total Profits</strong></td>
+                <td><strong> $ {{ total }} </strong></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <br>
 <img class="graph" src="data:image/png;base64,{{ image }}">
 

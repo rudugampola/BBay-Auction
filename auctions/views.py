@@ -13,6 +13,8 @@ from django.core.files import File
 import csv
 from django.http import JsonResponse
 from PIL import Image
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
 
 
 from .models import User, Listing, Bid, Category, Comment, Sales, Expenses, Profits
@@ -21,6 +23,10 @@ from django.contrib.auth.decorators import login_required
 
 
 # TODO - Run a report on all listings and their bids and comments and watchers
+
+# TODO - Editing a Listing
+def edit_listing(request, listing_id):
+    pass
 
 
 class NewBidForm(forms.ModelForm):
@@ -93,11 +99,6 @@ def delete_listing(request, listing_id):
         return HttpResponseRedirect(reverse("listings"))
     else:
         return HttpResponseRedirect(reverse("listing", args=[listing_id]))
-
-
-# TODO - Editing a Listing
-def edit_listing(request, listing_id):
-    pass
 
 
 def import_csv(request):
@@ -174,6 +175,28 @@ def listings(request):
         "listings": listings,
         "title": "Active Listings"
     })
+
+
+# TODO - Create a PDF report of the expenses and profits
+def pdf(request):
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(100, 100, "Hello world.")
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
 
 
 @login_required

@@ -2,7 +2,17 @@
 {% load static %}
 {% load humanize %}
 
-<h1> Expense Report </h1>
+<div class="nav">
+    <div>
+    <h1> Expense Report </h1>
+    </div>
+    <div  class="ms-auto">
+        <form >
+            <input id="printPageButton" type=button value="Print me!" onClick="window.print()" >
+        </form>
+    </div>
+</div>
+
 <div class="table_profit_expense">
     <table class="table table-striped">
         <thead  class="table_text">

@@ -162,7 +162,7 @@ body {
 }
 
 img.graph {
-    width: 60%;
+    width: 60vw;
     margin: auto;
     display: block;
     border-radius: 5px;
@@ -176,7 +176,13 @@ img.graph {
     justify-content: center;
     display: flex;
     border: var(--clr-accent) solid 1px;
-    width: 50%;
+    width: 52vw;
     margin: auto;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+@media print {
+    #printPageButton {
+        display: none;
+    }
 }

@@ -61,12 +61,12 @@
 
 
       <li class="nav-item dropdown link">
-        <a class="nav-link dropdown-toggle link" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <a class="nav-link dropdown-toggle link" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           Reports
         </a>
         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-          <li><a class="dropdown-item" href="{% url 'profits' %}">Profits</a></li>
-          <li><a class="dropdown-item" href="{% url 'expenses' %}">Expenses</a></li>
+          <li><a class="dropdown-item" href="{% url 'profits' %}">Profits 💰</a></li>
+          <li><a class="dropdown-item" href="{% url 'expenses' %}">Expenses 💸</a></li>
         </ul>
       </li>
 
@@ -84,7 +84,7 @@
       {% endif %}
       {% comment %} send the last item to the right corner {% endcomment %}      
       <li class="nav-item ms-auto">
-        <img src="{% static 'img/moon.png' %}/" id="icon">
+        <img src="{% static 'img/moon.svg' %}/" id="icon">
       </li>
     </ul>
     <hr />

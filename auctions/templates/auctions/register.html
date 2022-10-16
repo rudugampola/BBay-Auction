@@ -1,16 +1,11 @@
 {% extends "auctions/layout.html" %}
 
+
 {% block body %}
 <div style="margin:0 auto; text-align:center"> 
     <h2>Register</h2>
-
-    {% if message %}
-        <div class="alert alert-danger d-flex align-items-center" role="alert">
-            {{ message }}
-        </div>
-    {% endif %}
-
-    {% comment %} <br> {% endcomment %}
+    
+    {% include 'auctions/messages.html' %}
 
     <form class="form-control" style="width: 380px;" action="{% url 'register' %}" method="post">
         {% csrf_token %}
@@ -43,4 +38,13 @@
     </form>
 
 </div>
+
+<script>
+    setTimeout(function(){
+      if ($('#msg').length > 0) {
+        $('#msg').remove();
+      }
+    }, 2000)
+</script> 
+
 {% endblock %}

@@ -24,20 +24,23 @@
 
   <body class="body">
     <div class="ms-auto" style="color: white">
-        {% if user.is_authenticated %} 
-        {% comment %} User shown should be the session logged in user {% endcomment %}
-            Hi, &nbsp<a href="{% url 'user_profile' user.id %}" class="btn btn-warning btn-sm" style="padding: 0.5em" role="button"><b style="text-transform: capitalize; font-weight: bold">{{ user.username }}</b></a>
-        {% else %} 
-            Not Signed In. 
-        {% endif %}
+      {% if user.is_authenticated %} Hi, &nbsp<a
+        href="{% url 'user_profile' user.id %}"
+        class="btn btn-warning btn-sm"
+        style="padding: 0.5em"
+        role="button"
+        ><b style="text-transform: capitalize; font-weight: bold"
+          >{{ user.username }}</b
+        ></a
+      >
+      👋 {% else %} Not Signed In. {% endif %}
     </div>
     <h1>
       <a class="link" href="{% url 'index' %}"
         ><img class="logo_img" src="{% static 'img/bbay.png' %}"
       /></a>
     </h1>
-    
-    
+
     <ul class="nav">
       <li class="nav-item">
         <a class="nav-link link" href="{% url 'listings' %}">Active Listings</a>
@@ -49,26 +52,40 @@
       <li class="nav-item">
         <a class="nav-link link" href="{% url 'watchlist' %}"
           >Watchlist
-          <span style= "margin-left: 9px" class="position-absolute top-10 start-30 translate-middle badge rounded-pill bg-danger"
+          <span
+            style="margin-left: 9px"
+            class="position-absolute top-10 start-30 translate-middle badge rounded-pill bg-danger"
             >{{ request.session.watchlist_count }}
           </span>
         </a>
       </li>
+
       <li class="nav-item">
         <a class="nav-link link" href="{% url 'create' %}">Create Listing</a>
       </li>
 
-
-      <li class="nav-item dropdown link" style="z-index: 1000;">
-        <a class="nav-link dropdown-toggle link" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <li class="nav-item dropdown link" style="z-index: 1000">
+        <a
+          class="nav-link dropdown-toggle link"
+          id="navbarDarkDropdownMenuLink"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
           Reports
         </a>
-        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-          <li><a class="dropdown-item" href="{% url 'profits' %}">Profits 💰</a></li>
-          <li><a class="dropdown-item" href="{% url 'expenses' %}">Expenses 💸</a></li>
+        <ul
+          class="dropdown-menu dropdown-menu-dark"
+          aria-labelledby="navbarDarkDropdownMenuLink"
+        >
+          <li>
+            <a class="dropdown-item" href="{% url 'profits' %}">Profits 💰</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'expenses' %}">Expenses 💸</a>
+          </li>
         </ul>
       </li>
-
 
       <li class="nav-item">
         <a class="nav-link link" href="{% url 'logout' %}">Log Out</a>
@@ -80,138 +97,206 @@
       <li class="nav-item">
         <a class="nav-link link" href="{% url 'register' %}">Register</a>
       </li>
+      {% endif %} {% if not request.path == '/' %}
+      <div class="ms-auto">
+        <li class="nav-item">
+          <form class="d-flex" action="{% url 'search' %}" method="GET">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search for Listings...   🔎"
+              aria-label="Search"
+              name="q"
+            />
+            <button class="btn btn-success" type="submit">Search</button>
+            <li class="nav-item ms-auto" style="padding-left: 50px">
+              <img src="{% static 'img/moon.svg' %}" id="icon" />
+            </li>
+          </form>
+        </li>
+      </div>
       {% endif %}
-      {% comment %} send the last item to the right corner {% endcomment %}      
-      <li class="nav-item ms-auto">
-        <img src="{% static 'img/moon.svg' %}" id="icon">
-      </li>
     </ul>
     <hr />
     {% block body %} {% endblock %}
   </body>
 
-  {% comment %} Make the footer appear at the bottom of the page {% endcomment %}
   <footer class="footer_text">
-    <br>
+    <br />
     <div class="footer">
       <p class="text-center">
         <a class="footer_text" href="{% url 'index' %}">Home 🏠</a>
-         |
-        <a class="footer_text" data-bs-toggle="modal" data-bs-target="#aboutModal">About Us 👋</a>
-         |
-        <a class="footer_text" data-bs-toggle="modal" data-bs-target="#faqModal">FAQ ❔</a>
+        |
+        <a
+          class="footer_text"
+          data-bs-toggle="modal"
+          data-bs-target="#aboutModal"
+          >About Us 👋</a
+        >
+        |
+        <a class="footer_text" data-bs-toggle="modal" data-bs-target="#faqModal"
+          >FAQ ❔</a
+        >
       </p>
-        <p class="text-center footer_text">©Ravindu Udugampola 2022</p> 
+      <p class="text-center footer_text">©Ravindu Udugampola 2022</p>
     </div>
   </footer>
 
-<div class=" modal fade" id="aboutModal" role="dialog" tabindex="-1" aria-labelledby="aboutUsLabel" aria-hidden="true" >
-  <div class="modal-dialog" id="aboutModalInner" role="document" >
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="aboutUsLabel">About Us 👋</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>From our humble beginnings in 2022, Bbay has grown to become the world's 
-        largest online 🌎 marketplace 🛒, where practically anyone 👫 can bid to buy and sell 💲
-        practically anything. We offer the greatest selection of new and used 
-        goods, at great prices, and with a service that is second to none 😊. </p>
-        <p>We are committed to providing our customers with the best possible online 
-        shopping experience 💯. We are constantly working to improve our site and 
-        our service, and we welcome your feedback 🔨. We hope you enjoy your shopping 
-        experience with us, and we look forward to serving you again soon 👋.</p>
-        <p><i>We're not like any other online marketplace. And we're proud of that.</i></p>
-
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-info btn-sm" data-bs-dismiss="modal">Close</button>
+  <div
+    class="modal fade"
+    id="aboutModal"
+    role="dialog"
+    tabindex="-1"
+    aria-labelledby="aboutUsLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" id="aboutModalInner" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="aboutUsLabel">About Us 👋</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>
+            From our humble beginnings in 2022, Bbay has grown to become the
+            world's largest online 🌎 marketplace 🛒, where practically anyone
+            👫 can bid to buy and sell 💲 practically anything. We offer the
+            greatest selection of new and used goods, at great prices, and with
+            a service that is second to none 😊.
+          </p>
+          <p>
+            We are committed to providing our customers with the best possible
+            online shopping experience 💯. We are constantly working to improve
+            our site and our service, and we welcome your feedback 🔨. We hope
+            you enjoy your shopping experience with us, and we look forward to
+            serving you again soon 👋.
+          </p>
+          <p>
+            <i
+              >We're not like any other online marketplace. And we're proud of
+              that.</i
+            >
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-info btn-sm"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div
-  class="modal fade"
-  id="faqModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="faqModalTitle"
-  aria-hidden="true">
-
+  <div
+    class="modal fade"
+    id="faqModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="faqModalTitle"
+    aria-hidden="true"
+  >
     <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                    <h5 class="modal-title" id="faqModalTitle"><strong>FAQ ❔</strong></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <ul>
-                    <li>
-                      <h6>How do I create a listing?</h6>
-                      <p>
-                        To create a listing, click on the <b>"Create Listing"</b> button on the navigation bar. Then, fill in the form with the required information and click on the <b>"Create"</b> button.
-                      </p>
-                    </li>
-                    <li>
-                      <h6>How do I add an item to my watchlist?</h6>
-                      <p>
-                        To add an item to your watchlist, click on the <b>"Add to Watchlist"</b> button on the listing page. To remove an item from your watchlist, click on the <b>"Remove from Watchlist"</b> button on the listing page.
-                      </p>
-                    </li>
-                    <li>
-                      <h6>How do I bid on an item?</h6>
-                      <p>
-                        To bid on an item, click on the <b>"Bid"</b> button on the listing page. Then, fill in the form with the required information and click on the <b>"Bid"</b> button.
-                      </p>
-                    </li>
-                    <li>
-                      <h6>How do I close a listing?</h6>
-                      <p>
-                        To close a listing, click on the <b>"Close Listing"</b> button on the listing page.
-                      </p>
-                    </li>
-                    <li>
-                      <h6>How do I comment on a listing?</h6>
-                      <p>
-                        To comment on a listing, click on the <b>"Comment"</b> button on the listing page. Then, fill in the form with the required information and click on the <b>"Comment"</b> button.
-                      </p>
-                    </li>
-                    <li>
-                      <h6>How do I view my watchlist?</h6>
-                      <p>
-                        To view your watchlist, click on the <b>"Watchlist"</b> button on the navigation bar.
-                      </p>
-                    </li>
-                    <li>
-                      <h6>How do I view my listings?</h6>
-                      <p>
-                        To view your listings, click on the <b>"My Listings"</b> button on the navigation bar.
-                      </p>  
-                    </li>
-                  </ul>
-            </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-info btn-sm" data-bs-dismiss="modal">
-                    Close
-                    </button>
-                </div>
-
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="faqModalTitle">
+            <strong>FAQ ❔</strong>
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
+        <div class="modal-body">
+          <ul>
+            <li>
+              <h6>How do I create a listing?</h6>
+              <p>
+                To create a listing, click on the <b>"Create Listing"</b> button
+                on the navigation bar. Then, fill in the form with the required
+                information and click on the <b>"Create"</b> button.
+              </p>
+            </li>
+            <li>
+              <h6>How do I add an item to my watchlist?</h6>
+              <p>
+                To add an item to your watchlist, click on the
+                <b>"Add to Watchlist"</b> button on the listing page. To remove
+                an item from your watchlist, click on the
+                <b>"Remove from Watchlist"</b> button on the listing page.
+              </p>
+            </li>
+            <li>
+              <h6>How do I bid on an item?</h6>
+              <p>
+                To bid on an item, click on the <b>"Bid"</b> button on the
+                listing page. Then, fill in the form with the required
+                information and click on the <b>"Bid"</b> button.
+              </p>
+            </li>
+            <li>
+              <h6>How do I close a listing?</h6>
+              <p>
+                To close a listing, click on the <b>"Close Listing"</b> button
+                on the listing page.
+              </p>
+            </li>
+            <li>
+              <h6>How do I comment on a listing?</h6>
+              <p>
+                To comment on a listing, click on the <b>"Comment"</b> button on
+                the listing page. Then, fill in the form with the required
+                information and click on the <b>"Comment"</b> button.
+              </p>
+            </li>
+            <li>
+              <h6>How do I view my watchlist?</h6>
+              <p>
+                To view your watchlist, click on the <b>"Watchlist"</b> button
+                on the navigation bar.
+              </p>
+            </li>
+            <li>
+              <h6>How do I view my listings?</h6>
+              <p>
+                To view your listings, click on the <b>"My Listings"</b> button
+                on the navigation bar.
+              </p>
+            </li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-info btn-sm"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
     </div>
-</div>
-  
+  </div>
 </html>
 
 <script>
-    var icon = document.getElementById("icon");
-    icon.onclick = function() {
-        document.body.classList.toggle("darkmode");
-        if (document.body.classList.contains("darkmode")) {
-            icon.src = "{% static 'img/sun.svg' %}";
-        } else {
-            icon.src = "{% static 'img/moon.svg' %}";
-        }
-    } 
+  var icon = document.getElementById('icon');
+  icon.onclick = function () {
+    document.body.classList.toggle('darkmode');
+    if (document.body.classList.contains('darkmode')) {
+      icon.src = "{% static 'img/sun.svg' %}";
+    } else {
+      icon.src = "{% static 'img/moon.svg' %}";
+    }
+  };
 </script>

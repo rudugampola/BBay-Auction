@@ -1,6 +1,6 @@
 {% extends "auctions/layout.html" %} {% block body %}
 {% load humanize %}
-
+{% include 'auctions/messages.html' %}
 {% if listings|length > 0 %}
     <h2>{{ title }}</h2>
 {% else %}
@@ -58,5 +58,11 @@
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
+
+        setTimeout(function(){
+            if ($('#msg').length > 0) {
+            $('#msg').remove();
+            }
+        }, 2000)
     </script>
 {% endblock %}

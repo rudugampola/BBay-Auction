@@ -1,31 +1,47 @@
-{% extends "auctions/layout.html" %} {% block body %}
-{% load static %}
-
+{% extends "auctions/layout.html" %} {% block body %} {% load static %}
+{% include 'auctions/messages.html' %}
 <form
   action="{% url 'import_csv' %}"
   method="post"
-  enctype="multipart/form-data" 
-  class= "col-sm-4">
+  enctype="multipart/form-data"
+  class="col-sm-4"
+>
   {% csrf_token %} 
-
   {% if message %}
   <div class="alert alert-danger" role="alert">{{ message }}</div>
   {% endif %}
 
   <div class="form-control">
     <label for="csv_file" style="margin-left: 20px">CSV File</label>
-    <input type="file" name="csv_file" id="csv_file" style="margin-right: 30px"/>      
-    <input data-toggle="tooltip" data-placement="right" title="Import CSV File." type="submit" class="btn btn-success" />
+    <input
+      type="file"
+      name="csv_file"
+      id="csv_file"
+      style="margin-right: 30px"
+    />
+    <input
+      data-toggle="tooltip"
+      data-placement="right"
+      title="Import CSV File."
+      type="submit"
+      class="btn btn-success"
+    />
   </div>
 </form>
-<br>
+<br />
 <a href="{% static 'files/listings_template.csv' %}">Download Template</a>
 
 <script type="text/javascript">
   $(function () {
-      $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip();
   });
+
+  setTimeout(function(){
+    if ($('#msg').length > 0) {
+      $('#msg').remove();
+    }
+  }, 2000)
+
 </script>
 
 {% endblock %}
-

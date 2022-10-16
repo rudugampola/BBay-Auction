@@ -2,8 +2,8 @@
 {% load humanize %}
 
 {% block body %}
-
-    {% if messages %}
+{% include 'auctions/messages.html' %}
+    {% comment %} {% if messages %}
         <div class="flex">
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}" role="alert">
@@ -11,7 +11,7 @@
                 </div>
             {% endfor %}
         </div>
-    {% endif %}
+    {% endif %} {% endcomment %}
 
 {% comment %} <div class="flex listings"> {% endcomment %}
     {% comment %} <div class="row"> {% endcomment %}
@@ -89,9 +89,9 @@
                 {% if min_error %}
                     <p class="card-text">
                         {% if listing.bid_current %}
-                            <div class="alert alert-warning" role="alert">Your bid must be bigger than {{ listing.bid_current|default:listing.bid_start |floatformat:2|intcomma}}</div>
+                            <div class="alert alert-warning" role="alert">Error 💥: Your bid must be bigger than {{ listing.bid_current|default:listing.bid_start |floatformat:2|intcomma}}</div>
                         {% else %}
-                            <div class="alert alert-warning" role="alert">Your bid must be equal or bigger than {{ listing.bid_current|default:listing.bid_start |floatformat:2|intcomma}}</div>
+                            <div class="alert alert-warning" role="alert">Error 💥: Your bid must be equal or bigger than {{ listing.bid_current|default:listing.bid_start |floatformat:2|intcomma}}</div>
                         {% endif %}
                     </p>
                 {% endif %}
@@ -113,6 +113,7 @@
                 {% if listing.creator == user and listing.active %}
                     <a data-toggle="tooltip" data-placement="top" title="Edit this Listing." class="btn btn-danger btn-sm" style="padding: 0.5em" href="{% url 'edit_listing' listing.id %}" role="button">Edit Listing</a>
                 {% endif %}
+                <br>
                 <br>
                 <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>
                 <hr/>
@@ -153,5 +154,11 @@
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip();
             });
+
+            setTimeout(function(){
+                if ($('#msg').length > 0) {
+                  $('#msg').remove();
+                }
+              }, 2000)
         </script>
 {% endblock %}

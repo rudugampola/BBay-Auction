@@ -7,13 +7,10 @@ from django import forms
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.core.files import File
 from django.db import IntegrityError
-from django.http import FileResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
-from PIL import Image
-from reportlab.pdfgen import canvas
 
 from .models import (Bid, Category, Comment, Expenses, Listing, Profits, Sales,
                      User, UserProfile)
@@ -73,6 +70,8 @@ def create(request):
             newListing = form.save(commit=False)
             newListing.creator = request.user
             newListing.save()
+            messages.success(
+                request, 'Success ✅: Listing was created successfully!')
             return HttpResponseRedirect(reverse("listings"))
     else:
         return render(request, "auctions/create.html", {
@@ -104,8 +103,12 @@ def delete_listing(request, listing_id):
 
     if request.user == listing.creator:
         listing.delete()
+        messages.success(
+            request, 'Success ✅: Listing deleted successfully!')
         return HttpResponseRedirect(reverse("listings"))
     else:
+        messages.error(
+            request, 'Error 💥: Listing was not closed!')
         return HttpResponseRedirect(reverse("listing", args=[listing_id]))
 
 
@@ -115,9 +118,8 @@ def import_csv(request):
         csv_file = request.FILES['csv_file']
 
         if not csv_file.name.endswith('.csv'):
-            return render(request, "auctions/import_csv.html", {
-                "message": "Error 💥: File is not CSV type!"
-            })
+            messages.error(request, 'Error 💥: File is not CSV type!')
+            return HttpResponseRedirect(reverse("import_csv"))
 
         data_set = csv_file.read().decode('UTF-8')
         io_string = io.StringIO(data_set)
@@ -130,8 +132,6 @@ def import_csv(request):
                 title=column[0],
                 description=column[1],
                 bid_start=column[2],
-                # Convert the image to a File object to save images from CSV
-                # image=File(open(column[3], 'rb')),
                 image=column[3],
                 category=Category.objects.get(id=column[4]),
                 creator=request.user,
@@ -163,6 +163,8 @@ def user_profile(request, user_id):
         user_profile.avatar = request.FILES['avatar']
         user_profile.save()
 
+        messages.success(
+            request, 'Success ✅: Profile picture updated successfully!')
         return HttpResponseRedirect(reverse("user_profile", args=[user_id]))
 
     return render(request, "auctions/user_profile.html", {
@@ -193,6 +195,7 @@ def create_category(request):
         category = request.POST['category']
         new_category = Category(category=category)
         new_category.save()
+        messages.success(request, 'Success ✅: Category created successfully!')
         return HttpResponseRedirect(reverse("categories"))
     else:
         return render(request, "auctions/create_category.html")
@@ -214,28 +217,6 @@ def listings(request):
     })
 
 
-# TODO - Create a PDF report of the expenses and profits
-def pdf(request):
-    # Create a file-like buffer to receive PDF data.
-    buffer = io.BytesIO()
-
-    # Create the PDF object, using the buffer as its "file."
-    p = canvas.Canvas(buffer)
-
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
-    p.drawString(100, 100, "Hello world.")
-
-    # Close the PDF object cleanly, and we're done.
-    p.showPage()
-    p.save()
-
-    # FileResponse sets the Content-Disposition header so that browsers
-    # present the option to save the file.
-    buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
-
-
 @login_required
 def comment(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
@@ -243,10 +224,9 @@ def comment(request, listing_id):
     newComment = form.save(commit=False)
     newComment.user = request.user
     newComment.listing = listing
-    messages.success(
-        request, message='Success: You\'ve commented successfully.')
-
     newComment.save()
+    messages.success(
+        request, "Success ✅: You\'ve commented successfully.")
 
     return HttpResponseRedirect(reverse("listing", args=[listing_id]))
 
@@ -284,31 +264,37 @@ def bid_valid(offer, listing):
 
 def close_listing(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
-    buyer = Bid.objects.filter(auction_list=listing).last().user
+    listing.active = False
+    if Bid.objects.filter(auction_list=listing).last() is not None:
+        buyer = Bid.objects.filter(auction_list=listing).last().user
+    else:
+        buyer = None
+
     if request.user == listing.creator:
-        listing.active = False
-        listing.buyer = buyer
-        listing.save()
+        # listing.active = False
+        if buyer is not None:
+            listing.buyer = buyer
+            listing.save()
 
-        # Create a new Sales transaction
-        sale = Sales.objects.create(
-            listing=listing, buyer=buyer, seller=request.user, price=listing.bid_current)
-        sale.save()
+            # Create a new Sales transaction
+            sale = Sales.objects.create(
+                listing=listing, buyer=buyer, seller=request.user, price=listing.bid_current)
+            sale.save()
 
-        # Create a new profit for the seller
-        profit = Profits.objects.create(
-            user=request.user, profit=listing.bid_current)
-        profit.save()
+            # Create a new profit for the seller
+            profit = Profits.objects.create(
+                user=request.user, profit=listing.bid_current)
+            profit.save()
 
-        # Create a new expense for the buyer
-        expense = Expenses.objects.create(
-            user=buyer, expense=listing.bid_current)
-        expense.save()
+            # Create a new expense for the buyer
+            expense = Expenses.objects.create(
+                user=buyer, expense=listing.bid_current)
+            expense.save()
+
+        messages.success(
+            request, 'Success ✅: Listing closed successfully!')
 
         return HttpResponseRedirect(reverse("listing", args=[listing_id]))
-    else:
-        listing.watchers.add(request.user)
-    return HttpResponseRedirect(reverse("watchlist"))
 
 
 @login_required
@@ -420,9 +406,9 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "auctions/login.html", {
-                "message": "Error 💥: Invalid username and/or password."
-            })
+            messages.error(
+                request, "Error 💥: Invalid username and/or password.")
+            return HttpResponseRedirect(reverse("login"))
     else:
         return render(request, "auctions/login.html")
 
@@ -443,20 +429,17 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "auctions/register.html", {
-                "message": "Error 💥: Passwords must match."
-            })
+            messages.error(request, "Error 💥: Passwords must match.")
+            return HttpResponseRedirect(reverse("register"))
 
-        # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
             user.first_name = first_name
             user.last_name = last_name
             user.save()
         except IntegrityError:
-            return render(request, "auctions/register.html", {
-                "message": "Error 💥: Username already taken."
-            })
+            messages.error(request, "Error 💥: Username already taken.")
+            return HttpResponseRedirect(reverse("register"))
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:

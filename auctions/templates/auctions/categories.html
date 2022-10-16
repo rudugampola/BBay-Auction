@@ -1,31 +1,36 @@
 {% extends "auctions/layout.html" %} {% block body %}
-
+{% include 'auctions/messages.html' %}
 <div class="container">
   <div class="row">
     {% if user.is_superuser %}
-     
-      <div class="form-control" style="margin-bottom: 20px;">
-        <form action="{% url 'create_category' %}" method='POST'>
-          {% csrf_token %}
-          <div class="input-group form-group">
-            <input type="text" class="form-control" id="category" name="category" placeholder="Category to Insert" required>
-            <button type="submit" class="btn btn-primary">Add Category</button> 
-          </div>
-        </form>
-      </div>
-      
-    {% endif %}
 
-    {% for category in all_categories %}
+    <div class="form-control" style="margin-bottom: 20px">
+      <form action="{% url 'create_category' %}" method="POST">
+        {% csrf_token %}
+        <div class="input-group form-group">
+          <input
+            type="text"
+            class="form-control"
+            id="category"
+            name="category"
+            placeholder="Category to Insert"
+            required
+          />
+          <button type="submit" class="btn btn-primary">Add Category</button>
+        </div>
+      </form>
+    </div>
+
+    {% endif %} {% for category in all_categories %}
     <div class="col-sm-4">
       <div class="card" style="margin-bottom: 20px">
-
         {% comment %} Admin user can make categories {% endcomment %}
-
 
         <div class="card-body">
           <h5 class="card-title d-flex justify-content-center">
-            <a class="link" href="{% url 'categories' %}?category={{category.id}}"
+            <a
+              class="link"
+              href="{% url 'categories' %}?category={{category.id}}"
               >{{ category }}</a
             >
           </h5>
@@ -36,4 +41,11 @@
   </div>
 </div>
 
+<script>
+  setTimeout(function(){
+    if ($('#msg').length > 0) {
+      $('#msg').remove();
+    }
+  }, 2000)
+</script> 
 {% endblock %}

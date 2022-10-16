@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %} {% block body %}
 {% load humanize %}
 {% load static %}
-
+{% include 'auctions/messages.html' %}
 {% comment %} Show user's first name, last name, email, date_joined. Give option to edit first name, last name and email. {% endcomment %}
 <div class="container">
     <div class="row">
@@ -12,7 +12,6 @@
                     <h5 class="card-title text-center">{{ search_user.first_name }} {{ search_user.last_name }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted text-center">{{ search_user.email }}</h6>
                     <p class="card-text text-center">Member since {{ search_user.date_joined|date:"F j, Y" }}</p>
-                   
 
                     {% comment %} Add a circular user image to the right of user info {% endcomment %}
                     <div class="text-center">
@@ -101,5 +100,11 @@
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
+
+        setTimeout(function(){
+            if ($('#msg').length > 0) {
+              $('#msg').remove();
+            }
+          }, 2000)
     </script>
 {% endblock %}

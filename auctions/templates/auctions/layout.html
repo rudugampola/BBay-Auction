@@ -20,6 +20,8 @@
     />
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     <link rel="icon" href="{% static 'img/bbay.ico' %}" />
+    <script src="https://kit.fontawesome.com/25ae4408a9.js" crossorigin="anonymous"></script>
+    {% comment %} <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css"> {% endcomment %}
   </head>
 
   <body class="body">
@@ -30,8 +32,8 @@
         style="padding: 0.5em"
         role="button"
         ><b style="text-transform: capitalize; font-weight: bold"
-          >{{ user.username }}</b
-        ></a
+          >{{ user.username }} &nbsp</b
+        ><i class="fa-solid fa-user"></i></a
       >
       👋 {% else %} Not Signed In. {% endif %}
     </div>
@@ -43,25 +45,28 @@
 
     <ul class="nav">
       <li class="nav-item">
-        <a class="nav-link link" href="{% url 'listings' %}">Active Listings</a>
+        <a class="nav-link link" href="{% url 'index' %}"><i class="fa-solid fa-house"></i> &nbspHome </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link" href="{% url 'categories' %}">Categories</a>
+        <a class="nav-link link" href="{% url 'listings' %}">Active Listings <i class="fa-solid fa-list"></i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link" href="{% url 'categories' %}">Categories <i class="fa-solid fa-tags"></i></a>
       </li>
       {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link link" href="{% url 'watchlist' %}"
-          >Watchlist
+          ><i class="fa-solid fa-binoculars"></i> &nbspWatchlist 
           <span
             style="margin-left: 9px"
             class="position-absolute top-10 start-30 translate-middle badge rounded-pill bg-danger"
             >{{ request.session.watchlist_count }}
-          </span>
+          </span> 
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link link" href="{% url 'create' %}">Create Listing</a>
+        <a class="nav-link link" href="{% url 'create' %}"> Create Listing <i class="fa-solid fa-circle-plus"></i></a>
       </li>
 
       <li class="nav-item dropdown link" style="z-index: 1000">
@@ -72,7 +77,7 @@
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          Reports
+          Reports <i class="fa-solid fa-chart-column"></i>
         </a>
         <ul
           class="dropdown-menu dropdown-menu-dark"
@@ -88,14 +93,14 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link link" href="{% url 'logout' %}">Log Out</a>
+        <a class="nav-link link" href="{% url 'logout' %}">Log Out <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
       </li>
       {% else %}
       <li class="nav-item">
-        <a class="nav-link link" href="{% url 'login' %}">Log In</a>
+        <a class="nav-link link" href="{% url 'login' %}">Log In <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link" href="{% url 'register' %}">Register</a>
+        <a class="nav-link link" href="{% url 'register' %}">Register <i class="fa-solid fa-user-plus"></i></a>
       </li>
       {% endif %} {% if not request.path == '/' %}
       <div class="ms-auto">

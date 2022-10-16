@@ -10,6 +10,12 @@ class User(AbstractUser):
     pass
 
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(
+        upload_to="profile/", default='profile/avatar.png')
+
+
 class Category(models.Model):
     category = models.CharField(max_length=30)
 

@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
+<div style="margin:0 auto; text-align:center"> 
     <h2>Register</h2>
 
     {% if message %}
@@ -10,28 +10,37 @@
         </div>
     {% endif %}
 
-    <br>
-    <form action="{% url 'register' %}" method="post">
+    {% comment %} <br> {% endcomment %}
+
+    <form class="form-control" style="width: 380px;" action="{% url 'register' %}" method="post">
         {% csrf_token %}
-        <div class="form-group col-2">
-            <input class="form-control" autofocus type="text" name="username" placeholder="Username" required> 
+        <div class="form-group" style="width: 350px">
+            <input class="form-control" style="margin-top: 15px" autofocus type="text" name="first_name" placeholder="First Name" required> 
         </div>
         <br>
-        <div class="form-group col-2">
+        <div class="form-group" style="width: 350px">
+            <input class="form-control" type="text" name="last_name" placeholder="Last Name" required> 
+        </div>
+        <br>
+        <div class="form-group" style="width: 350px">
+            <input class="form-control" type="text" name="username" placeholder="Username" required> 
+        </div>
+        <br>
+        <div class="form-group" style="width: 350px">
             <input class="form-control" type="email" name="email" placeholder="Email Address" required>
         </div>
         <br>
-        <div class="form-group col-2">
+        <div class="form-group" style="width: 350px">
             <input class="form-control" type="password" name="password" placeholder="Password" required>
         </div>
         <br>
-        <div class="form-group col-2">
+        <div class="form-group" style="width: 350px">
             <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password" required>
         </div>
         <br>
-        <input class="btn btn-primary" type="submit" value="Register">
+        <input class="btn btn-primary" style="margin-bottom: 15px" type="submit" value="Register">
+        <p>Already have an account? <a href="{% url 'login' %}">Log In here.</a></p>
     </form>
-    <br>
-    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
 
+</div>
 {% endblock %}

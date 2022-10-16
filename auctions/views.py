@@ -16,7 +16,7 @@ from PIL import Image
 from reportlab.pdfgen import canvas
 
 from .models import (Bid, Category, Comment, Expenses, Listing, Profits, Sales,
-                     User)
+                     User, UserProfile)
 
 # TODO - Run a report on all listings and their bids and comments and watchers
 
@@ -36,6 +36,16 @@ class NewBidForm(forms.ModelForm):
 class NewListingForm(forms.ModelForm):
     class Meta:
         model = Listing
+
+        # Add placeholders to all fields
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Title of Listing'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Description of Listing'}),
+            'bid_start': forms.NumberInput(attrs={'placeholder': 'Starting Bid Price'}),
+            'image': forms.FileInput(attrs={'placeholder': 'Image'}),
+            'category': forms.Select(attrs={'placeholder': 'Category'}),
+        }
+
         fields = ['title', 'description', 'bid_start', 'image', 'category']
 
 
@@ -140,6 +150,24 @@ def search(request):
     return render(request, "auctions/listings.html", {
         "listings": listings,
         "title": "Search Results"
+    })
+
+
+def user_profile(request, user_id):
+    user = User.objects.get(id=user_id)
+    listings = Listing.objects.filter(creator=user, active=True)
+
+    if request.method == 'POST':
+        user = User.objects.get(id=user_id)
+        user_profile = UserProfile.objects.get(user=user)
+        user_profile.avatar = request.FILES['avatar']
+        user_profile.save()
+
+        return HttpResponseRedirect(reverse("user_profile", args=[user_id]))
+
+    return render(request, "auctions/user_profile.html", {
+        "user": user,
+        "listings": listings
     })
 
 
@@ -351,7 +379,7 @@ def watchlist(request):
 
     return render(request, "auctions/listings.html", {
         "listings": listings,
-        "title": "My watchlist"
+        "title": "My Watchlist"
     })
 
 
@@ -363,10 +391,20 @@ def update_watchlist(request, listing_id, reverse_method):
     else:
         listing.watchers.add(request.user)
 
-    if reverse_method == "listing":
-        return listing(request, listing_id)
-    else:
+    if reverse_method == "listings":
+        # Updated watchlist_count for the navbar
+        if request.user in listing.watchers.all():
+            listing.watched = True
+            request.session['watchlist_count'] += 1  # Update watchlist_count
+        else:
+            listing.watched = False
+            request.session['watchlist_count'] = request.user.watchlist.count()
+
+    # Stay on the same page, but update the watchlist_count for the navbar
         return HttpResponseRedirect(reverse(reverse_method))
+    else:  # reverse_method = "listing"
+        request.session['watchlist_count'] = request.user.watchlist.count()
+        return HttpResponseRedirect(reverse(reverse_method, args=[listing_id]))
 
 
 def login_view(request):
@@ -396,6 +434,8 @@ def logout_view(request):
 
 def register(request):
     if request.method == "POST":
+        first_name = request.POST["first_name"]
+        last_name = request.POST["last_name"]
         username = request.POST["username"]
         email = request.POST["email"]
 
@@ -410,6 +450,8 @@ def register(request):
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
+            user.first_name = first_name
+            user.last_name = last_name
             user.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {

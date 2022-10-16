@@ -4,15 +4,16 @@
   <div class="row">
     {% if user.is_superuser %}
      
-      <div class="form-control" style="margin-bottom: 20px; z-index: -1">
+      <div class="form-control" style="margin-bottom: 20px;">
         <form action="{% url 'create_category' %}" method='POST'>
           {% csrf_token %}
           <div class="input-group form-group">
-            <input type="text" class="form-control" id="category" name="category" placeholder="Category" required>
+            <input type="text" class="form-control" id="category" name="category" placeholder="Category to Insert" required>
             <button type="submit" class="btn btn-primary">Add Category</button> 
           </div>
         </form>
       </div>
+      
     {% endif %}
 
     {% for category in all_categories %}

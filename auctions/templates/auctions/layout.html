@@ -19,15 +19,13 @@
       crossorigin="anonymous"
     />
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-
-
     <link rel="icon" href="{% static 'img/bbay.ico' %}" />
   </head>
 
   <body class="body">
-    <div class="ms-auto ">
+    <div class="ms-auto" style="color: white">
         {% if user.is_authenticated %} 
-            Signed In As <strong>{{ user.username }}</strong>. 
+            Signed In As: &nbsp<a href="{% url 'user_profile' user.id %}" class="btn btn-warning btn-sm" style="padding: 0.5em" role="button"><b style="text-transform: capitalize; font-weight: bold">{{ user.username }}</b></a>
         {% else %} 
             Not Signed In. 
         {% endif %}
@@ -60,11 +58,11 @@
       </li>
 
 
-      <li class="nav-item dropdown link">
+      <li class="nav-item dropdown link" style="z-index: 1000;">
         <a class="nav-link dropdown-toggle link" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           Reports
         </a>
-        <ul class="dropdown-menu dropdown-menu-dark" style="z-index: 1000;" aria-labelledby="navbarDarkDropdownMenuLink">
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
           <li><a class="dropdown-item" href="{% url 'profits' %}">Profits 💰</a></li>
           <li><a class="dropdown-item" href="{% url 'expenses' %}">Expenses 💸</a></li>
         </ul>
@@ -106,8 +104,8 @@
     </div>
   </footer>
 
-<div class=" modal fade" id="aboutModal" role="dialog" tabindex="-1" aria-labelledby="aboutUsLabel" aria-hidden="true">
-  <div class="modal-dialog" id="aboutModalInner" role="document">
+<div class=" modal fade" id="aboutModal" role="dialog" tabindex="-1" aria-labelledby="aboutUsLabel" aria-hidden="true" >
+  <div class="modal-dialog" id="aboutModalInner" role="document" >
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="aboutUsLabel">About Us 👋</h1>

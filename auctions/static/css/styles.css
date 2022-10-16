@@ -5,7 +5,9 @@
 }
 
 :root {
-    --clr-light: linear-gradient(to left bottom, rgb(198, 236, 248), rgb(255, 255, 255));
+    /* background: rgb(2,0,36); */
+    --clr-light: linear-gradient(to right, #59c173, #a17fe0, #5d26c1);
+    /* --clr-light: linear-gradient(to left bottom, rgb(198, 236, 248), rgb(255, 255, 255)); */
     --clr-dark: #102c27;
     --clr-primary: white;
     --clr-secondary: #c3fcf2;
@@ -196,4 +198,13 @@ img.graph {
     justify-content: center;
     margin-left: 36%;
     margin-top: 10%;
+}
+
+.tales {
+    width: 100%;
+}
+
+.carousel-inner {
+    width: 100%;
+    max-height: 400px !important;
 }

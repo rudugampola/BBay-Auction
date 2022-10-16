@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import User, Listing, Bid, Comment, Category, Sales, Expenses, Profits
 
+from .models import (Bid, Category, Comment, Expenses, Listing, Profits, Sales,
+                     User, UserProfile)
 
 # Register your models here.
 admin.site.register(User)
@@ -11,3 +12,4 @@ admin.site.register(Category)
 admin.site.register(Sales)
 admin.site.register(Expenses)
 admin.site.register(Profits)
+admin.site.register(UserProfile)

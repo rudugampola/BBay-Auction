@@ -166,7 +166,7 @@ def user_profile(request, user_id):
         return HttpResponseRedirect(reverse("user_profile", args=[user_id]))
 
     return render(request, "auctions/user_profile.html", {
-        "user": user,
+        "search_user": user,
         "listings": listings
     })
 

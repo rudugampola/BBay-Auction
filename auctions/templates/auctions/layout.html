@@ -25,7 +25,8 @@
   <body class="body">
     <div class="ms-auto" style="color: white">
         {% if user.is_authenticated %} 
-            Signed In As: &nbsp<a href="{% url 'user_profile' user.id %}" class="btn btn-warning btn-sm" style="padding: 0.5em" role="button"><b style="text-transform: capitalize; font-weight: bold">{{ user.username }}</b></a>
+        {% comment %} User shown should be the session logged in user {% endcomment %}
+            Hi, &nbsp<a href="{% url 'user_profile' user.id %}" class="btn btn-warning btn-sm" style="padding: 0.5em" role="button"><b style="text-transform: capitalize; font-weight: bold">{{ user.username }}</b></a>
         {% else %} 
             Not Signed In. 
         {% endif %}

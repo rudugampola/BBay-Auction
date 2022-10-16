@@ -2,10 +2,6 @@
 {% load humanize %}
 {% load static %}
 
-{% comment %} <div style="margin:0 auto; text-align:center text-transform: capitalize">
-    <h2 style="text-transform: capitalize">{{ user }}</h2>
-</div> {% endcomment %}
-
 {% comment %} Show user's first name, last name, email, date_joined. Give option to edit first name, last name and email. {% endcomment %}
 <div class="container">
     <div class="row">
@@ -13,24 +9,26 @@
             <div class="card">
                 <div class="card-body">
                     {% comment %} add user image to right corner {% endcomment %}
-                    <h5 class="card-title text-center">{{ user.first_name }} {{ user.last_name }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted text-center">{{ user.email }}</h6>
-                    <p class="card-text text-center">Member since {{ user.date_joined|date:"F j, Y" }}</p>
+                    <h5 class="card-title text-center">{{ search_user.first_name }} {{ search_user.last_name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted text-center">{{ search_user.email }}</h6>
+                    <p class="card-text text-center">Member since {{ search_user.date_joined|date:"F j, Y" }}</p>
                    
 
                     {% comment %} Add a circular user image to the right of user info {% endcomment %}
                     <div class="text-center">
                         {% comment %} Add an option to update a new user image {% endcomment %}
-                        <img src="{{ user.userprofile.avatar.url }}" alt="Avatar" class="rounded-circle float-right ms-auto" style="width: 100px; height: 100px;">
+                        <img src="{{ search_user.userprofile.avatar.url }}" alt="Avatar" class="rounded-circle float-right ms-auto" style="width: 100px; height: 100px; object-fit: cover;">
 
                         {% comment %} Give option to edit avatar upload image {% endcomment %}
                         <form action="{% url 'user_profile' user.id %}" method="POST" enctype="multipart/form-data" id="avatar-form">
                             {% csrf_token %}
                             <div class="form-group">
+                                {% if search_user == user %}
                                 <label for="avatar"> 
-                                    <input type="file" name="avatar" id="avatar" style="display: none;" onchange="form.submit()">
+                                    <input type="file" name="avatar" id="avatar" style="display: none;" onchange="form.submit()" >
                                     <img src= "{% static 'img/edit_button.svg' %}" style="width: 30px; margin-left: 200px; float: top; ">
                                 </label>
+                                {% endif %}
                             </div>
                         </form>
                         
@@ -47,7 +45,7 @@
     
 {% comment %} Show user's listings. {% endcomment %}
 {% if listings|length > 0 %}
-    <h2 style="text-transform: capitalize">{{ user }}'s Listings</h2>
+    <h2 style="text-transform: capitalize">{{ search_user }}'s Listings</h2>
 {% else %}
     <h2>No Listings</h2>
 {% endif %}

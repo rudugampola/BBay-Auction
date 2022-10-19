@@ -16,12 +16,8 @@ from .models import (Bid, Category, Comment, Expenses, Listing, Profits, Sales,
                      User, UserProfile)
 
 # TODO - Run a report on all listings and their bids and comments and watchers
-
 # TODO - Editing a Listing
-
-
-def edit_listing(request, listing_id):
-    pass
+# TODO - Make the Report Microservice work for Profit and Expenses
 
 
 class NewBidForm(forms.ModelForm):
@@ -76,6 +72,30 @@ def create(request):
     else:
         return render(request, "auctions/create.html", {
             "form": NewListingForm()
+        })
+
+
+def edit_listing(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
+    # Prefill the form with the current listing data to be edited
+    form = NewListingForm(instance=listing)
+
+    if request.method == 'POST':
+        listing.title = request.POST['title']
+        listing.description = request.POST['description']
+        # Allow imagefield to be blank so that it doesn't have to be updated
+        request.FILES.getlist('image')
+        listing.bid_start = request.POST['bid_start']
+        listing.category = Category.objects.get(id=request.POST['category'])
+        listing.save()
+
+        messages.success(
+            request, 'Success ✅: Listing edited successfully!')
+        return HttpResponseRedirect(reverse("listing", args=[listing_id]))
+    else:
+        return render(request, "auctions/edit_listing.html", {
+            "listing": listing,
+            "form": form
         })
 
 

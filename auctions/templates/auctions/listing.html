@@ -42,7 +42,7 @@
 
                 <p>
             
-                <p class="card-text" style="text-transform: capitalize">{{ listing.description }}</p>
+                <p class="card-text" style="text-transform:first-letter: capitalize">{{ listing.description }}</p>
 
                 {% if listing.bid_current is None %}
                     <p class="card-text price">Starting price: ${{ listing.bid_start |floatformat:2|intcomma}}</p>

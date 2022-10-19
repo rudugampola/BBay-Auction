@@ -18,6 +18,8 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("user_profile/<int:user_id>", views.user_profile, name="user_profile"),
     path("create", views.create, name="create"),
+    path("edit_listing/<int:listing_id>",
+         views.edit_listing, name="edit_listing"),
     path("listing/<int:listing_id>", views.listing, name="listing"),
     path("import_csv", views.import_csv, name="import_csv"),
     path("categories", views.categories, name="categories"),

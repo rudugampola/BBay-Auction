@@ -5,6 +5,7 @@
   <head>
     <title>{% block title %}Auctions{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://kit.fontawesome.com/25ae4408a9.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script
@@ -20,8 +21,7 @@
     />
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     <link rel="icon" href="{% static 'img/bbay.ico' %}" />
-    <script src="https://kit.fontawesome.com/25ae4408a9.js" crossorigin="anonymous"></script>
-    {% comment %} <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css"> {% endcomment %}
+    
   </head>
 
   <body class="body">
@@ -105,7 +105,7 @@
       {% endif %} {% if not request.path == '/' %}
       <div class="ms-auto">
         <li class="nav-item">
-          <form class="d-flex" action="{% url 'search' %}" method="GET">
+          <form class="d-flex" action="{% url 'search' %}" method="GET" >
             <input
               class="form-control me-2"
               type="search"
@@ -113,7 +113,7 @@
               aria-label="Search"
               name="q"
             />
-            <button class="btn btn-success" type="submit">Search</button>
+            <button style="padding: 0.5em" class="btn btn-success" type="submit">Search</button>
             <li class="nav-item ms-auto" style="padding-left: 50px">
               <img src="{% static 'img/moon.svg' %}" id="icon" />
             </li>

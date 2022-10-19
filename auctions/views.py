@@ -16,7 +16,6 @@ from .models import (Bid, Category, Comment, Expenses, Listing, Profits, Sales,
                      User, UserProfile)
 
 # TODO - Run a report on all listings and their bids and comments and watchers
-# TODO - Editing a Listing
 # TODO - Make the Report Microservice work for Profit and Expenses
 
 

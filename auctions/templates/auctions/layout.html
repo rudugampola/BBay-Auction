@@ -304,4 +304,11 @@
       icon.src = "{% static 'img/moon.svg' %}";
     }
   };
+
+  document.onkeyup = function(e) {
+    if (e.ctrlKey && e.which == 67) {
+      window.location.href = "{% url 'create' %}";
+      // alert("Ctrl + B shortcut combination was pressed");
+    }
+  };
 </script>

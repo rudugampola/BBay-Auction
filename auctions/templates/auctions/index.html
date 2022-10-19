@@ -119,4 +119,15 @@ to return listings matching search keywords {% endcomment %}
   </div>
 </div>
 
+<script>
+  document.onkeyup = function(e) {
+    if (e.ctrlKey && e.which == 67) {
+      window.location.href = "{% url 'create' %}";
+      // alert("Ctrl + B shortcut combination was pressed");
+    }
+  };
+</script>
+
 {% endblock %}
+
+

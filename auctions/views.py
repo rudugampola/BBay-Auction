@@ -54,7 +54,9 @@ class NewCommentForm(forms.ModelForm):
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html", {
+        "title": "Home"
+    })
 
 
 @login_required
@@ -70,7 +72,8 @@ def create(request):
             return HttpResponseRedirect(reverse("listings"))
     else:
         return render(request, "auctions/create.html", {
-            "form": NewListingForm()
+            "form": NewListingForm(),
+            "title": "Create Listing"
         })
 
 
@@ -113,7 +116,8 @@ def listing(request, listing_id):
         "listing": listing,
         "form": NewBidForm(),
         "comments": listing.user_comment.all(),
-        "form_comment": NewCommentForm()
+        "form_comment": NewCommentForm(),
+        "title": listing.title.title()
     })
 
 
@@ -160,16 +164,23 @@ def import_csv(request):
         context['success'] = True  # Set to True if successful
 
         return render(request, 'auctions/listings.html', context)
-    return render(request, 'auctions/import_csv.html')
+    return render(request, 'auctions/import_csv.html', {
+        "title": "Import CSV"
+    })
 
 
 def search(request):
     query = request.GET.get('q')
     listings = Listing.objects.filter(title__icontains=query, active=True)
-    return render(request, "auctions/listings.html", {
-        "listings": listings,
-        "title": "Search Results"
-    })
+    if not listings:
+        messages.error(request, 'Error 💥: No listings found for "{query}"'.format(
+            query=query))
+        return HttpResponseRedirect(reverse("listings"))
+    else:
+        return render(request, "auctions/listings.html", {
+            "listings": listings,
+            "title": "Search Results for \"{query}\"".format(query=query)
+        })
 
 
 def user_profile(request, user_id):
@@ -200,6 +211,7 @@ def categories(request):
     if category_id is None:
         return render(request, "auctions/categories.html", {
             "all_categories": all_categories,
+            "title": "Categories"
         })
     else:
         return render(request, "auctions/listings.html", {
@@ -209,7 +221,6 @@ def categories(request):
 
 
 def create_category(request):
-    print(request)
     if request.method == 'POST':
         category = request.POST['category']
         new_category = Category(category=category)
@@ -217,7 +228,9 @@ def create_category(request):
         messages.success(request, 'Success ✅: Category created successfully!')
         return HttpResponseRedirect(reverse("categories"))
     else:
-        return render(request, "auctions/create_category.html")
+        return render(request, "auctions/create_category.html", {
+            "title": "Create Category"
+        })
 
 
 def listings(request):
@@ -340,7 +353,8 @@ def profits(request):
     return render(request, "auctions/profits.html", {
         "profits": profits,
         "total": total,
-        "image": image
+        "image": image,
+        "title": "Profit Report"
     })
 
 
@@ -368,7 +382,8 @@ def expenses(request):
     return render(request, "auctions/expenses.html", {
         "expenses": expenses,
         "total": total,
-        "image": image
+        "image": image,
+        "title": "Expense Report"
     })
 
 
@@ -429,7 +444,9 @@ def login_view(request):
                 request, "Error 💥: Invalid username and/or password.")
             return HttpResponseRedirect(reverse("login"))
     else:
-        return render(request, "auctions/login.html")
+        return render(request, "auctions/login.html", {
+            "title": "Login"
+        })
 
 
 def logout_view(request):
@@ -462,4 +479,6 @@ def register(request):
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "auctions/register.html")
+        return render(request, "auctions/register.html", {
+            "title": "Register"
+        })

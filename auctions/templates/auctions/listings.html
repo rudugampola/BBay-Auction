@@ -1,6 +1,7 @@
 {% extends "auctions/layout.html" %} {% block body %}
 {% load humanize %}
 {% include 'auctions/messages.html' %}
+
 {% if listings|length > 0 %}
     <h2>{{ title }}</h2>
 {% else %}

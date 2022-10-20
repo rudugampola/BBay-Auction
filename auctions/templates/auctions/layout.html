@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>{% block title %}Auctions{% endblock %}</title>
+    {% comment %} <title>{% block title %}Auctions{% endblock %}</title> {% endcomment %}
+    <title>{{ title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://kit.fontawesome.com/25ae4408a9.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

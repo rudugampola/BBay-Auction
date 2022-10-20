@@ -99,15 +99,54 @@
                 {% comment %} Alert the user the listing will be sold to highest bidder before closing {% endcomment %}
 
                 {% if  listing.creator == user and listing.active %}
-                    <a data-toggle="tooltip" data-placement="top" title="Close this Listing." class="btn btn-danger btn-sm" style="padding: 0.5em" href="{% url 'close_listing' listing.id %}"  
-                    onclick="return confirm('❗ Are you sure want to close this listing? The item will be sold to the highest bidder!');"
-                    role="button">Close Listing</a>
+                <a data-toggle="tooltip" data-placement="top" data-bs-toggle="modal" data-bs-target="#closer" title="Close this Listing." 
+                class="btn btn-danger btn-sm" style="padding: 0.5em" href="{% url 'close_listing' listing.id %}" role="button">Close Listing</a>
+                    
                 {% endif %}
 
+                <div class="modal fade" id="closer" tabindex="-1" aria-labelledby="closer" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="closer">Close Listing ❗ </h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                           Are you sure want to close this listing? The item will be sold to the highest bidder!
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" style="padding: 0.5em" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                          {% comment %} <button type="button" style="padding: 0.5em" href="{% url 'close_listing' listing.id %}"  class="btn btn-primary">Yes</button> {% endcomment %}
+                          <a class="btn btn-danger btn-sm" style="padding: 0.5em" href="{% url 'close_listing' listing.id %}" role="button">Close Listing</a> 
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                
+
                 {% if listing.creator == user and listing.active %}
-                    <a data-toggle="tooltip" data-placement="top" title="Delete this Listing from Bbay."class="btn btn-danger btn-sm" style="padding: 0.5em" href="{% url 'delete_listing' listing.id %}" 
-                    onclick="return confirm('❗ Are you sure want to delete this listing?');" role="button">Delete Listing</a>
+                    <a data-toggle="tooltip" data-bs-toggle="modal" data-bs-target="#delete" data-placement="top" title="Delete this Listing.."class="btn btn-danger btn-sm" style="padding: 0.5em" href="{% url 'delete_listing' listing.id %}" 
+                    role="button">Delete Listing</a>
                 {% endif %}
+
+                <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="delete" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="delete">Delete Listing ❗</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure want to delete this listing?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" style="padding: 0.5em" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                          <a data-toggle="tooltip" data-placement="top" title="Delete this Listing from Bbay."class="btn btn-danger btn-sm" 
+                          style="padding: 0.5em" href="{% url 'delete_listing' listing.id %}" role="button">Delete Listing</a>
+                        </div>
+                      </div>
+                    </div>
+                </div>
 
                 {% comment %} Add a button to edit a listing if logged in user is the creator {% endcomment %}
                 {% if listing.creator == user and listing.active %}
@@ -119,6 +158,7 @@
                 <hr/>
             </button>
         </div>
+        
 
         <div class="card">
             <h4>Comments <i class="fa-regular fa-comment"></i></h4>
@@ -133,6 +173,8 @@
                 </div>   
             {% endif %}         
             <hr/>
+
+            
             
             {% for comment in comments %}   
             <div class="card" >     
@@ -161,4 +203,6 @@
                 }
               }, 2000)
         </script>
+
+        
 {% endblock %}

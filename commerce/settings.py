@@ -25,9 +25,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '6ps8j!crjgrxt34cqbqn7x&b3y%(fny8k8nh21+qa)%ws3fh!q'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 IS_HEROKU = "DYNO" in os.environ
 
 # Generally avoid wildcards(*). However since Heroku router provides hostname validation it is ok

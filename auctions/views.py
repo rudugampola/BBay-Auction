@@ -199,7 +199,8 @@ def user_profile(request, user_id):
 
     return render(request, "auctions/user_profile.html", {
         "search_user": user,
-        "listings": listings
+        "listings": listings,
+        "title": user.username.title()
     })
 
 
@@ -396,10 +397,13 @@ def watchlist(request):
             listing.watched = True
         else:
             listing.watched = False
+    watchlistCount = listings.count()
+    print("Watchlist count: ", watchlistCount)
 
     return render(request, "auctions/listings.html", {
         "listings": listings,
-        "title": "My Watchlist"
+        "title": "My Watchlist",
+        "watchlistCount": watchlistCount
     })
 
 

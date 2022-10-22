@@ -5,6 +5,8 @@ from django.dispatch import receiver
 from django.utils import timezone
 from PIL import Image
 
+from django.core.files.storage import default_storage as storage
+
 
 class User(AbstractUser):
     pass
@@ -43,11 +45,12 @@ class Listing(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None):
         super().save()  # saving image first
-        img = Image.open(self.image.path)  # Open image using self
-        if img.height > 300 or img.width > 300:
-            new_img = (300, 300)
-            img.thumbnail(new_img)
-            img.save(self.image.path)  # saving image at the same path
+        # Use aws for storage
+        img = storage.open(self.image.name)  # Open image using self
+        # if img.height > 300 or img.width > 300:
+        #     new_img = (300, 300)
+        #     img.thumbnail(new_img)
+        #     img.save(self.image.path)  # saving image at the same path
 
     def __str__(self):
         return f"{self.title} : {self.description}"

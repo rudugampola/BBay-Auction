@@ -5,8 +5,6 @@ from django.dispatch import receiver
 from django.utils import timezone
 from PIL import Image
 
-from commerce.storage_backends import PrivateMediaStorage
-
 
 class User(AbstractUser):
     pass

@@ -1,0 +1,23 @@
+{% extends "./auctions/layout.html" %} 
+{% block body %}
+{% load static %}
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5 align-self-center">
+            <img src="{% static 'img/500.png' %}" />
+            </div>
+                <div class="col-md-6 align-self-center">
+                <h1 class="display-1">500</h1>
+                <h1 class="display-2">Internal Server Error</h1>
+                <h2>OOPS! Something went wrong.</h2>
+                <p>The server encountered and internal error or misconfiguration and was unable to complete your request.
+                </p>
+                <a class="btn btn-success rounded-pill" type="button" href="{% url 'index' %}">HOME</a>
+            </div>
+      </div>
+    </div>
+  </main>
+
+{% endblock %}

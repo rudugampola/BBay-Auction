@@ -8,15 +8,18 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
 from .models import (Bid, Category, Comment, Expenses, Listing, Profits, Sales,
                      User, UserProfile)
 
+from django.db.models import Max
+
 # TODO - Run a report on all listings and their bids and comments and watchers
 # TODO - Make the Report Microservice work for Profit and Expenses
+# TODO - Make a filter for active listings by date, price, category, etc.
 
 
 class NewBidForm(forms.ModelForm):
@@ -244,6 +247,23 @@ def listings(request):
         else:
             listing.watched = False
         request.session['watchlist_count'] = count
+    return render(request, "auctions/listings.html", {
+        "listings": listings,
+        "title": "Active Listings"
+    })
+
+# Filter listings by max or min price
+
+
+def filter_listings(request):
+    listings = Listing.objects.filter(active=True)
+    max_price = request.GET.get('max_price', None)
+    min_price = request.GET.get('min_price', None)
+
+    if max_price is not None:
+        listings = listings.filter(bid_start__lte=max_price)
+    if min_price is not None:
+        listings = listings.filter(bid_start__gte=min_price)
     return render(request, "auctions/listings.html", {
         "listings": listings,
         "title": "Active Listings"

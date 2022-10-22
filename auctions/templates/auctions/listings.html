@@ -8,8 +8,6 @@
     <h2>No Listings</h2>
 {% endif %}
 
-
-
 <hr />
     {% for listing in listings %}
             <div class="listings card">
@@ -32,7 +30,7 @@
                                 {% if listing.bid_current is None %}
                                     <h4 class="card-title price">USD ${{ listing.bid_start |floatformat:2|intcomma}}</h4>
                                 {% else %}
-                                    <h4 class="card-title price">USD ${{ listing.bid_current |floatformat:2|intcomma}}</h4>
+                                    <h4 class="card-title price" id="price" >USD ${{ listing.bid_current |floatformat:2|intcomma}}</h4>
                                 {% endif %}
                                 <p>
                                     <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>
@@ -73,5 +71,26 @@
             $('#msg').remove();
             }
         }, 2000)
+
+        // Sort the listings based on listing.bid_current
+        function sortListings() {
+            var listings = document.getElementsByClassName("listings card");
+            var listingsArray = Array.from(listings);
+            listingsArray.sort(function(a, b) {
+                var aPrice = a.getElementsByClassName("price")[0].innerHTML;
+                var bPrice = b.getElementsByClassName("price")[0].innerHTML;
+                aPrice = aPrice.replace("$", "");
+                bPrice = bPrice.replace("$", "");
+                aPrice = parseFloat(aPrice);
+                bPrice = parseFloat(bPrice);
+                return bPrice - aPrice;
+            });
+            var listingsContainer = document.getElementById("listings-container");
+            listingsContainer.innerHTML = "";
+            listingsArray.forEach(function(listing) {
+                listingsContainer.appendChild(listing);
+            });
+        }
+
     </script>
 {% endblock %}

@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %} {% block body %}
+{% load humanize %}
+{% include 'auctions/messages.html' %}
+{% load static %}
+
+
+<main>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5 align-self-center">
+            <img src="{% static 'img/nosearch.png' %}" />
+            </div>
+                <div class="col-md-6 align-self-center">
+                <h1 class="display-6">We're Sorry. We were not able to find a match.</h1>
+                <h3>Suggestions</h3>
+                <p>
+                    <ul>
+                        <li>Check for typos and spelling errors.</li>
+                        <li>Try more general keywords.</li>
+                        <li>Try different keywords.</li>
+                    </ul>
+                </p>
+                <a class="btn btn-success rounded-pill" type="button" href="{% url 'index' %}">HOME</a>
+            </div>
+      </div>
+    </div>
+  </main>
+
+{% endblock %}

@@ -11,15 +11,15 @@ from django.db import IntegrityError
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+from isort import file
 
-# from commerce.storage_backends import FileStorage
+from commerce.storage_backends import FileStorage
 
 
 from .models import (Bid, Category, Comment, Expenses, Listing, Profits, Sales,
                      User, UserProfile)
 
 # TODO - Run a report on all listings and their bids and comments and watchers
-# TODO - Make the Report Microservice work for Profit and Expenses
 # TODO - Make a filter for active listings by date, price, category, etc.
 
 
@@ -177,9 +177,7 @@ def search(request):
     query = request.GET.get('q')
     listings = Listing.objects.filter(title__icontains=query, active=True)
     if not listings:
-        messages.error(request, 'Error 💥: No listings found for "{query}"'.format(
-            query=query))
-        return HttpResponseRedirect(reverse("listings"))
+        return render(request, "auctions/nosearch.html",)
     else:
         return render(request, "auctions/listings.html", {
             "listings": listings,
@@ -362,6 +360,13 @@ def profits(request):
     # Create a JSON object to store the profits
     data = profits.values('user', 'profit', 'date')
     profitsJSON = (JsonResponse({'data': list(data), 'type': 'profit'}))
+
+    # TODO - Make the Report Microservice work for Profit and Expenses using AWS S3
+    # Storing data.txt in AWS S3
+    # file_storage = FileStorage()
+    # file = file_storage.open('data.txt', 'w')
+    # file.write(profitsJSON.content)
+    # file.close()
 
     # Write the JSON object to a file
     with open('auctions/graphs/data.txt', 'w+') as f:

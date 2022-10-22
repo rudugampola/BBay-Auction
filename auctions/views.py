@@ -15,8 +15,6 @@ from django.urls import reverse
 from .models import (Bid, Category, Comment, Expenses, Listing, Profits, Sales,
                      User, UserProfile)
 
-from django.db.models import Max
-
 # TODO - Run a report on all listings and their bids and comments and watchers
 # TODO - Make the Report Microservice work for Profit and Expenses
 # TODO - Make a filter for active listings by date, price, category, etc.

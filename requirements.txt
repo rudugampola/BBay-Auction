@@ -72,7 +72,7 @@ pyflakes==2.4.0
 Pygments==2.11.2
 pylint==2.13.2
 pyparsing==3.0.8
-python-dateutil==2.8.2
+python-dateutil==1.5
 # pywin32==303
 PyYAML==5.4.1
 pyzmq==22.3.0

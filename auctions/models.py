@@ -33,6 +33,7 @@ class Listing(models.Model):
         User, on_delete=models.PROTECT, related_name="all_listings")
     category = models.ForeignKey(Category, on_delete=models.CASCADE,
                                  blank=True, null=True, related_name="listings_same_category")
+    # Image is saved to aws s3 bucket
     image = models.ImageField(
         upload_to="upload/", default='upload/placeholder.png')
     buyer = models.ForeignKey(User, null=True, on_delete=models.PROTECT)

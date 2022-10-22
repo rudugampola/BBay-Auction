@@ -27,7 +27,6 @@ SECRET_KEY = '6ps8j!crjgrxt34cqbqn7x&b3y%(fny8k8nh21+qa)%ws3fh!q'
 
 IS_HEROKU = "DYNO" in os.environ
 
-
 # Generally avoid wildcards(*). However since Heroku router provides hostname validation it is ok
 if IS_HEROKU:
     ALLOWED_HOSTS = ["*"]
@@ -156,7 +155,7 @@ TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'auctions/templates'), )
 # Enable WhiteNoise's GZip compression of static assets.
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# AWS Access Key S3
+# AWS Access Settings
 AWS_ACCESS_KEY_ID = 'AKIAUMUGV5ILFY3HZSTI'
 AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'bbay-auction'

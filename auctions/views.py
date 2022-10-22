@@ -11,7 +11,6 @@ from django.db import IntegrityError
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
-from isort import file
 
 from commerce.storage_backends import FileStorage
 

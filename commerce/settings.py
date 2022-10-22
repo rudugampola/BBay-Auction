@@ -27,6 +27,23 @@ SECRET_KEY = '6ps8j!crjgrxt34cqbqn7x&b3y%(fny8k8nh21+qa)%ws3fh!q'
 
 IS_HEROKU = "DYNO" in os.environ
 
+# AWS Access Key S3
+AWS_ACCESS_KEY_ID = 'AKIAUMUGV5ILFY3HZSTI'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'bbay-auction'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'auctions/static'),
+]
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'commerce.storage_backends.MediaStorage'
+
 # Generally avoid wildcards(*). However since Heroku router provides hostname validation it is ok
 if IS_HEROKU:
     ALLOWED_HOSTS = ["*"]
@@ -49,6 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'import_export',
+    'storages',
 ]
 
 MIDDLEWARE = [

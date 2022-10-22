@@ -70,7 +70,7 @@ def create(request):
             newListing.save()
             messages.success(
                 request, 'Success ✅: Listing was created successfully!')
-            return HttpResponseRedirect(reverse("listings", args=[newListing.id]))
+            return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/create.html", {
             "form": NewListingForm(),

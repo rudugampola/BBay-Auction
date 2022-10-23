@@ -2,14 +2,21 @@
 {% load humanize %}
 {% include 'auctions/messages.html' %}
 
-{% if listings|length > 0 %}
-    <h2>{{ title }}</h2>
-{% else %}
-    <h2>No Listings</h2>
-{% endif %}
+<div >
+    {% if listings|length > 0 %}
+        <div >
+            <h2>{{ title }}</h2> 
+        </div>
+    {% else %}
+        <div>
+            <h2>No Listings</h2>
+        </div>
+    {% endif %}
+</div>
 
 <hr />
     {% for listing in listings %}
+        <div class="row">
             <div class="listings card">
                 <div class="row no-gutters">
                     <div class="col-sm-6">
@@ -59,6 +66,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     {% endfor %}
 
     <script type="text/javascript">
@@ -68,9 +76,11 @@
 
         setTimeout(function(){
             if ($('#msg').length > 0) {
-            $('#msg').remove();
-            }
-        }, 2000)
+            $('#msg').fadeOut();
+            } 
+        }, 3000)
+
+
 
         // Sort the listings based on listing.bid_current
         function sortListings() {

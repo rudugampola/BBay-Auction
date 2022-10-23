@@ -1,5 +1,6 @@
-{% extends "auctions/layout.html" %} {% block body %} {% comment %} Search bar
-to return listings matching search keywords {% endcomment %}
+{% extends "auctions/layout.html" %} {% block body %}
+
+{% include 'auctions/messages.html' %}
 <br />
 <div class="container">
   <div class="row">
@@ -126,6 +127,13 @@ to return listings matching search keywords {% endcomment %}
       // alert("Ctrl + B shortcut combination was pressed");
     }
   };
+
+  setTimeout(function(){
+    if ($('#msg').length > 0) {
+      $('#msg').fadeOut();
+    }
+  }, 2000)
+
 </script>
 
 {% endblock %}

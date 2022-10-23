@@ -6,6 +6,8 @@ from django.utils import timezone
 from PIL import Image
 
 from django.core.files.storage import default_storage as storage
+import django_filters
+from crispy_forms.helper import FormHelper
 
 
 class User(AbstractUser):
@@ -30,6 +32,10 @@ class Listing(models.Model):
     description = models.TextField(max_length=1024, null=True)
     bid_start = models.FloatField()
     bid_current = models.FloatField(blank=True, null=True)
+
+    if bid_current is None:
+        bid_current = bid_start  # set current bid to starting bid
+
     created_date = models.DateTimeField(default=timezone.localtime())
     creator = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="all_listings")
@@ -53,7 +59,32 @@ class Listing(models.Model):
         #     img.save(self.image.path)  # saving image at the same path
 
     def __str__(self):
-        return f"{self.title} : {self.description}"
+        # Show in admin panel
+        return f"{self.title} - {self.creator} - {self.created_date} - {self.category} - {self.active}"
+
+
+class ListingFilter(django_filters.FilterSet):
+    class Meta:
+        model = Listing
+        fields = {
+            # Add placeholders to filter
+            'bid_start': ['lte', 'gte'],
+            'created_date': ['year__lte', 'year__gte'],
+            'bid_current': ['lte', 'gte'],
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Your code
+        self.form.helper = FormHelper()
+        self.form.helper.form_show_labels = False
+        # Add placeholders
+        self.form.fields['bid_start__lte'].widget.attrs['placeholder'] = 'Start Bid Less Than or Equal To'
+        self.form.fields['bid_start__gte'].widget.attrs['placeholder'] = 'Start Bid Greater Than or Equal To'
+        self.form.fields['bid_current__lte'].widget.attrs['placeholder'] = 'Current Bid Less Than or Equal To'
+        self.form.fields['bid_current__gte'].widget.attrs['placeholder'] = 'Current Bid Greater Than or Equal To'
+        self.form.fields['created_date__year__lte'].widget.attrs['placeholder'] = 'Created Year Less Than or Equal To'
+        self.form.fields['created_date__year__gte'].widget.attrs['placeholder'] = 'Created Year Greater Than or Equal To'
 
 
 class Bid(models.Model):

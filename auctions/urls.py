@@ -36,6 +36,7 @@ urlpatterns = [
          views.update_watchlist, name="update_watchlist"),
     path("profits", views.profits, name="profits"),
     path("expenses", views.expenses, name="expenses"),
+    path('filter/', views.filter, name="filter")
 ]
 
 if settings.DEBUG:

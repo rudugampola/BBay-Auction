@@ -11,11 +11,11 @@ from django.db import IntegrityError
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
-
+from django.utils.html import format_html
 from commerce.storage_backends import FileStorage
 
 
-from .models import (Bid, Category, Comment, Expenses, Listing, Profits, Sales,
+from .models import (Bid, Category, Comment, Expenses, Listing, ListingFilter, Profits, Sales,
                      User, UserProfile)
 
 # TODO - Run a report on all listings and their bids and comments and watchers
@@ -245,30 +245,27 @@ def listings(request):
         else:
             listing.watched = False
         request.session['watchlist_count'] = count
-    return render(request, "auctions/listings.html", {
-        "listings": listings,
-        "title": "Active Listings"
-    })
-
-# Filter listings by max or min price
-
-
-def filter_listings(request):
-    listings = Listing.objects.filter(active=True)
-    max_price = request.GET.get('max_price', None)
-    min_price = request.GET.get('min_price', None)
-
-    if max_price is not None:
-        listings = listings.filter(bid_start__lte=max_price)
-    if min_price is not None:
-        listings = listings.filter(bid_start__gte=min_price)
+    # send a html message
+    messages.info(
+        request, format_html("{} <a href='/filter'>{}</a>",
+                             'Protip! For an advanced search, try using ', 'advanced filters.'))
     return render(request, "auctions/listings.html", {
         "listings": listings,
         "title": "Active Listings"
     })
 
 
-@login_required
+def filter(request):
+    f = ListingFilter(request.GET, queryset=Listing.objects.all())
+    # Show message when filter is submitted
+    if request.GET:
+        messages.info(request, 'Success ✅: ' +
+                      str(f.qs.count()) + ' listings found!')
+
+    return render(request, 'auctions/filter.html', {'filter': f, 'title': 'Filter Results'})
+
+
+@ login_required
 def comment(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     form = NewCommentForm(request.POST)
@@ -282,7 +279,7 @@ def comment(request, listing_id):
     return HttpResponseRedirect(reverse("listing", args=[listing_id]))
 
 
-@login_required
+@ login_required
 def bid(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     offer = float(request.POST['offer'])
@@ -348,7 +345,7 @@ def close_listing(request, listing_id):
         return HttpResponseRedirect(reverse("listing", args=[listing_id]))
 
 
-@login_required
+@ login_required
 def profits(request):
     profits = Profits.objects.filter(user=request.user)
     #  Sum all profits
@@ -480,6 +477,8 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
+    messages.success(
+        request, "Success ✅: Logged out successfully!")
     return HttpResponseRedirect(reverse("index"))
 
 

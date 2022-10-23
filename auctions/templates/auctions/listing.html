@@ -160,7 +160,7 @@
         </div>
         
 
-        <div class="card">
+        <div class="card" style="width: 95%; margin: 0 auto;" >
             <h4>Comments <i class="fa-regular fa-comment"></i></h4>
             {% if listing.active %}
                 <div class="form-group">
@@ -173,13 +173,11 @@
                 </div>   
             {% endif %}         
             <hr/>
-
-            
-            
+        
             {% for comment in comments %}   
             <div class="card" >     
                     <div class="card-header">
-                        {{ comment.user|default:"Unknown auctor" }} commented on {{ comment.createdDate|date:"M, d"  }}
+                        {{ comment.user|default:"Unknown auctor" }} commented:
                     </div>
                     <div class="card-body">
                         <h5 class="card-title"> {{ comment.comment }}</h5>                        

@@ -22,16 +22,8 @@
     />
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     <link rel="icon" href="{% static 'img/bbay.ico' %}" />
-    
   </head>
-
-
   
-
-
-
-  
-
   <body class="body">
     <div class="ms-auto" style="color: white; margin-top: 0px">
       {% if user.is_authenticated %} Hi, &nbsp
@@ -58,6 +50,9 @@
       <a class="link" href="{% url 'index' %}"
         ><img class="logo_img" src="{% static 'img/bbay.png' %}" alt="logo" height="10 px" width="10 px"
       /></a>
+    <img data-toggle="tooltip" data-placement="top" title=" 💬 Welcome to Bbay 👋 I am the Auction Master!"
+     class="logo_img" src="{% static 'img/master.png' %}" style="position:absolute; z-index: 1000; top: 0; height:200px; width: 180px" 
+     alt="logo" height="10 px" width="10 px"/>
     </h1>
 
 
@@ -145,88 +140,8 @@
         </div>
       </div>
     </nav>
-
-
   <hr>
-
-    {% comment %} <ul class="nav ">
-      <li class="nav-item">
-        <a class="nav-link link" href="{% url 'index' %}"><i class="fa-solid fa-house"></i> &nbspHome </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link" href="{% url 'listings' %}"><i class="fa-solid fa-list"></i>&nbspActive Listings </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link" href="{% url 'categories' %}"><i class="fa-solid fa-tags"></i>&nbspCategories </a>
-      </li>
-      {% if user.is_authenticated %}
-      <li class="nav-item">
-        <a class="nav-link link" href="{% url 'watchlist' %}"
-          ><i class="fa-solid fa-binoculars"></i> &nbspWatchlist 
-          <span
-            style="margin-left: 9px"
-            class="position-absolute top-10 start-30 translate-middle badge rounded-pill bg-danger"
-            >{{ request.session.watchlist_count }}
-          </span> 
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link link" href="{% url 'create' %}"> <i class="fa-solid fa-circle-plus"></i>&nbspCreate Listing </a>
-      </li>
-
-      <li class="nav-item dropdown link" style="z-index: 1000">
-        <a
-          class="nav-link dropdown-toggle link"
-          id="navbarDarkDropdownMenuLink"
-          role="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-        <i class="fa-solid fa-chart-column"></i>&nbspReports 
-        </a>
-        <ul
-          class="dropdown-menu dropdown-menu-dark"
-          aria-labelledby="navbarDarkDropdownMenuLink"
-        >
-          <li>
-            <a class="dropdown-item" href="{% url 'profits' %}">Profits 💰</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="{% url 'expenses' %}">Expenses 💸</a>
-          </li>
-        </ul>
-      </li>
-      {% endif %} 
-      
-      
-      
-      {% if not request.path == '/' %}
-      <div class="ms-auto">
-        <li class="nav-item">
-          <form class="d-flex" action="{% url 'search' %}" method="GET" >
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search for Listings...   🔎"
-              aria-label="Search"
-              name="q"
-            />
-            <button style="padding: 0.5em" class="btn btn-success" type="submit">Search</button>
-            <li class="nav-item ms-auto" style="padding-left: 50px">
-              <img src="{% static 'img/moon.svg' %}" id="icon" />
-            </li>
-          </form>
-        </li>
-      </div>
-      {% endif %}
-    </ul> 
-    <hr />
-    {% endcomment %}
-
-
-    
-    {% block body %} {% endblock %}
+{% block body %} {% endblock %}
   </body>
 
   <footer class="footer_text">

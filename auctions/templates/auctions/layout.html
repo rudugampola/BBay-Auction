@@ -26,17 +26,26 @@
   </head>
 
   <body class="body">
-    <div class="ms-auto" style="color: white">
-      {% if user.is_authenticated %} Hi, &nbsp<a
+    <div class="ms-auto" style="color: white; margin-top: 0px">
+      {% if user.is_authenticated %} Hi, &nbsp
+      
+      <a
         href="{% url 'user_profile' user.id %}"
         class="btn btn-warning btn-sm"
-        style="padding: 0.5em"
+        style="padding: 0.5em; margin-bottom: 0.5em"
         role="button"
         ><b style="text-transform: capitalize; font-weight: bold"
-          >{{ user.username }} &nbsp</b
+          > {{ user.username }} &nbsp</b
         ><i class="fa-solid fa-user"></i></a
       >
-      👋 {% else %} Not Signed In. {% endif %}
+      <p>
+        <a class="btn btn-danger btn-sm" style="padding: 0.5em" href="{% url 'logout' %}">Log Out <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+      {% else %}
+        <p>👋 Not Signed In.</p>
+        <a class="btn btn-success btn-sm" style="padding: 0.5em" href="{% url 'login' %}">Log In <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+        <a class="btn btn-primary btn-sm" style="padding: 0.5em" href="{% url 'register' %}">Register <i class="fa-solid fa-user-plus"></i></a>
+      </p>
+       {% endif %}
     </div>
     <h1>
       <a class="link" href="{% url 'index' %}"
@@ -49,10 +58,10 @@
         <a class="nav-link link" href="{% url 'index' %}"><i class="fa-solid fa-house"></i> &nbspHome </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link" href="{% url 'listings' %}">Active Listings <i class="fa-solid fa-list"></i></a>
+        <a class="nav-link link" href="{% url 'listings' %}"><i class="fa-solid fa-list"></i>&nbspActive Listings </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link" href="{% url 'categories' %}">Categories <i class="fa-solid fa-tags"></i></a>
+        <a class="nav-link link" href="{% url 'categories' %}"><i class="fa-solid fa-tags"></i>&nbspCategories </a>
       </li>
       {% if user.is_authenticated %}
       <li class="nav-item">
@@ -67,7 +76,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link link" href="{% url 'create' %}"> Create Listing <i class="fa-solid fa-circle-plus"></i></a>
+        <a class="nav-link link" href="{% url 'create' %}"> <i class="fa-solid fa-circle-plus"></i>&nbspCreate Listing </a>
       </li>
 
       <li class="nav-item dropdown link" style="z-index: 1000">
@@ -78,7 +87,7 @@
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          Reports <i class="fa-solid fa-chart-column"></i>
+        <i class="fa-solid fa-chart-column"></i>&nbspReports 
         </a>
         <ul
           class="dropdown-menu dropdown-menu-dark"
@@ -92,18 +101,11 @@
           </li>
         </ul>
       </li>
-
-      <li class="nav-item">
-        <a class="nav-link link" href="{% url 'logout' %}">Log Out <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
-      </li>
-      {% else %}
-      <li class="nav-item">
-        <a class="nav-link link" href="{% url 'login' %}">Log In <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link" href="{% url 'register' %}">Register <i class="fa-solid fa-user-plus"></i></a>
-      </li>
-      {% endif %} {% if not request.path == '/' %}
+{% endif %} 
+      
+      
+      
+      {% if not request.path == '/' %}
       <div class="ms-auto">
         <li class="nav-item">
           <form class="d-flex" action="{% url 'search' %}" method="GET" >
@@ -231,7 +233,7 @@
                 To create a listing, click on the <b>"Create Listing"</b> button
                 on the navigation bar. Then, fill in the form with the required
                 information and click on the <b>"Create"</b> button. Alternatively, 
-                you can use the keyboard shortcut <b>"Ctrl + C"</b> to create a listing.
+                you can use the keyboard shortcut <b>"Alt + Ctrl + C"</b> to create a listing.
               </p>
             </li>
             <li>
@@ -308,7 +310,7 @@
   };
 
   document.onkeyup = function(e) {
-    if (e.ctrlKey && e.which == 67) {
+    if (e.ctrlKey && e.which == 67 && e.altKey) {
       window.location.href = "{% url 'create' %}";
       // alert("Ctrl + B shortcut combination was pressed");
     }

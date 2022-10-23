@@ -40,11 +40,7 @@
                                     <h4 class="card-title price" id="price" >USD ${{ listing.bid_current |floatformat:2|intcomma}}</h4>
                                 {% endif %}
                                 <p>
-                                    <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>
-                                <p>
-                        </div>
-                    
-                        <div class="col-sm-3 ms-auto">
+                                    <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>                        <div class="col-sm-3 ms-auto">
                             {% if user.is_authenticated %}
                                 <a data-toggle="tooltip" data-placement="top" title="Add this Listing to Watchlist." class="btn btn-danger btn-sm" style="padding: 0.5em"
                                 href="{% url 'update_watchlist' listing.id 'listings' %}" role="button">
@@ -63,6 +59,10 @@
 
                             </a>
                         </div>
+                                <p>
+                        </div>
+                    
+
                     </div>
                 </div>
             </div>

@@ -122,7 +122,7 @@
 
 <script>
   document.onkeyup = function(e) {
-    if (e.ctrlKey && e.which == 67) {
+    if (e.ctrlKey && e.which == 67 && e.altKey) {
       window.location.href = "{% url 'create' %}";
       // alert("Ctrl + B shortcut combination was pressed");
     }

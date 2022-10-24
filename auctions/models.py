@@ -32,10 +32,6 @@ class Listing(models.Model):
     description = models.TextField(max_length=1024, null=True)
     bid_start = models.FloatField()
     bid_current = models.FloatField(blank=True, null=True)
-
-    if bid_current is None:
-        bid_current = bid_start  # set current bid to starting bid
-
     created_date = models.DateTimeField(default=timezone.localtime())
     creator = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="all_listings")

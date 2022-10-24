@@ -19,7 +19,6 @@ from .models import (Bid, Category, Comment, Expenses, Listing, ListingFilter, P
                      User, UserProfile)
 
 # TODO - Run a report on all listings and their bids and comments and watchers
-# TODO - Make a filter for active listings by date, price, category, etc.
 
 
 class NewBidForm(forms.ModelForm):
@@ -69,6 +68,7 @@ def create(request):
         if form.is_valid():
             newListing = form.save(commit=False)
             newListing.creator = request.user
+            newListing.bid_current = newListing.bid_start
             newListing.save()
             messages.success(
                 request, 'Success ✅: Listing was created successfully!')

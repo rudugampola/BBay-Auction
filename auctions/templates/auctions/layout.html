@@ -50,7 +50,7 @@
       <a class="link" href="{% url 'index' %}"
         ><img class="logo_img" src="{% static 'img/bbay.png' %}" alt="logo" height="10 px" width="10 px"
       /></a>
-    <img data-toggle="tooltip" data-placement="top" title=" 💬 Welcome to Bbay 👋 I am the Auction Master!"
+    <img data-toggle="tooltip" data-placement="top" title=" 💬 Welcome to Bbay 👋 I am the Auction Master!" data-html="true"
      class="logo_img" src="{% static 'img/master.png' %}" style="position:absolute; z-index: 1000; top: 0; height:200px; width: 180px" 
      alt="logo" height="10 px" width="10 px"/>
     </h1>
@@ -314,6 +314,10 @@
 </html>
 
 <script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+
   var icon = document.getElementById('icon');
   icon.onclick = function () {
     document.body.classList.toggle('darkmode');

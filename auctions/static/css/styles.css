@@ -209,3 +209,73 @@ img.graph {
     width: 100%;
     max-height: 400px !important;
 }
+
+/* Password Strength */
+
+.loginForm input[type=submit] {
+    background: #fb044a;
+    color: #fff;
+    font-weight: 700;
+}
+
+
+#pswd_info {
+    background: #ffffff none repeat scroll 0 0;
+    color: #fff;
+    position: absolute;
+    top: 480px;
+    right: 465px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#pswd_info h4 {
+    background: #157347 none repeat scroll 0 0;
+    display: block;
+    font-size: 14px;
+    letter-spacing: 0;
+    padding: 17px;
+    text-align: center;
+    text-transform: uppercase;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+
+#pswd_info ul {
+    list-style: outside none none;
+}
+
+
+.valid {
+    background: rgba(0, 0, 0, 0) url("https://s19.postimg.org/vq43s2wib/valid.png") no-repeat scroll 2px 6px;
+    color: #157347;
+    line-height: 21px;
+    /* padding-left: 22px; */
+    text-align: left;
+}
+
+.invalid {
+    background: rgba(0, 0, 0, 0) url("https://s19.postimg.org/olmaj1p8z/invalid.png") no-repeat scroll 2px 6px;
+    color: red;
+    line-height: 21px;
+    /* padding-left: 22px; */
+    text-align: left;
+}
+
+
+#pswd_info::before {
+    background: #ffffff none repeat scroll 0 0;
+    content: "";
+    height: 25px;
+    left: -13px;
+    margin-top: -12.5px;
+    position: absolute;
+    top: 50%;
+    transform: rotate(45deg);
+    width: 25px;
+}
+
+#pswd_info {
+    display: none;
+}

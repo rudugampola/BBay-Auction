@@ -8,6 +8,7 @@ from PIL import Image
 from django.core.files.storage import default_storage as storage
 import django_filters
 from crispy_forms.helper import FormHelper
+from ckeditor.fields import RichTextField
 
 
 class User(AbstractUser):
@@ -29,7 +30,8 @@ class Category(models.Model):
 
 class Listing(models.Model):
     title = models.CharField(max_length=64)
-    description = models.TextField(max_length=1024, null=True)
+    # description = models.TextField(max_length=1024, null=True)
+    description = RichTextField(max_length=1024, null=True, blank=True)
     bid_start = models.FloatField()
     bid_current = models.FloatField(blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.localtime())
@@ -44,6 +46,7 @@ class Listing(models.Model):
     active = models.BooleanField(default=True)
     watchers = models.ManyToManyField(
         User, blank=True, related_name="watchlist")
+    likes = models.ManyToManyField(User, related_name='listing_likes')
 
     def save(self, force_insert=False, force_update=False, using=None):
         super().save()  # saving image first
@@ -53,6 +56,9 @@ class Listing(models.Model):
         #     new_img = (300, 300)
         #     img.thumbnail(new_img)
         #     img.save(self.image.path)  # saving image at the same path
+
+    def total_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         # Show in admin panel

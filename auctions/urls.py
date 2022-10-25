@@ -36,7 +36,8 @@ urlpatterns = [
          views.update_watchlist, name="update_watchlist"),
     path("profits", views.profits, name="profits"),
     path("expenses", views.expenses, name="expenses"),
-    path('filter/', views.filter, name="filter")
+    path('filter/', views.filter, name="filter"),
+    path('like/<int:pk>', views.like, name='like_listing'),
 ]
 
 if settings.DEBUG:

@@ -9,9 +9,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import Http404, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.html import format_html
+from matplotlib.pyplot import get
 from commerce.storage_backends import FileStorage
 
 
@@ -110,6 +111,10 @@ def listing(request, listing_id):
 
     listing = Listing.objects.get(id=listing_id)
 
+    liked = False
+    if listing.likes.filter(id=request.user.id).exists():
+        liked = True
+
     if request.user in listing.watchers.all():
         listing.watched = True
     else:
@@ -120,8 +125,22 @@ def listing(request, listing_id):
         "form": NewBidForm(),
         "comments": listing.user_comment.all(),
         "form_comment": NewCommentForm(),
-        "title": listing.title.title()
+        "title": listing.title.title(),
+        "liked": liked,
+        "total_likes": listing.total_likes()
     })
+
+
+def like(request, pk):
+    listing = get_object_or_404(Listing, id=request.POST.get('listing_id'))
+    liked = False
+    if listing.likes.filter(id=request.user.id).exists():
+        listing.likes.remove(request.user)
+        liked = False
+    else:
+        listing.likes.add(request.user)
+        liked = True
+    return HttpResponseRedirect(reverse('listing', args=[str(pk)]))
 
 
 def delete_listing(request, listing_id):

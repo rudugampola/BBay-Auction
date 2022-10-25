@@ -23,28 +23,35 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     <link rel="icon" href="{% static 'img/bbay.ico' %}" />
   </head>
-  
+
+  <div class="mx-auto" style="position:absolute; z-index: 1000;" >
+    {% if request.user.is_superuser %}
+    <a class="btn btn-outline-danger btn-sm" style="padding: 0.2em" href="{% url 'admin:index' %}" target="_blank">Site Administration <i class="fa-solid fa-lock"></i></a>
+    {% endif %}
+ </div>
+
   <body class="body">
     <div class="ms-auto" style="color: white; margin-top: 0px">
       {% if user.is_authenticated %} Hi, &nbsp
-      
-      <a
+        <a
         href="{% url 'user_profile' user.id %}"
         class="btn btn-warning btn-sm"
         style="padding: 0.5em; margin-bottom: 0.5em"
         role="button"
         ><b style="text-transform: capitalize; font-weight: bold"
           > {{ user.username }} &nbsp</b
-        ><i class="fa-solid fa-user"></i></a
-      >
-      <p>
+        ><i class="fa-solid fa-user"></i></a>
+        <p>
         <a class="btn btn-danger btn-sm" style="padding: 0.5em" href="{% url 'logout' %}">Log Out <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
       {% else %}
         <p>👋 Not Signed In.</p>
         <a class="btn btn-success btn-sm" style="padding: 0.5em" href="{% url 'login' %}">Log In <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
         <a class="btn btn-primary btn-sm" style="padding: 0.5em" href="{% url 'register' %}">Register <i class="fa-solid fa-user-plus"></i></a>
-      </p>
-       {% endif %}
+        </p>
+      {% endif %}
+
+       
+
     </div>
     <h1>
       <a class="link" href="{% url 'index' %}"

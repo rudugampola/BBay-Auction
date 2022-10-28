@@ -36,3 +36,13 @@ with open("auctions/graphs/graph.png", "rb") as image_file:
 </div>
 
 <img align="right" src="https://user-images.githubusercontent.com/28117713/198697906-f6a048ea-5167-4b1c-8b83-559323109b38.png" alt="Microservice UML" width="400">
+
+```javascript
+var s = "JavaScript syntax highlighting";
+alert(s);
+```
+ 
+```python
+s = "Python syntax highlighting"
+print s
+```

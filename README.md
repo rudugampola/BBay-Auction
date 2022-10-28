@@ -11,6 +11,6 @@ shopping experience 💯. We are constantly working to improve our site and
 our service, and we welcome your feedback 🔨. We hope you enjoy your shopping
 experience with us, and we look forward to serving you again soon 👋.</p>
 <p><i>We're not like any other online marketplace. And we're proud of that.</i></p>
-
-<img align="right" src="https://user-images.githubusercontent.com/28117713/198697682-5c1b49b0-8304-4f06-8c77-2009af58dd5a.png" alt="My Image" width="400">
-
+<hr>
+<p>Microservice</p>
+<img align="right" src="https://user-images.githubusercontent.com/28117713/198697906-f6a048ea-5167-4b1c-8b83-559323109b38.png" alt="Microservice UML" width="400">

@@ -13,7 +13,7 @@ experience with us, and we look forward to serving you again soon 👋.</p>
 <p><i>We're not like any other online marketplace. And we're proud of that.</i></p>
 <hr>
 
-<h3>Microservice</h3>
+<h3>Microservice 💻</h3>
 REQUEST Data: The data is extracted from the database and must be serialized into a JSON dump. The data is saved to a text file named 'data.txt' located within the same folder as the microservice. The 'type' can be defined as profits, expenses, or sales to enable proper labeling for the charts. Sample data is provided in the 'data.txt' file. The data is then sent to the microservice via a POST request.
 
 ```python

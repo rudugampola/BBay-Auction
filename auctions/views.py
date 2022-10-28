@@ -2,19 +2,15 @@ import base64
 import csv
 import io
 import time
-from tkinter import PAGES
-
 from django import forms
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import Http404, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.html import format_html
-from matplotlib.pyplot import get
-from commerce.storage_backends import FileStorage
 from django.core.paginator import Paginator
 
 
@@ -69,6 +65,7 @@ def index(request):
 def rate_listing(request):
     if request.method == 'POST':
         listing_id = request.POST.get('listing_id')
+
         val = request.POST.get('rating')
         obj = Listing.objects.get(id=listing_id)
         obj.score = val

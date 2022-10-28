@@ -2,6 +2,7 @@ import base64
 import csv
 import io
 import time
+from tkinter import PAGES
 
 from django import forms
 from django.contrib import messages
@@ -21,6 +22,8 @@ from .models import (Bid, Category, Comment, Expenses, Listing, ListingFilter, P
                      User, UserProfile)
 
 # TODO - Run a report on all listings and their bids and comments and watchers
+
+PAGES = 5
 
 
 class NewBidForm(forms.ModelForm):
@@ -195,10 +198,14 @@ def import_csv(request):
 def search(request):
     query = request.GET.get('q')
     listings = Listing.objects.filter(title__icontains=query, active=True)
+    paginator = Paginator(listings, PAGES)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     if not listings:
         return render(request, "auctions/nosearch.html",)
     else:
         return render(request, "auctions/listings.html", {
+            "page_obj": page_obj,
             "listings": listings,
             "title": "Search Results for \"{query}\"".format(query=query)
         })
@@ -207,6 +214,9 @@ def search(request):
 def user_profile(request, user_id):
     user = User.objects.get(id=user_id)
     listings = Listing.objects.filter(creator=user, active=True)
+    paginator = Paginator(listings, PAGES)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     if request.method == 'POST':
         user = User.objects.get(id=user_id)
@@ -219,6 +229,7 @@ def user_profile(request, user_id):
         return HttpResponseRedirect(reverse("user_profile", args=[user_id]))
 
     return render(request, "auctions/user_profile.html", {
+        "page_obj": page_obj,
         "search_user": user,
         "listings": listings,
         "title": user.username.title()
@@ -230,6 +241,10 @@ def categories(request):
     category_id = request.GET.get("category", None)
     listings = Listing.objects.filter(category=category_id, active=True)
 
+    paginator = Paginator(listings, PAGES)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     if category_id is None:
         return render(request, "auctions/categories.html", {
             "all_categories": all_categories,
@@ -237,6 +252,7 @@ def categories(request):
         })
     else:
         return render(request, "auctions/listings.html", {
+            "page_obj": page_obj,
             "listings": listings,
             "title": Category.objects.get(id=category_id)
         })
@@ -258,7 +274,7 @@ def create_category(request):
 def listings(request):
     listings = Listing.objects.filter(active=True)
     count = 0
-    paginator = Paginator(listings, 3)
+    paginator = Paginator(listings, PAGES)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     for listing in listings:

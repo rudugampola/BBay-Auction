@@ -1,4 +1,5 @@
-{% extends "auctions/layout.html" %} {% block body %} {% load static %}
+{% extends "auctions/layout.html" %} {% load static %}
+{% block body %} 
 {% include 'auctions/messages.html' %}
 <form
   action="{% url 'import_csv' %}"
@@ -30,18 +31,5 @@
 </form>
 <br />
 <a style="color: white; text-decoration: none" href="{% static 'files/listings_template.csv' %}">Download Template <i class="fa-solid fa-download"></i></a>
-
-<script type="text/javascript">
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
-
-  setTimeout(function(){
-    if ($('#msg').length > 0) {
-      $('#msg').fadeOut();
-    }
-  }, 2000)
-
-</script>
 
 {% endblock %}

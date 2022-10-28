@@ -1,4 +1,5 @@
 {% extends "auctions/layout.html" %} 
+{% load static %}
 {% load crispy_forms_tags %}
 {% crispy filter.form %}
 {% block body %}
@@ -77,11 +78,4 @@
     </div>
     {% endfor %}
 
-    <script>
-        setTimeout(function(){
-            if ($('#msg').length > 0) {
-                $('#msg').fadeOut();
-            }
-          }, 2000)
-    </script>
 {% endblock %}

@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import (Bid, Category, Comment, Expenses, Listing, Profits, Sales,
                      User, UserProfile)
 
+
 # Register your models here.
 admin.site.register(User)
 admin.site.register(Listing)

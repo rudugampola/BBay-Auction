@@ -1,48 +1,58 @@
-{% extends "auctions/layout.html" %} {% block body %} {% load static %} 
+{% extends "auctions/layout.html" %} 
+{% load static %} 
+{% block body %} 
 {% load humanize %}
 
-<div class="nav">
-  <div>
-    <h1>Expense Report</h1>
-  </div>
-  <div class="ms-auto">
-    <form>
-      <input
-        id="printPageButton"
-        type="image"
-        value="Print me!"
-        onClick="window.print()"
-        src="{% static 'img/printer.svg' %}"
-      />
-    </form>
-  </div>
+<div id="spinner-box" class="text-center mt-5">
+  <div class="spinner-border" style="width: 6rem; height: 6rem;" role="status"></div>
 </div>
 
-<div class="table_profit_expense">
-  <table class="table table-striped">
-    <thead class="table_text">
-      <tr>
-        <th scope="col">User</th>
-        <th scope="col">Expense</th>
-        <th scope="col">Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for expense in expenses %}
-      <tr>
-        <td>{{ expense.user }}</td>
-        <td>{{ expense.expense }}</td>
-        <td>{{ expense.date }}</td>
-      </tr>
-      {% endfor %} {% comment %} Show the Total Expenses {% endcomment %}
-      <tr>
-        <td><strong>Total Profits</strong></td>
-        <td><strong> $ {{ total }} </strong></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
+<div id="data-box" class="not-visible">
+  <div class="nav">
+    <div>
+      <h1>Expense Report</h1>
+    </div>
+    <div class="ms-auto">
+      <form>
+        <input
+          id="printPageButton"
+          type="image"
+          value="Print me!"
+          onClick="window.print()"
+          src="{% static 'img/printer.svg' %}"
+        />
+      </form>
+    </div>
+  </div>
+
+
+  <div class="table_profit_expense">
+    <table class="table table-striped">
+      <thead class="table_text">
+        <tr>
+          <th scope="col">User</th>
+          <th scope="col">Expense</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for expense in expenses %}
+        <tr>
+          <td>{{ expense.user }}</td>
+          <td>{{ expense.expense }}</td>
+          <td>{{ expense.date }}</td>
+        </tr>
+        {% endfor %} {% comment %} Show the Total Expenses {% endcomment %}
+        <tr>
+          <td><strong>Total Profits</strong></td>
+          <td><strong> $ {{ total }} </strong></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br />
+  <img class="graph" src="data:image/png;base64,{{ image }}" />
 </div>
-<br />
-<img class="graph" src="data:image/png;base64,{{ image }}" />
+
 {% endblock %}

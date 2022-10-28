@@ -1,4 +1,4 @@
-{% extends "auctions/layout.html" %} {% load crispy_forms_tags %} {% block body %}
+{% extends "auctions/layout.html" %} {% load static %} {% load crispy_forms_tags %} {% block body %}
 
 <form action="{% url 'edit_listing' listing.id %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
@@ -27,18 +27,5 @@
     </div>
 
 </form>
-
-<script type="text/javascript">
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-
-    setTimeout(function(){
-        if ($('#msg').length > 0) {
-            $('#msg').fadeOut();
-        }
-    }, 2000)
-
-</script>
 
 {% endblock %}

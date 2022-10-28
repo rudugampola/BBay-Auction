@@ -1,4 +1,6 @@
-{% extends "auctions/layout.html" %} {% block body %}
+{% extends "auctions/layout.html" %}
+{% load static %} 
+{% block body %}
 
 {% include 'auctions/messages.html' %}
 <br />
@@ -109,22 +111,6 @@
     </button>
   </div>
 </div>
-
-<script>
-  document.onkeyup = function(e) {
-    if (e.ctrlKey && e.which == 67 && e.altKey) {
-      window.location.href = "{% url 'create' %}";
-      // alert("Ctrl + B shortcut combination was pressed");
-    }
-  };
-
-  setTimeout(function(){
-    if ($('#msg').length > 0) {
-      $('#msg').fadeOut();
-    }
-  }, 2000)
-
-</script>
 
 {% endblock %}
 

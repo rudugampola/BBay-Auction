@@ -41,10 +41,13 @@ while True:
     for i in range(len(data["data"])):
         value = data["data"][i][plotType]
 
-        date = datetime.datetime.strptime(
-            data["data"][i]["date"], "%Y-%m-%dT%H:%M:%S.%fZ")
-        month = date.month
-        year = date.year
+        # Get the month and year
+        # date = datetime.datetime.strptime(
+        #     data["data"][i]["date"], "%Y-%m-%dT%H:%M:%S.%fZ")
+
+        date = data["data"][i]["date"].split("T")[0]
+        month = date.split("-")[1].lstrip("0")
+        year = date.split("-")[0].lstrip("0")
         print(plotName + ": " + str(value) + " for Month: " + str(month))
 
         # Update the dictionary with the profit for the month

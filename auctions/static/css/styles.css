@@ -279,3 +279,7 @@ img.graph {
 #pswd_info {
     display: none;
 }
+
+.not-visible {
+    display: none;
+}

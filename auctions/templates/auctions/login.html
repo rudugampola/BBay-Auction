@@ -1,4 +1,5 @@
 {% extends "auctions/layout.html" %}
+{% load static %}
 
 {% block body %}
 <div style="margin:0 auto; text-align:center"> 
@@ -21,26 +22,4 @@
     </form>
 </div>
 
-<script>
-    setTimeout(function(){
-      if ($('#msg').length > 0) {
-        $('#msg').fadeOut();
-      }
-    }, 2000)
-
-    // Make submit button inactive until all fields are filled
-    $(document).ready(function() {
-      $('input[type="submit"]').prop('disabled', true);
-      $('input[type="text"]').keyup(function() {
-        if($(this).val() != '' && $('input[type="password"]').val() != '') {
-          $('input[type="submit"]').prop('disabled', false);
-        }
-      });
-      $('input[type="password"]').keyup(function() {
-        if($(this).val() != '' && $('input[type="text"]').val() != '') {
-          $('input[type="submit"]').prop('disabled', false);
-        }
-      });
-    });
-</script> 
 {% endblock %}

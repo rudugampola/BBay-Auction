@@ -1,4 +1,6 @@
-{% extends "auctions/layout.html" %} {% block body %}
+{% extends "auctions/layout.html" %} 
+{% load static %}
+{% block body %}
 {% load humanize %}
 {% include 'auctions/messages.html' %}
 
@@ -104,39 +106,4 @@
 
         </ul>
     </nav>
-
-    <script type="text/javascript">
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-
-        setTimeout(function(){
-            if ($('#msg').length > 0) {
-            $('#msg').fadeOut();
-            } 
-        }, 3000)
-
-
-
-        // Sort the listings based on listing.bid_current
-        function sortListings() {
-            var listings = document.getElementsByClassName("listings card");
-            var listingsArray = Array.from(listings);
-            listingsArray.sort(function(a, b) {
-                var aPrice = a.getElementsByClassName("price")[0].innerHTML;
-                var bPrice = b.getElementsByClassName("price")[0].innerHTML;
-                aPrice = aPrice.replace("$", "");
-                bPrice = bPrice.replace("$", "");
-                aPrice = parseFloat(aPrice);
-                bPrice = parseFloat(bPrice);
-                return bPrice - aPrice;
-            });
-            var listingsContainer = document.getElementById("listings-container");
-            listingsContainer.innerHTML = "";
-            listingsArray.forEach(function(listing) {
-                listingsContainer.appendChild(listing);
-            });
-        }
-
-    </script>
 {% endblock %}

@@ -13,7 +13,7 @@ experience with us, and we look forward to serving you again soon 👋.</p>
 <p><i>We're not like any other online marketplace. And we're proud of that.</i></p>
 <hr>
 
-<h4>Microservice<i class="fa-solid fa-server"></i></h4>
+<h3>Microservice</h3>
 REQUEST Data: The data is extracted from the database and must be serialized into a JSON dump. The data is saved to a text file named 'data.txt' located within the same folder as the microservice. The 'type' can be defined as profits, expenses, or sales to enable proper labeling for the charts. Sample data is provided in the 'data.txt' file. The data is then sent to the microservice via a POST request.
 
 ```python
@@ -22,7 +22,7 @@ with open('data.txt', 'w') as outfile:
     json.dump(profitsJSON, outfile)
 ```
 
-<img align="right" src="https://user-images.githubusercontent.com/28117713/198697906-f6a048ea-5167-4b1c-8b83-559323109b38.png" alt="Microservice UML" width="500">
+<img align="center" src="https://user-images.githubusercontent.com/28117713/198697906-f6a048ea-5167-4b1c-8b83-559323109b38.png" alt="Microservice UML" width="600">
 
 RECEIVE Data: 
 The microservice will then parse the data and create a chart based on the data. The chart is then saved to a file named 'graph.png' located within the same folder as the microservice. The chart is then sent to the client via a GET request. The client will then read the chart as binary data and displayed on the webpage. The chart is then deleted from the microservice.

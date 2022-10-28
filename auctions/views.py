@@ -14,6 +14,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from matplotlib.pyplot import get
 from commerce.storage_backends import FileStorage
+from django.core.paginator import Paginator
 
 
 from .models import (Bid, Category, Comment, Expenses, Listing, ListingFilter, Profits, Sales,
@@ -257,6 +258,9 @@ def create_category(request):
 def listings(request):
     listings = Listing.objects.filter(active=True)
     count = 0
+    paginator = Paginator(listings, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     for listing in listings:
         if request.user in listing.watchers.all():
             listing.watched = True
@@ -269,6 +273,7 @@ def listings(request):
         request, format_html("{} <a href='/filter'>{}</a>",
                              'Protip! For an advanced search, try using ', 'advanced filters.'))
     return render(request, "auctions/listings.html", {
+        'page_obj': page_obj,
         "listings": listings,
         "title": "Active Listings"
     })

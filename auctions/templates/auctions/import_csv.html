@@ -10,14 +10,13 @@
   {% if message %}
   <div class="alert alert-danger" role="alert">{{ message }}</div>
   {% endif %}
-
-  <div class="form-control">
-    <label for="csv_file" style="margin-left: 20px">CSV File</label>
-    <input
+  <div class="mb-3">
+    <label for="csv_file">Select CSV File for Data Import: </label>
+    <input class="form-control" type="file"
       type="file"
       name="csv_file"
       id="csv_file"
-      style="margin-right: 5px"
+      style="margin-right: 5px; margin-bottom: 10px"
     />
     <input
       data-toggle="tooltip"

@@ -22,6 +22,8 @@ with open('data.txt', 'w') as outfile:
     json.dump(profitsJSON, outfile)
 ```
 
+<img align="right" src="https://user-images.githubusercontent.com/28117713/198697906-f6a048ea-5167-4b1c-8b83-559323109b38.png" alt="Microservice UML" width="500">
+
 RECEIVE Data: 
 The microservice will then parse the data and create a chart based on the data. The chart is then saved to a file named 'graph.png' located within the same folder as the microservice. The chart is then sent to the client via a GET request. The client will then read the chart as binary data and displayed on the webpage. The chart is then deleted from the microservice.
 
@@ -31,4 +33,3 @@ with open("auctions/graphs/graph.png", "rb") as image_file:
     image = base64.b64encode(image_file.read()).decode("utf-8")
 ```
 
-<img align="right" src="https://user-images.githubusercontent.com/28117713/198697906-f6a048ea-5167-4b1c-8b83-559323109b38.png" alt="Microservice UML" width="400">

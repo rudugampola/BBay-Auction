@@ -201,6 +201,11 @@ img.graph {
     margin-top: 10%;
 }
 
+.modal-body {
+    color: black;
+    border-radius: 5px;
+}
+
 .tales {
     width: 100%;
 }
@@ -281,5 +286,30 @@ img.graph {
 }
 
 .not-visible {
-    display: none;
+    display: none !important;
+}
+
+.checked {
+    color: red !important;
+}
+
+.star-btn {
+    background-color: inherit !important;
+    border: 0 !important;
+    padding: 0 !important;
+}
+
+.like_dislike {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    /* Animate when clicked */
+}
+
+.like_dislike:hover {
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
 }

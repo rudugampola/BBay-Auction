@@ -3,18 +3,6 @@
 {% load humanize %}
 {% block body %}
 {% include 'auctions/messages.html' %}
-    {% comment %} {% if messages %}
-        <div class="flex">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %} {% endcomment %}
-
-{% comment %} <div class="flex listings"> {% endcomment %}
-    {% comment %} <div class="row"> {% endcomment %}
         <div class="card">
             
             <div class="card-body">
@@ -43,13 +31,27 @@
                 <form action= "{% url 'like_listing' listing.pk  %}" method="POST">
                     {% csrf_token %}
                     {% if liked%}
-                        <button style="background: none; border: none; padding: 0" type="submit" name="listing_id" value="{{ listing.id }}"><i class="fa-regular fa-thumbs-down"></i></i></button>
+                        <button class="like_dislike" type="submit" name="listing_id" value="{{ listing.id }}"><i class="fa-regular fa-thumbs-down"></i></i></button>
                     {% else %}
-                        <button style="background: none; border: none; padding: 0" type="submit" name="listing_id" value="{{ listing.id }}"><i class="fa-regular fa-thumbs-up"></i></button>
+                        <button class="like_dislike" type="submit" name="listing_id" value="{{ listing.id }}"><i class="fa-regular fa-thumbs-up"></i></button>
                     {% endif %}
                     {% comment %} <span class="badge">{{ total_likes }}</span> {% endcomment %}
                     - Likes: {{ total_likes }}
                 </form>
+
+                <div>
+                    <div>
+                        <form class="rate-form" action="" method="POST" id={{listing.pk}}>
+                            {% csrf_token %}
+                            <button type="submit" class="fa fa-star star-btn" id="first"></button>
+                            <button type="submit" class="fa fa-star star-btn" id="second"></button>
+                            <button type="submit" class="fa fa-star star-btn" id="third"></button>
+                            <button type="submit" class="fa fa-star star-btn" id="fourth"></button>
+                            <button type="submit" class="fa fa-star star-btn" id="fifth"></button>
+                        </form>
+                    </div>
+                    <div id="confirm-box"></div>
+                </div>
 
                 <p>
             

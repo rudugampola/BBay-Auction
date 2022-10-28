@@ -7,7 +7,7 @@
 
     {% include 'auctions/messages.html' %}
 
-    <form class="form-control" style="width: 380px;" action="{% url 'login' %}" method="post">
+    <form id="login-form" class="form-control" style="width: 380px;" action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <div class="form-group" style="width: 350px">
             <input autofocus class="form-control" style="margin-top: 15px" type="text" name="username" placeholder="Username">

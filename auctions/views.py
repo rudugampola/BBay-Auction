@@ -66,6 +66,17 @@ def index(request):
     })
 
 
+def rate_listing(request):
+    if request.method == 'POST':
+        listing_id = request.POST.get('listing_id')
+        val = request.POST.get('rating')
+        obj = Listing.objects.get(id=listing_id)
+        obj.score = val
+        obj.save()
+        return JsonResponse({'success': 'true', "score": val}, safe=False)
+    return JsonResponse({'success': 'false'}, safe=False)
+
+
 @login_required
 def create(request):
     if request.method == 'POST':

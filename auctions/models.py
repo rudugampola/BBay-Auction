@@ -1,9 +1,9 @@
+from wsgiref.validate import validator
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.utils import timezone
 from PIL import Image
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from django.core.files.storage import default_storage as storage
 import django_filters
@@ -42,11 +42,15 @@ class Listing(models.Model):
     # Image is saved to aws s3 bucket
     image = models.ImageField(
         upload_to="upload/", default='upload/placeholder.png')
-    buyer = models.ForeignKey(User, null=True, on_delete=models.PROTECT)
+    buyer = models.ForeignKey(
+        User, blank=True, null=True, on_delete=models.PROTECT, )
     active = models.BooleanField(default=True)
     watchers = models.ManyToManyField(
         User, blank=True, related_name="watchlist")
-    likes = models.ManyToManyField(User, related_name='listing_likes')
+    likes = models.ManyToManyField(
+        User, related_name='listing_likes', blank=True, null=True)
+    score = models.IntegerField(default=0, validators=[
+                                MinValueValidator(0), MaxValueValidator(5)])
 
     def save(self, force_insert=False, force_update=False, using=None):
         super().save()  # saving image first
@@ -62,7 +66,7 @@ class Listing(models.Model):
 
     def __str__(self):
         # Show in admin panel
-        return f"{self.title} - {self.creator} - {self.created_date} - {self.category} - {self.active}"
+        return f"{self.title} - {self.creator} - {self.created_date} - {self.category} - {self.active} - {self.score}"
 
 
 class ListingFilter(django_filters.FilterSet):

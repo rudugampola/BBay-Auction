@@ -16,13 +16,14 @@ experience with us, and we look forward to serving you again soon 👋.</p>
 REQUEST Data: The data is extracted from the database and must be serialized into a JSON dump. The data is saved to a text file named 'data.txt' located within the same folder as the microservice. The 'type' can be defined as profits, expenses, or sales to enable proper labeling for the charts.
 ```python
 profitsJSON = (JsonResponse({'data': list(data), 'type': 'profits'}))
-
 # Write the JSON object to a file
 with open('auctions/graphs/data.txt', 'w+') as f:
     f.write(expensesJSON.content.decode('utf-8'))
 ```
+<p>
 RECEIVE Data: 
 The chart generated from the data will be saved at the same location as the microservice. The chart can be read as binary and displayed on a HTML page.  
+    </p>
 ```python
 import base64
 

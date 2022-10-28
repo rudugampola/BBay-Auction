@@ -18,10 +18,10 @@ REQUEST Data: The data is extracted from the database and must be serialized int
 
 <div>
     ```python
-        profitsJSON = (JsonResponse({'data': list(data), 'type': 'profits'}))
+        profitsJSON = (JsonResponse({"data": list(data), "type": "profits"}))
         # Write the JSON object to a file
-        with open('auctions/graphs/data.txt', 'w+') as f:
-            f.write(expensesJSON.content.decode('utf-8'))
+        with open("auctions/graphs/data.txt", "w+") as f:
+            f.write(expensesJSON.content.decode("utf-8"))
     ```
 </div>
 
@@ -32,8 +32,8 @@ The microservice will then parse the data and create a chart based on the data. 
     ```python
         import base64
 
-        with open('auctions/graphs/graph.png', 'rb') as image_file:
-        image = base64.b64encode(image_file.read()).decode('utf-8')
+        with open("auctions/graphs/graph.png", "rb") as image_file:
+        image = base64.b64encode(image_file.read()).decode("utf-8")
     ```
 </div>
 

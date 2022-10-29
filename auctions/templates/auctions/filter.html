@@ -59,7 +59,7 @@
                                 {% endif %}
 
                             </a>
-                            <p class="card-text" style="text-transform:first-letter: capitalize">{{ listing.description }}</p>
+                            <p class="card-text" style="text-transform:first-letter: capitalize">{{ listing.description | safe}}</p>
                             {% if listing.bid_current is None %}
                                 <h4 class="card-title price">USD ${{ listing.bid_start |floatformat:2|intcomma}}</h4>
                             {% else %}

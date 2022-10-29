@@ -6,9 +6,47 @@
         <div class="card">
             
             <div class="card-body">
-                <h5 class="card-title h1" style="text-transform: capitalize">
-                    {{ listing.title }}
-                </h5>
+                <div class="hstack gap-3">
+                    <div>
+                        <h5 class="card-title h1" style="text-transform: capitalize">
+                            {{ listing.title }}
+                        </h5>
+                    </div>
+
+                    
+                    <div class="ms-auto">
+                        <div class="btn-group">
+                            <button class="btn btn-success btn-sm" style="padding: 0.5em; margin-bottom: 10px" type="button">
+                              Options
+                            </button>
+                            <button type="button" class="btn btn-sm btn-success dropdown-toggle dropdown-toggle-split" 
+                            style="padding: 0.5em; margin-bottom: 10px" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                {% if  listing.creator == user and listing.active %}
+                                <li><a class="dropdown-item" data-toggle="tooltip" data-placement="top" data-bs-toggle="modal" 
+                                    data-bs-target="#closer" title="Close this Listing."  
+                                    href="{% url 'close_listing' listing.id %}">Close Listing&nbsp<i class="fa-solid fa-check"></i></a></li>
+                                {% endif %}
+                
+                                {% if listing.creator == user and listing.active %}
+                                <li><a data-toggle="tooltip" data-bs-toggle="modal" data-bs-target="#delete" data-placement="top" title="Delete this Listing." 
+                                    class="dropdown-item" href="{% url 'delete_listing' listing.id %}"> Delete Listing&nbsp<i class="fa-solid fa-trash"></i></a></li>
+                                {% endif %} 
+
+                                {% if listing.creator == user and listing.active %}
+                                <li><a data-toggle="tooltip" data-placement="top" title="Edit this Listing." 
+                                    class="dropdown-item" href="{% url 'edit_listing' listing.id %}">Edit Listing&nbsp&nbsp<i class="fa-solid fa-pen-to-square"></i></a></li>
+                                {% endif %}
+
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Separated link</a></li>
+                            </ul>
+                          </div>
+                    </div>
+                </div>
+
                 <div>
                     <img class="listing_image" src="{{ listing.image.url }}" alt="Image" />         
                 </div>  
@@ -22,9 +60,9 @@
                     {% endif %}
                         
                     {% if listing.watched %}
-                        Remove from watchlist
+                        Remove from watchlist&nbsp<i class="fa-regular fa-eye-slash"></i>
                     {% else %}
-                        Add to watchlist
+                        Add to watchlist&nbsp<i class="fa-regular fa-eye"></i>
                     {% endif %}
                 </a>
 
@@ -111,11 +149,15 @@
 
                 {% comment %} Alert the user the listing will be sold to highest bidder before closing {% endcomment %}
 
-                {% if  listing.creator == user and listing.active %}
+
+
+
+
+                {% comment %} {% if  listing.creator == user and listing.active %}
                 <a data-toggle="tooltip" data-placement="top" data-bs-toggle="modal" data-bs-target="#closer" title="Close this Listing." 
                 class="btn btn-danger btn-sm" style="padding: 0.5em" href="{% url 'close_listing' listing.id %}" role="button">Close Listing</a>
                     
-                {% endif %}
+                {% endif %} {% endcomment %}
 
                 <div class="modal fade" id="closer" tabindex="-1" aria-labelledby="closer" aria-hidden="true">
                     <div class="modal-dialog">
@@ -137,10 +179,10 @@
                 </div>
                 
 
-                {% if listing.creator == user and listing.active %}
+                {% comment %} {% if listing.creator == user and listing.active %}
                     <a data-toggle="tooltip" data-bs-toggle="modal" data-bs-target="#delete" data-placement="top" title="Delete this Listing.."class="btn btn-danger btn-sm" style="padding: 0.5em" href="{% url 'delete_listing' listing.id %}" 
                     role="button">Delete Listing</a>
-                {% endif %}
+                {% endif %} {% endcomment %}
 
                 <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="delete" aria-hidden="true">
                     <div class="modal-dialog">
@@ -162,13 +204,9 @@
                 </div>
 
                 {% comment %} Add a button to edit a listing if logged in user is the creator {% endcomment %}
-                {% if listing.creator == user and listing.active %}
+                {% comment %} {% if listing.creator == user and listing.active %}
                     <a data-toggle="tooltip" data-placement="top" title="Edit this Listing." class="btn btn-danger btn-sm" style="padding: 0.5em" href="{% url 'edit_listing' listing.id %}" role="button">Edit Listing</a>
-                {% endif %}
-                <br>
-                <br>
-
-                
+                {% endif %} {% endcomment %}
 
                 <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>
                 <hr/>

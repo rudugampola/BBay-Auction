@@ -68,6 +68,7 @@ body {
     flex-direction: column;
 }
 
+
 .btn {
     padding: 1em 2em;
     text-decoration: none;
@@ -82,7 +83,7 @@ body {
 .btn-secondary {
     background: var(--foreground);
     color: var(--background);
-    /* border: currentColor solid 2px; */
+    border: currentColor solid 2px;
 }
 
 .btn-accent {
@@ -90,6 +91,7 @@ body {
     color: var(--foreground);
 }
 
+/*
 .btn::after {
     content: "";
     position: absolute;
@@ -100,6 +102,7 @@ body {
     border-radius: inherit;
     z-index: -1;
 }
+*/
 
 .footer_text {
     text-decoration: none;
@@ -312,4 +315,31 @@ img.graph {
     -moz-transform: scale(1.1);
     -o-transform: scale(1.1);
     -ms-transform: scale(1.1);
+}
+
+/* 
+  #002f4b,#dc4225 
+  Convert HEX to RGBA - http://hex2rgba.devoth.com/
+  */
+.carousel-item:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,
+            rgba(255, 255, 255, 0),
+            rgba(12, 245, 43, 0.521) 90%);
+}
+
+#options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 10px;
 }

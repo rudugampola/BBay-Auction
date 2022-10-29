@@ -36,35 +36,38 @@
 
                                 </a>
                                 <p class="card-text" style="text-transform:first-letter: capitalize">{{ listing.description | safe}}</p>
-                                {% if listing.bid_current is None %}
-                                    <h4 class="card-title price">USD ${{ listing.bid_start |floatformat:2|intcomma}}</h4>
-                                {% else %}
-                                    <h4 class="card-title price" id="price" >USD ${{ listing.bid_current |floatformat:2|intcomma}}</h4>
-                                {% endif %}
+                                <div class="hstack gap-3">
+                                    <div>
+                                        {% if listing.bid_current is None %}
+                                            <h4 class="card-title price">USD ${{ listing.bid_start |floatformat:2|intcomma}}</h4>
+                                        {% else %}
+                                            <h4 class="card-title price" id="price" >USD ${{ listing.bid_current |floatformat:2|intcomma}}</h4>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="ms-auto">
+                                        {% if user.is_authenticated %}
+                                            <a data-toggle="tooltip" data-placement="top" title="Add this Listing to Watchlist." class="btn btn-danger btn-sm" style="padding: 0.5em"
+                                            href="{% url 'update_watchlist' listing.id 'listings' %}" role="button">
+                                        {% else %}
+                                            <a href="{% url 'login' %}" class="card-link">
+                                        {% endif %}
+
+                                        {% if user.is_authenticated %}
+                                            {% if listing in watchlist %}
+                                                Remove from watchlist&nbsp<i class="fa-regular fa-eye-slash"></i>
+                                            {% else %}
+                                                Add to watchlist&nbsp<i class="fa-regular fa-eye"></i>
+                                            {% endif %}
+                                        {% endif %}
+                                        </a>
+                                    </div>
+                                </div>
                                 <p>
-                                    <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>                        <div class="col-sm-3 ms-auto">
-                            {% if user.is_authenticated %}
-                                <a data-toggle="tooltip" data-placement="top" title="Add this Listing to Watchlist." class="btn btn-danger btn-sm" style="padding: 0.5em"
-                                href="{% url 'update_watchlist' listing.id 'listings' %}" role="button">
-                            {% else %}
-                                <a href="{% url 'login' %}" class="card-link">
-                            {% endif %}
+                                <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>
+                                </p>
                                 
-                            
-                            {% if user.is_authenticated %}
-                                {% if listing.watched %}
-                                    Remove from watchlist
-                                {% else %}
-                                    Add to watchlist
-                                {% endif %}
-                            {% endif %}
-
-                            </a>
                         </div>
-                                <p>
-                        </div>
-                    
-
                     </div>
                 </div>
             </div>

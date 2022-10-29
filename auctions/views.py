@@ -225,6 +225,7 @@ def user_profile(request, user_id):
     paginator = Paginator(listings, PAGES)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    watchlist = request.user.watchlist.all()
 
     if request.method == 'POST':
         user = User.objects.get(id=user_id)
@@ -240,7 +241,8 @@ def user_profile(request, user_id):
         "page_obj": page_obj,
         "search_user": user,
         "listings": listings,
-        "title": user.username.title()
+        "title": user.username.title(),
+        "watchlist": watchlist
     })
 
 
@@ -285,6 +287,9 @@ def listings(request):
     paginator = Paginator(listings, PAGES)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
+    watchlist = request.user.watchlist.all()
+    print(watchlist)
     for listing in listings:
         if request.user in listing.watchers.all():
             listing.watched = True
@@ -299,7 +304,8 @@ def listings(request):
     return render(request, "auctions/listings.html", {
         'page_obj': page_obj,
         "listings": listings,
-        "title": "Active Listings"
+        "title": "Active Listings",
+        "watchlist": watchlist
     })
 
 
@@ -413,6 +419,7 @@ def profits(request):
     # file.close()
 
     # Write the JSON object to a file
+    print("Requesting data from Microservice... 🌎")
     with open('auctions/graphs/data.txt', 'w+') as f:
         f.write(profitsJSON.content.decode('utf-8'))
 
@@ -442,6 +449,7 @@ def expenses(request):
     expensesJSON = (JsonResponse({'data': list(data), 'type': 'expense'}))
 
     # Write the JSON object to a file
+    print("Requesting data from Microservice... 🌎")
     with open('auctions/graphs/data.txt', 'w+') as f:
         f.write(expensesJSON.content.decode('utf-8'))
 
@@ -461,6 +469,10 @@ def expenses(request):
 @ login_required
 def watchlist(request):
     listings = request.user.watchlist.all()
+    paginator = Paginator(listings, PAGES)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    watchlist = request.user.watchlist.all()
 
     for listing in listings:
         if request.user in listing.watchers.all():
@@ -471,9 +483,11 @@ def watchlist(request):
     print("Watchlist count: ", watchlistCount)
 
     return render(request, "auctions/listings.html", {
+        "page_obj": page_obj,
         "listings": listings,
         "title": "My Watchlist",
-        "watchlistCount": watchlistCount
+        "watchlistCount": watchlistCount,
+        "watchlist": watchlist
     })
 
 

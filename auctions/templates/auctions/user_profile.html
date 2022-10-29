@@ -52,59 +52,62 @@
 {% endif %}
 
 <hr />
-    {% for listing in page_obj %}
-    <div class="row">
-        <div class="listings card">
-            <div class="row no-gutters">
-                <div class="col-sm-6">
-                    <img class="item_image" class="card-img-top" src="{{ listing.image.url }}" alt="Image" />
-                </div>
-                <div class="col-sm-6">
-                    <div class="card-body">
-                            <a href="{% url 'listing' listing.id %}" class="link">
-                                <h5 class="card-title" style="text-transform: capitalize">{{ listing.title }} 
-                                {% if listing.active %}
-                                    <span class="badge" style="background-color: #dff0d8; border-color: #d6e9c6; color: #3c763d;">NEW </span></h5>
-                                {% else %}
-                                    <span class="badge" style="background-color: #fff3cd;border-color: #ffecb5;color: #664d03;">CLOSED</span></h5>
-                                {% endif %}
-
-                            </a>
-                            <p class="card-text" style="text-transform:first-letter: capitalize">{{ listing.description | safe}}</p>
-                            {% if listing.bid_current is None %}
-                                <h4 class="card-title price">USD ${{ listing.bid_start |floatformat:2|intcomma}}</h4>
+{% for listing in page_obj %}
+<div class="row">
+    <div class="listings card">
+        <div class="row no-gutters">
+            <div class="col-sm-6">
+                <img class="item_image" class="card-img-top" src="{{ listing.image.url }}" alt="Image" />
+            </div>
+            <div class="col-sm-6">
+                <div class="card-body">
+                        <a href="{% url 'listing' listing.id %}" class="link">
+                            <h5 class="card-title" style="text-transform: capitalize">{{ listing.title }} 
+                            {% if listing.active %}
+                                <span class="badge" style="background-color: #dff0d8; border-color: #d6e9c6; color: #3c763d;">NEW </span></h5>
                             {% else %}
-                                <h4 class="card-title price" id="price" >USD ${{ listing.bid_current |floatformat:2|intcomma}}</h4>
+                                <span class="badge" style="background-color: #fff3cd;border-color: #ffecb5;color: #664d03;">CLOSED</span></h5>
                             {% endif %}
-                            <p>
-                                <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>                        <div class="col-sm-3 ms-auto">
-                        {% if user.is_authenticated %}
-                            <a data-toggle="tooltip" data-placement="top" title="Add this Listing to Watchlist." class="btn btn-danger btn-sm" style="padding: 0.5em"
-                            href="{% url 'update_watchlist' listing.id 'listings' %}" role="button">
-                        {% else %}
-                            <a href="{% url 'login' %}" class="card-link">
-                        {% endif %}
-                            
-                        
-                        {% if user.is_authenticated %}
-                            {% if listing.watched %}
-                                Remove from watchlist
-                            {% else %}
-                                Add to watchlist
-                            {% endif %}
-                        {% endif %}
 
                         </a>
-                    </div>
-                            <p>
-                    </div>
-                
+                        <p class="card-text" style="text-transform:first-letter: capitalize">{{ listing.description | safe}}</p>
+                        <div class="hstack gap-3">
+                            <div>
+                                {% if listing.bid_current is None %}
+                                    <h4 class="card-title price">USD ${{ listing.bid_start |floatformat:2|intcomma}}</h4>
+                                {% else %}
+                                    <h4 class="card-title price" id="price" >USD ${{ listing.bid_current |floatformat:2|intcomma}}</h4>
+                                {% endif %}
+                            </div>
 
+                            <div class="ms-auto">
+                                {% if user.is_authenticated %}
+                                    <a data-toggle="tooltip" data-placement="top" title="Add this Listing to Watchlist." class="btn btn-danger btn-sm" style="padding: 0.5em"
+                                    href="{% url 'update_watchlist' listing.id 'listings' %}" role="button">
+                                {% else %}
+                                    <a href="{% url 'login' %}" class="card-link">
+                                {% endif %}
+
+                                {% if user.is_authenticated %}
+                                    {% if listing in watchlist %}
+                                        Remove from watchlist&nbsp<i class="fa-regular fa-eye-slash"></i>
+                                    {% else %}
+                                        Add to watchlist&nbsp<i class="fa-regular fa-eye"></i>
+                                    {% endif %}
+                                {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                        <p>
+                        <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>
+                        </p>
+                        
                 </div>
             </div>
         </div>
     </div>
-    {% endfor %}
+</div>
+{% endfor %}
 
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">                

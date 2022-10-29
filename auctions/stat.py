@@ -46,7 +46,7 @@ while True:
         #     data["data"][i]["date"], "%Y-%m-%dT%H:%M:%S.%fZ")
 
         date = data["data"][i]["date"].split("T")[0]
-        month = date.split("-")[1].lstrip("0")
+        month = int(date.split("-")[1].lstrip("0"))
         year = date.split("-")[0].lstrip("0")
         print(plotName + ": " + str(value) + " for Month: " + str(month))
 
@@ -81,7 +81,7 @@ while True:
     # X-axis is the months of the year and Y-axis is the profit
     mon = list(months.keys())
     val = list(months.values())
-    print(val)
+    # print(months["October"])
     total = sum(val)
 
     print(total)
@@ -90,7 +90,7 @@ while True:
     ax.bar(mon, val, color="#66c2a5")
     ax.set_title(plotName + " for each Month for Year: " + str(year))
     ax.set_ylabel(plotName)
-    ax.set_xticklabels(mon, rotation=45)
+    ax.set_xticklabels(mon, rotation=45) 
 
     for bars in ax.containers:
         ax.bar_label(bars, rotation=45, label_type='edge', color='black')

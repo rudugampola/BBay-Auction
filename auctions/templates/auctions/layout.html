@@ -24,9 +24,9 @@
     <link rel="icon" href="{% static 'img/bbay.ico' %}" />
   </head>
 
-  <div class="mx-auto" style="position:absolute; z-index: 1000;" >
+  <div style="z-index: 1000">
     {% if request.user.is_superuser %}
-    <a class="btn btn-outline-danger btn-sm" style="padding: 0.2em" href="{% url 'admin:index' %}" target="_blank">Site Administration <i class="fa-solid fa-lock"></i></a>
+    <a class="btn btn-outline-danger btn-sm position-absolute top-10 start-50 translate-middle" style="padding: 0.2em" href="{% url 'admin:index' %}" target="_blank">Site Administration <i class="fa-solid fa-lock"></i></a>
     {% endif %}
  </div>
 
@@ -35,18 +35,18 @@
       {% if user.is_authenticated %} Hi, &nbsp
         <a
         href="{% url 'user_profile' user.id %}"
-        class="btn btn-warning btn-sm"
+        class="btn btn-warning btn-sm rounded-pill"
         style="padding: 0.5em; margin-bottom: 0.5em"
         role="button"
         ><b style="text-transform: capitalize; font-weight: bold"
           > {{ user.username }} &nbsp</b
         ><i class="fa-solid fa-user"></i></a>
         <p>
-        <a class="btn btn-danger btn-sm" style="padding: 0.5em" href="{% url 'logout' %}">Log Out <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+        <a class="btn btn-danger btn-sm rounded-pill" style="padding: 0.5em" href="{% url 'logout' %}">Log Out <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
       {% else %}
         <p>👋 Not Signed In.</p>
-        <a class="btn btn-success btn-sm" style="padding: 0.5em" href="{% url 'login' %}">Log In <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
-        <a class="btn btn-primary btn-sm" style="padding: 0.5em" href="{% url 'register' %}">Register <i class="fa-solid fa-user-plus"></i></a>
+        <a class="btn btn-success btn-sm rounded-pill" style="padding: 0.5em" href="{% url 'login' %}">Log In <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+        <a class="btn btn-primary btn-sm rounded-pill" style="padding: 0.5em" href="{% url 'register' %}">Register <i class="fa-solid fa-user-plus"></i></a>
         </p>
       {% endif %}
 
@@ -87,7 +87,7 @@
                 ><i class="fa-solid fa-binoculars"></i> &nbspWatchlist 
                 <span
                   style="margin-left: 9px"
-                  class="position-absolute top-10 start-30 translate-middle badge rounded-pill bg-danger"
+                  class="position-absolute top-10 start-30 translate-middle badge rounded-circle bg-danger"
                   >{{ request.session.watchlist_count }}
                 </span> 
               </a>
@@ -105,8 +105,7 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-              <i class="fa-solid fa-chart-column"></i>&nbspReports 
-              </a>
+              <i class="fa-solid fa-chart-column"></i>&nbspReports </a>
               <ul
                 class="dropdown-menu dropdown-menu-dark"
                 aria-labelledby="navbarDarkDropdownMenuLink"
@@ -121,7 +120,7 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link link" style="margin-left: 10px" href="{% url 'mail-index' %}"><i class="fa-solid fa-envelope"></i>&nbspMail </a>
+              <a class="nav-link link" href="{% url 'mail-index' %}"><i class="fa-solid fa-envelope"></i>&nbspMail </a>
             </li>
             {% endif %} 
 
@@ -141,13 +140,13 @@
               <li class="nav-item" >
                 <form class="d-flex" action="{% url 'search' %}" method="GET" >
                   <input
-                    class="form-control me-2"
+                    class="form-control me-2 rounded-pill"
                     type="search"
                     placeholder="Search for Listings...   🔎"
                     aria-label="Search"
                     name="q"
                   />
-                  <button style="padding: 0.5em" class="btn btn-success" type="submit">Search</button>
+                  <button style="padding: 0.5em" class="btn btn-success rounded-pill" type="submit">Search</button>
                   <li class="nav-item ms-auto" style="padding-left: 50px">
                     <img src="{% static 'img/moon.svg' %}" id="icon" />
                   </li>
@@ -228,7 +227,7 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-info btn-sm"
+            class="btn btn-info btn-sm rounded-pill"
             data-bs-dismiss="modal"
           >
             Close
@@ -245,7 +244,7 @@
     role="dialog"
     aria-labelledby="faqModalTitle"
     aria-hidden="true"
-  >
+    >
     <div class="modal-dialog modal-dialog-scrollable" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -254,7 +253,7 @@
           </h5>
           <button
             type="button"
-            class="btn-close"
+            class="btn-close  rounded-pill"
             data-bs-dismiss="modal"
             aria-label="Close"
           ></button>
@@ -262,8 +261,8 @@
         <div class="modal-body">
           {% comment %} <ul> {% endcomment %}
               <p>
-                <a class="btn btn-light btn-sm" style="padding: 0.5em; margin: 5px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);" data-bs-toggle="collapse" href="#create" role="button" aria-expanded="false" aria-controls="collapseExample">
-                  How do I create a listing
+                <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px;" data-bs-toggle="collapse" href="#create" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  How do I create a listing?
                 </a>
               </p>
               <div class="collapse" id="create">
@@ -278,7 +277,7 @@
               </div>
             
               <p>
-                <a class="btn btn-light btn-sm" style="padding: 0.5em; margin: 5px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);" data-bs-toggle="collapse" href="#watchlist" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px;" data-bs-toggle="collapse" href="#watchlist" role="button" aria-expanded="false" aria-controls="collapseExample">
                   How do I add an item to my watchlist?
                 </a>
               </p>
@@ -292,7 +291,7 @@
                 </div>
           
               <p>
-                <a class="btn btn-light btn-sm" style="padding: 0.5em; margin: 5px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);" data-bs-toggle="collapse" href="#bid" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px;" data-bs-toggle="collapse" href="#bid" role="button" aria-expanded="false" aria-controls="collapseExample">
                   How do I bid on an item?
                 </a>
               </p>
@@ -305,7 +304,7 @@
                 </div>
            
                 <p>
-                  <a class="btn btn-light btn-sm" style="padding: 0.5em; margin: 5px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);" data-bs-toggle="collapse" href="#close" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px; " data-bs-toggle="collapse" href="#close" role="button" aria-expanded="false" aria-controls="collapseExample">
                     How do I close a listing?
                   </a>
                 </p>
@@ -317,7 +316,7 @@
                 </div>
             
               <p>
-                <a class="btn btn-light btn-sm" style="padding: 0.5em; margin: 5px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);" data-bs-toggle="collapse" href="#comment" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px; " data-bs-toggle="collapse" href="#comment" role="button" aria-expanded="false" aria-controls="collapseExample">
                   How do I comment on a listing?
                 </a>
               </p>
@@ -330,7 +329,7 @@
                 </div>
             
               <p>
-                <a class="btn btn-light btn-sm" style="padding: 0.5em; margin: 5px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);" data-bs-toggle="collapse" href="#watch" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px;" data-bs-toggle="collapse" href="#watch" role="button" aria-expanded="false" aria-controls="collapseExample">
                   How do I view my watchlist?
                 </a>
               </p>
@@ -342,7 +341,7 @@
                 </div>
            
               <p>
-                <a class="btn btn-light btn-sm" style="padding: 0.5em; margin: 5px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);" data-bs-toggle="collapse" href="#view" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px;" data-bs-toggle="collapse" href="#view" role="button" aria-expanded="false" aria-controls="collapseExample">
                   How do I view my listings?
                 </a>
               </p>
@@ -354,7 +353,7 @@
                 </div>
             
                 <p>
-                  <a class="btn btn-light btn-sm" style="padding: 0.5em; margin: 5px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);" data-bs-toggle="collapse" href="#win" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px;" data-bs-toggle="collapse" href="#win" role="button" aria-expanded="false" aria-controls="collapseExample">
                     What happens when I win the auction listing?
                   </a>
                 </p>
@@ -370,7 +369,7 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-info btn-sm"
+            class="btn btn-info btn-sm rounded-pill"
             data-bs-dismiss="modal"
           >
             Close

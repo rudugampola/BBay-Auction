@@ -53,7 +53,7 @@
 
                 
                 {% if user.is_authenticated %}
-                <a data-toggle="tooltip" data-placement="top" title="Add this Listing to Watchlist." class="btn btn-danger btn-sm" style="padding: 0.5em; margin-bottom: 10px"
+                <a data-toggle="tooltip" data-placement="top" title="Add this Listing to Watchlist." class="btn btn-danger btn-sm rounded-pill" style="padding: 0.5em; margin-bottom: 10px"
                     href="{% url 'update_watchlist' listing.id 'listing' %}" role="button">
                     {% else %}
                         <a href="{% url 'login' %}" class="card-link">
@@ -100,7 +100,7 @@
                 {% endif %}
 
                 <p class="card-text">
-                    Listed By:&nbsp<a href="{% url 'user_profile' listing.creator.id %}" class="btn btn-warning btn-sm" style="padding: 0.5em" role="button"><b style="text-transform: capitalize; font-weight: bold">{{ listing.creator }}</b></a>
+                    Listed By:&nbsp<a href="{% url 'user_profile' listing.creator.id %}" class="btn btn-warning btn-sm rounded-pill" style="padding: 0.5em" role="button"><b style="text-transform: capitalize; font-weight: bold">{{ listing.creator }}</b></a>
                 </p>
 
 
@@ -132,7 +132,7 @@
                         <form action="{% url 'bid' listing.id %}" method="post">
                             {% csrf_token %}
                             {{ form }}        
-                            <input type = submit value="Bid Now!" class="btn btn-warning btn-sm" style="padding: 0.5em">
+                            <input type = submit value="Bid Now!" class="btn btn-warning btn-sm rounded-pill" style="padding: 0.5em">
                         </form>                    
                     </div>            
                 {% endif %}
@@ -164,7 +164,7 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="closer">Close Listing ❗ </h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <button type="button" class="btn-close rounded-pill" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                            Are you sure want to close this listing? The item will be sold to the highest bidder!

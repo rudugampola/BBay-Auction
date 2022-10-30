@@ -166,10 +166,11 @@ function one_email(id) {
       from.innerHTML = email.sender;
       to.innerHTML = email.recipients;
       body.innerHTML = email.body;
-      timestamp.innerHTML = email.timestamp;
+      // Convert time to PST time
+      timestamp.innerHTML = '⏰ ' + email.timestamp + ' UTC';
 
       const reply = document.createElement('button');
-      reply.className = 'btn btn-success btn-sm right_align reply';
+      reply.className = 'btn btn-success btn-sm right_align reply rounded-pill';
       const reply_icon = document.createElement('i');
       reply_icon.className = 'fa-solid fa-reply';
       reply_icon.textContent = ' Reply';
@@ -177,7 +178,8 @@ function one_email(id) {
       from.append(reply);
 
       const archive = document.createElement('button');
-      archive.className = 'btn btn-warning btn-sm right_align archive';
+      archive.className =
+        'btn btn-warning btn-sm right_align archive rounded-pill';
       const archive_icon = document.createElement('i');
       archive_icon.className = 'fa-solid fa-box-archive';
       if (email.archived) {

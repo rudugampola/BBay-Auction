@@ -20,11 +20,11 @@
         
     
         <div>
-            <input data-toggle="tooltip" data-placement="right" title="Submit a Listing."type="submit" class="btn btn-success" style="padding: 0.5em; margin: 5px"/> 
+            <input data-toggle="tooltip" data-placement="right" title="Submit a Listing."type="submit" class="btn btn-success rounded-pill" style="padding: 0.5em; margin: 5px"/> 
             {% comment %} Cancel button {% endcomment %}
-            <a href="{% url 'index' %}" class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="Cancel" style="padding: 0.5em;">Cancel</a>
+            <a href="{% url 'index' %}" class="btn btn-danger rounded-pill" data-toggle="tooltip" data-placement="right" title="Cancel" style="padding: 0.5em; ">Cancel</a>
             <a data-toggle="tooltip" data-placement="top" title="Import Listings from a CSV file. Use the predefined template." 
-                class="btn btn-primary btn-sm" href= "{% url 'import_csv' %}" style="padding: 0.5em; margin: 5px"> Import from a CSV  <i class="fa-solid fa-file-import"></i></a>
+                class="btn btn-primary btn-sm rounded-pill" href= "{% url 'import_csv' %}" style="padding: 0.5em; margin: 5px"> Import from a CSV  <i class="fa-solid fa-file-import"></i></a>
         </div>
         <br>
 

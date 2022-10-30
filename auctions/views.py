@@ -13,9 +13,9 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.core.paginator import Paginator
 
-
 from .models import (Bid, Category, Comment, Expenses, Listing, ListingFilter, Profits, Sales,
                      User, UserProfile)
+from mail.models import Email
 
 # TODO - Run a report on all listings and their bids and comments and watchers
 
@@ -393,6 +393,22 @@ def close_listing(request, listing_id):
             expense = Expenses.objects.create(
                 user=buyer, expense=listing.bid_current)
             expense.save()
+
+        # Create one email for each recipient, plus sender
+        body = "Congratulations! You have won the auction for " + listing.title + " for $" + \
+            str(listing.bid_current) + "." + " Please contact the seller at " + \
+            listing.creator.email + " to arrange for the delivery of the item."
+        subject = "You have won 🎉 the auction for " + listing.title + "!"
+
+        sender = Email.objects.create(
+            body=body, subject=subject, sender=request.user, user=request.user)
+        receiver = Email.objects.create(
+            body=body, subject=subject, sender=request.user, user=buyer)
+
+        sender.recipients.set([buyer])
+        receiver.recipients.set([buyer])
+        sender.save()
+        receiver.save()
 
         messages.success(
             request, 'Success ✅: Listing closed successfully!')

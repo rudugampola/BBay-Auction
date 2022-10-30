@@ -1,15 +1,42 @@
 {% extends "mail/layout.html" %}
 {% load static %}
 {% load mail_extras %}
+{% load tz %}
 
 {% block body %}
     <h2>{{ "Welcome, "|addstr:request.user.first_name|capfirst|addstr:"👋" }}</h2>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn btn-success rounded-pill" href="{% url 'index' %}"><i class="fa-solid fa-house">&nbspHome</i></a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-sm btn btn-success rounded-pill" style="margin-left: 10px" id="inbox"><i class="fa-solid fa-inbox">&nbspInbox</i></button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-sm btn btn-success rounded-pill" style="margin-left: 10px" id="compose"><i class="fa-solid fa-pen">&nbspCompose</i></button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-sm btn btn-success rounded-pill" style="margin-left: 10px" id="sent"><i class="fa-solid fa-envelope-circle-check">&nbspSent</i></button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-sm btn btn-success rounded-pill" style="margin-left: 10px" id="archived"><i class="fa-solid fa-box-archive">&nbspArchived</i></button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn btn-success rounded-pill" style="margin-left: 10px" href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket">&nbspLog Out</i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <button class="btn btn-sm btn btn-success" id="inbox"><i class="fa-solid fa-inbox">&nbspInbox</i></button>
-    <button class="btn btn-sm btn btn-success" id="compose"><i class="fa-solid fa-pen">&nbspCompose</i></button>
-    <button class="btn btn-sm btn btn-success" id="sent"><i class="fa-solid fa-envelope-circle-check">&nbspSent</i></button>
-    <button class="btn btn-sm btn btn-success" id="archived"><i class="fa-solid fa-box-archive">&nbspArchived</i></button>
-    <a class="btn btn-sm btn btn-success" href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket">&nbspLog Out</i></a>
+
+    
     <hr>
     
     <div id="emails-view">
@@ -18,37 +45,47 @@
     <div id="compose-view">
         <h3>New Email</h3>
         <form id="compose-form">
-            <div class="form-group">
-                From: <input disabled class="form-control" value="{{ request.user.email }}">
+            <div class="mb-3">
+                <label for="from" class="form-label">From: </label>
+                <input type="email" value="{{ request.user.email }}" disabled class="form-control" id="from">
             </div>
-            <div class="form-group">
-                To: <input id="compose-recipients" class="form-control">
+            <div class="mb-3">
+                <label for="compose-recipients" class="form-label">To: </label>
+                <input type="email" id="compose-recipients" class="form-control" placeholder="To">
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <input class="form-control" id="compose-subject" placeholder="Subject">
             </div>
+            {{form.media}}
             <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
-            <input type="submit" class="btn btn-primary"/>
+            <input type="submit" style="margin-top: 20px" class="btn btn-primary rounded-pill"/>
         </form>
     </div>
 
     <div id="single_email_view">
         <div id="header">
-            <div class="time" id="timestamp">
-                <div><span class="timestamp">Times Stamp</span></div>
-            </div>
+            
+                <div class="time" id="timestamp">
+                    
+                    <div><span class="timestamp">Times Stamp</span></div>
+                    
+                </div>
+            
             <div id="subject">
                 Heading
             </div>
             <div id="from">
-                <p>From: </p>
+                <p id="from_to">From: </p>
                 <div><span class="from">Email Address</span></div>
             </div>
             <div id="to">
-                <p>To: </p>
+                <p id="from_to">To: </p>
                 <div><span class="to">Email Address</span></div>
             </div>
-
+            {% comment %} <div>
+                <p>Date: </p>
+                <div><span class="date">Date</span></div>
+            </div> {% endcomment %}
         </div>
         <hr>
         <div id="body">

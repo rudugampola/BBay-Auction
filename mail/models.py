@@ -2,6 +2,7 @@ from django.utils import timezone
 # from django.contrib.auth.models import AbstractUser
 from django.db import models
 from auctions.models import User
+from ckeditor.fields import RichTextField
 
 
 # class User(AbstractUser):
@@ -14,7 +15,8 @@ class Email(models.Model):
         User, on_delete=models.PROTECT, related_name="emails_sent")
     recipients = models.ManyToManyField(User, related_name="emails_received")
     subject = models.CharField(max_length=255)
-    body = models.TextField(blank=True)
+    # body = models.TextField(blank=True)
+    body = RichTextField(blank=True)
     timestamp = models.DateTimeField(default=timezone.localtime())
     read = models.BooleanField(default=False)
     archived = models.BooleanField(default=False)
@@ -30,3 +32,6 @@ class Email(models.Model):
             "read": self.read,
             "archived": self.archived
         }
+
+    def __str__(self):
+        return f"From: {self.sender} To: {self.recipients.all()} Subject: {self.subject}"

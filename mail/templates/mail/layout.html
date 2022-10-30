@@ -3,18 +3,249 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{% block title %}Mail{% endblock %}</title>
+        <title>{% block title %}Bbay - Mail{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'mail/styles.css' %}\">
-        <script src="https://kit.fontawesome.com/3d6a9ebe99.js" crossorigin="anonymous"></script>
-
+        <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+        crossorigin="anonymous"
+      />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://kit.fontawesome.com/25ae4408a9.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+        <link rel="icon" href="{% static 'img/bbay.ico' %}" />
+        
         {% block script %}
         {% endblock %}
     </head>
     <body>
-        <div class="container">
+        <img class="logo_img" src="{% static 'img/mail.png' %}" alt="logo" height="300 px" style="position:absolute; z-index: 1000; top: 0; margin-top: 10px; margin-left: 400px" />
+        <div class="container border rounded-3" style="padding: 5em">
             {% block body %}
             {% endblock %}
         </div>
     </body>
+    <footer class="footer_text">
+        <br />
+        <div class="footer">
+          <p class="text-center">
+            <a class="footer_text" href="{% url 'index' %}">Home 🏠</a>
+            |
+            <a
+              class="footer_text"
+              data-bs-toggle="modal"
+              data-bs-target="#aboutModal"
+              >About Us 👋</a
+            >
+            |
+            <a class="footer_text" data-bs-toggle="modal" data-bs-target="#faqModal"
+              >FAQ ❔</a
+            >
+          </p>
+          <p class="text-center footer_text">©Ravindu Udugampola 2022</p>
+        </div>
+      </footer>
+    
+      <div
+        class="modal fade"
+        id="aboutModal"
+        role="dialog"
+        tabindex="-1"
+        aria-labelledby="aboutUsLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" id="aboutModalInner" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-body modal-title fs-5" id="aboutUsLabel">About Us 👋</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p>
+                From our humble beginnings in 2022, Bbay has grown to become the
+                world's largest online 🌎 marketplace 🛒, where practically anyone
+                👫 can bid to buy and sell 💲 practically anything. We offer the
+                greatest selection of new and used goods, at great prices, and with
+                a service that is second to none 😊.
+              </p>
+              <p>
+                We are committed to providing our customers with the best possible
+                online shopping experience 💯. We are constantly working to improve
+                our site and our service, and we welcome your feedback 🔨. We hope
+                you enjoy your shopping experience with us, and we look forward to
+                serving you again soon 👋.
+              </p>
+              <p>
+                <i
+                  >We're not like any other online marketplace. And we're proud of
+                  that.</i
+                >
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-info btn-sm rounded-pill"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div
+        class="modal fade"
+        id="faqModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="faqModalTitle"
+        aria-hidden="true"
+        >
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-body modal-title" id="faqModalTitle">
+                <strong>FAQ ❔</strong>
+              </h5>
+              <button
+                type="button"
+                class="btn-close  rounded-pill"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              {% comment %} <ul> {% endcomment %}
+                  <p>
+                    <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px;" data-bs-toggle="collapse" href="#create" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      How do I create a listing?
+                    </a>
+                  </p>
+                  <div class="collapse" id="create">
+                    <div class="card card-body">
+                        <div>To create a listing, click on the "Create Listing" button
+                          on the navigation bar. Then, fill in the form with the required
+                          information and click on the "Create" button. Alternatively, 
+                          you can use the keyboard shortcut <img src="{% static 'img/alt-key.svg' %}" id="icon" /> + 
+                        <img src="{% static 'img/ctrl-key.svg' %}" id="icon" />  + 
+                        <img src="{% static 'img/c-key.svg' %}" id="icon" /> to create a listing.</div> 
+                    </div>
+                  </div>
+                
+                  <p>
+                    <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px;" data-bs-toggle="collapse" href="#watchlist" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      How do I add an item to my watchlist?
+                    </a>
+                  </p>
+                  <div class="collapse" id="watchlist">
+                      <div class="card card-body">
+                          To add an item to your watchlist, click on the
+                          "Add to Watchlist" button on the listing page. To remove
+                          an item from your watchlist, click on the
+                          "Remove from Watchlist" button on the listing page.
+                      </div>
+                    </div>
+              
+                  <p>
+                    <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px;" data-bs-toggle="collapse" href="#bid" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      How do I bid on an item?
+                    </a>
+                  </p>
+                  <div class="collapse" id="bid">
+                      <div class="card card-body">
+                        To bid on an item, click on the "Bid" button on the
+                        listing page. Then, fill in the form with the required
+                        information and click on the "Bid" button.
+                      </div>
+                    </div>
+               
+                    <p>
+                      <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px; " data-bs-toggle="collapse" href="#close" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        How do I close a listing?
+                      </a>
+                    </p>
+                    <div class="collapse" id="close">
+                        <div class="card card-body">
+                          To close a listing, click on the "Close Listing" button
+                          on the listing page.
+                        </div>
+                    </div>
+                
+                  <p>
+                    <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px; " data-bs-toggle="collapse" href="#comment" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      How do I comment on a listing?
+                    </a>
+                  </p>
+                  <div class="collapse" id="comment">
+                      <div class="card card-body">
+                        To comment on a listing, click on the "Comment" button on
+                        the listing page. Then, fill in the form with the required
+                        information and click on the "Comment" button.
+                      </div>
+                    </div>
+                
+                  <p>
+                    <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px;" data-bs-toggle="collapse" href="#watch" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      How do I view my watchlist?
+                    </a>
+                  </p>
+                  <div class="collapse" id="watch">
+                      <div class="card card-body">
+                        To view your watchlist, click on the "Watchlist" button
+                    on the navigation bar.
+                      </div>
+                    </div>
+               
+                  <p>
+                    <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px;" data-bs-toggle="collapse" href="#view" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      How do I view my listings?
+                    </a>
+                  </p>
+                  <div class="collapse" id="view">
+                      <div class="card card-body">
+                        To view your listings, click on the "My Listings" button
+                    on the navigation bar.
+                      </div>
+                    </div>
+                
+                    <p>
+                      <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px;" data-bs-toggle="collapse" href="#win" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        What happens when I win the auction listing?
+                      </a>
+                    </p>
+                    <div class="collapse" id="win">
+                        <div class="card card-body">
+                          When the listing is closed, the highest bidder wins the auction 
+                        and pays for the item. Remember, a bid is a binding contract. 
+                        When you bid on an item in an auction, you're committing to buy it if you win.
+                        </div>
+                    </div>
+              {% comment %} </ul> {% endcomment %}
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-info btn-sm rounded-pill"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 </html>

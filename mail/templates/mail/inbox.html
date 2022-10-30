@@ -1,0 +1,63 @@
+{% extends "mail/layout.html" %}
+{% load static %}
+{% load mail_extras %}
+
+{% block body %}
+    <h2>{{ "Welcome, "|addstr:request.user.first_name|capfirst|addstr:"👋" }}</h2>
+
+    <button class="btn btn-sm btn btn-success" id="inbox"><i class="fa-solid fa-inbox">&nbspInbox</i></button>
+    <button class="btn btn-sm btn btn-success" id="compose"><i class="fa-solid fa-pen">&nbspCompose</i></button>
+    <button class="btn btn-sm btn btn-success" id="sent"><i class="fa-solid fa-envelope-circle-check">&nbspSent</i></button>
+    <button class="btn btn-sm btn btn-success" id="archived"><i class="fa-solid fa-box-archive">&nbspArchived</i></button>
+    <a class="btn btn-sm btn btn-success" href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket">&nbspLog Out</i></a>
+    <hr>
+    
+    <div id="emails-view">
+    </div>
+
+    <div id="compose-view">
+        <h3>New Email</h3>
+        <form id="compose-form">
+            <div class="form-group">
+                From: <input disabled class="form-control" value="{{ request.user.email }}">
+            </div>
+            <div class="form-group">
+                To: <input id="compose-recipients" class="form-control">
+            </div>
+            <div class="form-group">
+                <input class="form-control" id="compose-subject" placeholder="Subject">
+            </div>
+            <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
+            <input type="submit" class="btn btn-primary"/>
+        </form>
+    </div>
+
+    <div id="single_email_view">
+        <div id="header">
+            <div class="time" id="timestamp">
+                <div><span class="timestamp">Times Stamp</span></div>
+            </div>
+            <div id="subject">
+                Heading
+            </div>
+            <div id="from">
+                <p>From: </p>
+                <div><span class="from">Email Address</span></div>
+            </div>
+            <div id="to">
+                <p>To: </p>
+                <div><span class="to">Email Address</span></div>
+            </div>
+
+        </div>
+        <hr>
+        <div id="body">
+            Body
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'mail/inbox.js' %}"></script>
+{% endblock %}

@@ -287,9 +287,10 @@ def listings(request):
     paginator = Paginator(listings, PAGES)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    watchlist = []
+    if request.user.is_authenticated:
+        watchlist = request.user.watchlist.all()
 
-    watchlist = request.user.watchlist.all()
-    print(watchlist)
     for listing in listings:
         if request.user in listing.watchers.all():
             listing.watched = True

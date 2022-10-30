@@ -41,6 +41,7 @@ if not IS_HEROKU:
 INSTALLED_APPS = [
     'crispy_forms',
     'auctions',
+    'mail',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

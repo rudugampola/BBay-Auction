@@ -221,6 +221,7 @@ def search(request):
 
 def user_profile(request, user_id):
     user = User.objects.get(id=user_id)
+    print(user)
     listings = Listing.objects.filter(creator=user, active=True)
     paginator = Paginator(listings, PAGES)
     page_number = request.GET.get('page')
@@ -580,6 +581,8 @@ def register(request):
             user.first_name = first_name
             user.last_name = last_name
             user.save()
+            profile = UserProfile(user=user)
+            profile.save()
         except IntegrityError:
             messages.error(request, "Error 💥: Username already taken.")
             return HttpResponseRedirect(reverse("register"))

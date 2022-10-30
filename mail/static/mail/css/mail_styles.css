@@ -99,3 +99,20 @@ body {
     text-decoration: none;
     cursor: auto;
 }
+
+#toolbar {
+    display: none !important;
+}
+
+.preloader {
+    position: fixed;
+    top: 50;
+    left: 50;
+    width: 50vw;
+    height: 50vh;
+    z-index: 1000;
+}
+
+.not-visible {
+    display: none !important;
+}

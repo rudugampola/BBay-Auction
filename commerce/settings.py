@@ -149,7 +149,8 @@ USE_TZ = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'auctions/static'), )
+STATICFILES_DIRS = [os.path.join(
+    BASE_DIR, 'auctions/static'), os.path.join(BASE_DIR, 'mail/static/mail')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -170,6 +171,7 @@ AWS_LOCATION = 'static'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'auctions/static'),
+    os.path.join(BASE_DIR, 'mail/static/mail')
 ]
 STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

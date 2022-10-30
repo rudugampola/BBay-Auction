@@ -581,6 +581,7 @@ def register(request):
             user.first_name = first_name
             user.last_name = last_name
             user.save()
+            # Create a profile for every user created, avatar will be default
             profile = UserProfile(user=user)
             profile.save()
         except IntegrityError:

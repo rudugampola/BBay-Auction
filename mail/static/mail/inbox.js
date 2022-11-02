@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   email_content = document.querySelector('#email_content');
   footer_content = document.querySelector('#footer_content');
   mail_image = document.querySelector('#mail_image');
+  
   setTimeout(() => {
     preloader.classList.add('not-visible');
     email_content.classList.remove('not-visible');

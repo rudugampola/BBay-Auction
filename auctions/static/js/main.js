@@ -22,6 +22,18 @@ if (spinnerBox) {
   });
 }
 
+const spinnerLoading = document.getElementById('spinner-loading');
+const dataLoading = document.getElementById('data-loading');
+
+if (spinnerLoading && dataLoading) {
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(() => {
+      spinnerLoading.classList.add('not-visible');
+      dataLoading.classList.remove('not-visible');
+    }, 1000);
+  });
+}
+
 var icon = document.getElementById('icon');
 icon.onclick = function () {
   document.body.classList.toggle('darkmode');

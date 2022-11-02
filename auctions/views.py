@@ -85,7 +85,7 @@ def create(request):
             newListing.save()
             messages.success(
                 request, 'Success ✅: Listing was created successfully!')
-            return HttpResponseRedirect(reverse("listings"))
+            return HttpResponseRedirect(reverse("listing", args=[newListing.id]))
     else:
         return render(request, "auctions/create.html", {
             "form": NewListingForm(),
@@ -228,6 +228,13 @@ def user_profile(request, user_id):
     page_obj = paginator.get_page(page_number)
     watchlist = request.user.watchlist.all()
 
+    pendingPayments = []
+    total = 0
+    for sale in Sales.objects.filter(buyer=request.user):
+        if sale.listing.paid == False:
+            pendingPayments.append(sale)
+            total += sale.price
+
     if request.method == 'POST':
         user = User.objects.get(id=user_id)
         user_profile = UserProfile.objects.get(user=user)
@@ -243,7 +250,13 @@ def user_profile(request, user_id):
         "search_user": user,
         "listings": listings,
         "title": user.username.title(),
-        "watchlist": watchlist
+        "watchlist": watchlist,
+
+        "pendingPayments": pendingPayments,
+        "total": total,
+        "user": request.user,
+        "userInfo": UserProfile.objects.get(user=request.user)
+
     })
 
 

@@ -2,6 +2,7 @@
 {% load static %}
 {% block body %}
 {% load humanize %}
+{% load auctions_extras %}
 
 {% include 'auctions/messages.html' %}
 {% comment %} Show user's first name, last name, email, date_joined. Give option to edit first name, last name and email. {% endcomment %}
@@ -44,104 +45,193 @@
     </div>
 </div>
     
-{% comment %} Show user's listings. {% endcomment %}
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="listings-tab" data-bs-toggle="tab" data-bs-target="#listings-tab-pane" type="button" role="tab" aria-controls="listings-tab-pane" aria-selected="true">Listings</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="billing-tab" data-bs-toggle="tab" data-bs-target="#billing-tab-pane" type="button" role="tab" aria-controls="billing-tab-pane" aria-selected="false">Billing</button>
+    </li>
+</ul>
+  <br>
+<div class="tab-content" id="myTabContent">
+<div class="tab-pane fade show active" id="listings-tab-pane" role="tabpanel" aria-labelledby="listings-tab" tabindex="0">
+        {% comment %} Show user's listings. {% endcomment %}
 {% if listings|length > 0 %}
-    <h2 style="text-transform: capitalize">{{ search_user }}'s Listings</h2>
+<h2 style="text-transform: capitalize">{{ search_user }}'s Listings</h2>
 {% else %}
-    <h2>No Listings</h2>
+<h2>No Listings</h2>
 {% endif %}
 
 <hr />
 {% for listing in page_obj %}
 <div class="row">
-    <div class="listings card">
-        <div class="row no-gutters">
-            <div class="col-sm-6">
-                <img class="item_image" class="card-img-top" src="{{ listing.image.url }}" alt="Image" />
-            </div>
-            <div class="col-sm-6">
-                <div class="card-body">
-                        <a href="{% url 'listing' listing.id %}" class="link">
-                            <h5 class="card-title" style="text-transform: capitalize">{{ listing.title }} 
-                            {% if listing.active %}
-                                <span class="badge" style="background-color: #dff0d8; border-color: #d6e9c6; color: #3c763d;">NEW </span></h5>
+<div class="listings card">
+    <div class="row no-gutters">
+        <div class="col-sm-6">
+            <img class="item_image" class="card-img-top" src="{{ listing.image.url }}" alt="Image" />
+        </div>
+        <div class="col-sm-6">
+            <div class="card-body">
+                    <a href="{% url 'listing' listing.id %}" class="link">
+                        <h5 class="card-title" style="text-transform: capitalize">{{ listing.title }} 
+                        {% if listing.active %}
+                            <span class="badge" style="background-color: #dff0d8; border-color: #d6e9c6; color: #3c763d;">NEW </span></h5>
+                        {% else %}
+                            <span class="badge" style="background-color: #fff3cd;border-color: #ffecb5;color: #664d03;">CLOSED</span></h5>
+                        {% endif %}
+
+                    </a>
+                    <p class="card-text" style="text-transform:first-letter: capitalize">{{ listing.description | safe}}</p>
+                    <div class="hstack gap-3">
+                        <div>
+                            {% if listing.bid_current is None %}
+                                <h4 class="card-title price">USD ${{ listing.bid_start |floatformat:2|intcomma}}</h4>
                             {% else %}
-                                <span class="badge" style="background-color: #fff3cd;border-color: #ffecb5;color: #664d03;">CLOSED</span></h5>
+                                <h4 class="card-title price" id="price" >USD ${{ listing.bid_current |floatformat:2|intcomma}}</h4>
+                            {% endif %}
+                        </div>
+
+                        <div class="ms-auto">
+                            {% if user.is_authenticated %}
+                                <a data-toggle="tooltip" data-placement="top" title="Add this Listing to Watchlist." class="btn btn-danger btn-sm rounded-pill" style="padding: 0.5em"
+                                href="{% url 'update_watchlist' listing.id 'listings' %}" role="button">
+                            {% else %}
+                                <a href="{% url 'login' %}" class="card-link">
                             {% endif %}
 
-                        </a>
-                        <p class="card-text" style="text-transform:first-letter: capitalize">{{ listing.description | safe}}</p>
-                        <div class="hstack gap-3">
-                            <div>
-                                {% if listing.bid_current is None %}
-                                    <h4 class="card-title price">USD ${{ listing.bid_start |floatformat:2|intcomma}}</h4>
+                            {% if user.is_authenticated %}
+                                {% if listing in watchlist %}
+                                    Remove from watchlist&nbsp<i class="fa-regular fa-eye-slash"></i>
                                 {% else %}
-                                    <h4 class="card-title price" id="price" >USD ${{ listing.bid_current |floatformat:2|intcomma}}</h4>
+                                    Add to watchlist&nbsp<i class="fa-regular fa-eye"></i>
                                 {% endif %}
-                            </div>
-
-                            <div class="ms-auto">
-                                {% if user.is_authenticated %}
-                                    <a data-toggle="tooltip" data-placement="top" title="Add this Listing to Watchlist." class="btn btn-danger btn-sm rounded-pill" style="padding: 0.5em"
-                                    href="{% url 'update_watchlist' listing.id 'listings' %}" role="button">
-                                {% else %}
-                                    <a href="{% url 'login' %}" class="card-link">
-                                {% endif %}
-
-                                {% if user.is_authenticated %}
-                                    {% if listing in watchlist %}
-                                        Remove from watchlist&nbsp<i class="fa-regular fa-eye-slash"></i>
-                                    {% else %}
-                                        Add to watchlist&nbsp<i class="fa-regular fa-eye"></i>
-                                    {% endif %}
-                                {% endif %}
-                                </a>
-                            </div>
+                            {% endif %}
+                            </a>
                         </div>
-                        <p>
-                        <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>
-                        </p>
-                        
+                    </div>
+                    <p>
+                    <footer class="footer_text card-footer"><small>Created on {{ listing.created_date|date:"M, d, Y g:i a" }}</small></footer>
+                    </p>
+                    
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endfor %}
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">                
+        {% comment %} First page always {% endcomment %}
+        <li class="page-item {% if page_obj.has_previous %}{% endif %}">
+            <a class="page-link" href="?page=1">First</a>
+
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true"><i class="fa-solid fa-angles-left"></i></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+        {% endif %}
+        {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+                <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true"><i class="fa-solid fa-angles-right"></i></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        {% endif %}
+        {% comment %} Last page always {% endcomment %}
+        <li class="page-item {% if page_obj.has_next %}{% endif %}">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+
+    </ul>
+</nav>
+
+    </div>
+    <div class="tab-pane fade" id="billing-tab-pane" role="tabpanel" aria-labelledby="billing-tab" tabindex="0">
+
+        
+<div id="spinner-loading" class="text-center mt-5">
+    <div class="spinner-border" style="width: 6rem; height: 6rem;" role="status"></div>
+</div>
+  
+<div id="data-loading" class="not-visible">
+    <div class="nav">
+        <div style="width: 80%">
+            
+            <div>
+                <h1> Invoice# </h1>
+                <br>
+                <p>{{"Billed To: "|addstr:user.first_name|capfirst|addstr:" "|addstr:user.last_name }} </p>
+                <p>
+                    <span>{{"Email: "|addstr:user.email}}</span><br>
+                    <span>{{"Phone: "|addstr:userInfo.phone}}</span><br>
+                    <span>{{userInfo.address}}</span><br>
+                    <span>{{userInfo.city}}</span><span> {{userInfo.state}}, </span><span>{{userInfo.zip_code}}</span>
+                </p>
+            </div>
+            
+            <div class="ms-auto">
+                <button type="button" href="#" style="padding: 0.5em;" class="ms-auto d-flex justify-content-between btn btn-success btn-sm">Make a Payment</button>
+            </div>
+        </div>
+        
+
+        <div  class="ms-auto" style="width: 50px">
+            <form >
+                <input
+            id="printPageButton"
+            type="image"
+            value="Print me!"
+            onClick="window.print()"
+            src="{% static 'img/printer.svg' %}"/>
+            </form>
+            
+        </div>
+    </div>
+    <br>
+    <div style="padding: 0 20% 0 20%">
+        At-a-glance summary
+        <hr>
+        <div style="justify-content: center">
+            {% for sale in pendingPayments %}
+            <div class="row d-flex justify-content-between">
+                <div class="col-3">
+                    <h6> {{ sale.listing.title }} </h6>
+                </div>
+                <div class="col-3">
+                    <h6> {{ sale.date }}  </h6>
+                </div>
+                <div class="col-3 d-flex justify-content-end">
+                    <h6> ${{ sale.price|floatformat:2 }} </h6>
+                </div>
+            </div>
+            {% endfor %}
+            <hr>
+            <div class="row d-flex justify-content-end">
+                <div class="col-3 d-flex justify-content-end"><h3>Total Due: </h3></div>
+                <div class="col-3 d-flex justify-content-end">
+                <h3><mark>${{ total|floatformat:2 }} </mark></h3>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endfor %}
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">                
-            {% comment %} First page always {% endcomment %}
-            <li class="page-item {% if page_obj.has_previous %}{% endif %}">
-                <a class="page-link" href="?page=1">First</a>
+    </div>
+  </div>
 
-            {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                        <span aria-hidden="true"><i class="fa-solid fa-angles-left"></i></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-            {% endif %}
-            {% for i in page_obj.paginator.page_range %}
-                {% if page_obj.number == i %}
-                    <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                {% else %}
-                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                        <span aria-hidden="true"><i class="fa-solid fa-angles-right"></i></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            {% endif %}
-            {% comment %} Last page always {% endcomment %}
-            <li class="page-item {% if page_obj.has_next %}{% endif %}">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
 
-        </ul>
-    </nav>
+
+
 {% endblock %}

@@ -17,8 +17,16 @@ class User(AbstractUser):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    address = models.CharField(max_length=100, blank=True)
+    phone = models.CharField(max_length=20, blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    state = models.CharField(max_length=100, blank=True)
+    zip_code = models.CharField(max_length=100, blank=True)
     avatar = models.ImageField(
         upload_to="profile/", default='profile/avatar.png')
+
+    def __str__(self) -> str:
+        return self.user.username
 
 
 class Category(models.Model):
@@ -51,6 +59,7 @@ class Listing(models.Model):
         User, related_name='listing_likes', blank=True, null=True)
     score = models.IntegerField(default=0, validators=[
                                 MinValueValidator(0), MaxValueValidator(5)])
+    paid = models.BooleanField(default=False)
 
     def save(self, force_insert=False, force_update=False, using=None):
         super().save()  # saving image first

@@ -343,3 +343,22 @@ img.graph {
     align-items: center;
     margin: 0 10px;
 }
+
+mark {
+    background-color: hsl(60, 100%, 50%);
+    color: black;
+}
+
+#listings-tab,
+#billing-tab {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 10px;
+    color: black;
+}
+
+#listings-tab::after {
+    background-color: grey;
+}

@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
+  preloader = document.querySelector('#preloader');
+  email_content = document.querySelector('#email_content');
+  footer_content = document.querySelector('#footer_content');
+  mail_image = document.querySelector('#mail_image');
+  
+  setTimeout(() => {
+    preloader.classList.add('not-visible');
+    email_content.classList.remove('not-visible');
+    footer_content.classList.remove('not-visible');
+    mail_image.classList.remove('not-visible');
+  }, 2000);
+
   // Use buttons to toggle between views
   document
     .querySelector('#inbox')

@@ -42,7 +42,8 @@ class Listing(models.Model):
     description = RichTextField(max_length=1024, null=True, blank=True)
     bid_start = models.FloatField()
     bid_current = models.FloatField(blank=True, null=True)
-    created_date = models.DateTimeField(default=timezone.localtime())
+    # created_date = models.DateTimeField(default=timezone.localtime())
+    created_date = models.DateTimeField(default=timezone.now)
     creator = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="all_listings")
     category = models.ForeignKey(Category, on_delete=models.CASCADE,
@@ -56,7 +57,7 @@ class Listing(models.Model):
     watchers = models.ManyToManyField(
         User, blank=True, related_name="watchlist")
     likes = models.ManyToManyField(
-        User, related_name='listing_likes', blank=True, null=True)
+        User, related_name='listing_likes', blank=True)
     score = models.IntegerField(default=0, validators=[
                                 MinValueValidator(0), MaxValueValidator(5)])
     paid = models.BooleanField(default=False)
@@ -111,7 +112,8 @@ class Bid(models.Model):
 
 class Comment(models.Model):
     comment = models.CharField(max_length=100)
-    created_date = models.DateTimeField(default=timezone.localtime())
+    # created_date = models.DateTimeField(default=timezone.localtime())
+    created_date = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     listing = models.ForeignKey(
         Listing, on_delete=models.CASCADE, related_name="user_comment")
@@ -126,14 +128,16 @@ class Sales(models.Model):
         User, on_delete=models.CASCADE, related_name="sale_buyer")
     seller = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="sale_seller")
-    date = models.DateTimeField(default=timezone.localtime())
+    # date = models.DateTimeField(default=timezone.localtime())
+    date = models.DateTimeField(default=timezone.now)
     price = models.FloatField()
 
 
 class Profits(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     profit = models.FloatField(default=0)
-    date = models.DateTimeField(default=timezone.localtime())
+    # date = models.DateTimeField(default=timezone.localtime())
+    date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"User: {self.user} , Profit: {self.profit}"
@@ -145,7 +149,8 @@ class Profits(models.Model):
 class Expenses(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     expense = models.FloatField(default=0)
-    date = models.DateTimeField(default=timezone.localtime())
+    # date = models.DateTimeField(default=timezone.localtime())
+    date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"User: {self.user} , Expense: {self.expense}"

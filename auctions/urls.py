@@ -40,6 +40,8 @@ urlpatterns = [
     path('like/<int:pk>', views.like, name='like_listing'),
     path('rate_listing', views.rate_listing, name='rate_listing'),
     path('charge/', views.charge, name='charge'),
+    path('update_userInfo/<int:user_id>',
+         views.update_userInfo, name='update_userInfo'),
 ]
 
 if settings.DEBUG:

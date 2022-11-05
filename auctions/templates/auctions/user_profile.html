@@ -11,7 +11,12 @@
     <div class="row">
         <div class="col-5" style="margin:0 auto;">
             <div class="card">
+                <div class="ms-auto">
+                    <a type="button" href="{% url 'charge' %}" data-bs-toggle="modal" data-bs-target="#userInfo" method="GET" style="padding: 0.5em; font-size: 10px; margin-top: 10px; margin-right: 10px" 
+                    class="ms-auto d-flex justify-content-between btn btn-success btn-sm"><i class="fa-solid fa-pen"></i>&nbspUpdate Information</a>
+                </div>
                 <div class="card-body">
+                    
                     {% comment %} add user image to right corner {% endcomment %}
                     <h5 class="card-title text-center">{{ search_user.first_name }} {{ search_user.last_name }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted text-center">{{ search_user.email }}</h6>
@@ -19,6 +24,7 @@
 
                     {% comment %} Add a circular user image to the right of user info {% endcomment %}
                     <div class="text-center">
+                        
                         {% comment %} Add an option to update a new user image {% endcomment %}
                         <img src="{{ search_user.userprofile.avatar.url }}" alt="Avatar" class="rounded-circle float-right ms-auto" style="width: 100px; height: 100px; object-fit: cover;">
 
@@ -38,6 +44,7 @@
                     </div>
                 </div>
 
+                
 
 
 
@@ -231,5 +238,128 @@
 
     </div>
   </div>
+
+  <div class="modal fade" id="userInfo" tabindex="-1" aria-labelledby="delete" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="delete">Update User Information</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+            <form class="row g-3" action="{% url 'update_userInfo' user.id %}" method="POST">
+                {% csrf_token %}
+                <div class="col-md-6" >
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingFirstInput" placeholder="First Name" name="UpdateFirstName">
+                        <label for="floatingFirstInput">First Name</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingLastInput" placeholder="Last Name" name="UpdateLastName">
+                        <label for="floatingLastInput">Last Name</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingPhoneInput" placeholder="Phone Number" name="UpdatePhone">
+                        <label for="floatingPhoneInput">Phone Number</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingAddressInput" placeholder="Address" name="UpdateAddress">
+                        <label for="floatingAddressInput">Address</label>
+                    </div>
+                </div>
+
+
+                <div class="col-md-5">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingCityInput" placeholder="City" name="UpdateCity">
+                        <label for="floatingCityInput">City</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating mb-3">
+                        
+                  <select class="form-select" id="floatingStateInput" placeholder="State" required name="UpdateState">
+                    <option value="AL" selected>Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                  </select>
+                  <label for="floatingStateInput">State</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingZipInput" placeholder="Zip Code" name="UpdateZip">
+                        <label for="floatingZipInput">Zip Code</label>
+                    </div>
+                </div>
+                <button role="button" type="submit" style="padding: 0.5em" class="btn btn-primary" href="{% url 'update_userInfo' user.id %}" method="POST">Submit Information</button>
+              </form>
+        </div>
+  {% comment %}
+        <div class="modal-footer">
+          <button type="button" style="padding: 0.5em" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+          <a role="button" type="submit" style="padding: 0.5em" class="btn btn-primary" href="{% url 'update_userInfo' user.id %}" method="POST">Submit Information</a>
+
+         <a data-toggle="tooltip" data-placement="top" title="Delete this Listing from Bbay."class="btn btn-danger btn-sm" 
+          style="padding: 0.5em" href="{% url 'delete_listing' listing.id %}" role="button">Delete Listing</a> 
+        </div>{% endcomment %}
+      </div>
+    </div>
+</div>
 
 {% endblock %}

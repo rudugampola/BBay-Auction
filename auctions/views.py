@@ -16,12 +16,11 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.core.paginator import Paginator
 
+# Stripe Information
 import stripe
 stripe.api_key = "sk_test_51M0Z0iAVXcXhXFdu5e2NEfPISaTOn4qw7GAiVyfjWlZvwXxJUtEz3DmIwakyoqHH1HEITTZS2n9T1EBRXz2gSX1a000uF27rfu"
 
-
-# TODO - Run a report on all listings and their bids and comments and watchers
-
+# Pagination page numbers
 PAGES = 5
 
 
@@ -78,13 +77,18 @@ def rate_listing(request):
 
 
 def charge(request):
+    pendingPayments = []
+    total = 0
+    for sale in Sales.objects.filter(buyer=request.user):
+        if sale.listing.paid == False:
+            pendingPayments.append(sale)
+            total += sale.price
+
     if request.method == 'POST':
         print('Data:', request.POST)
-        total = 0
 
         for sale in Sales.objects.filter(buyer=request.user):
             if sale.listing.paid == False:
-                total += sale.price
                 sale.listing.paid = True
                 sale.listing.save()
 
@@ -109,7 +113,11 @@ def charge(request):
 
         return render(request, 'auctions/thanks.html')
     else:
-        return render(request, "auctions/payments.html")
+        return render(request, "auctions/payments.html", {
+            "pendingPayments": pendingPayments,
+            "total": total,
+            "user": request.user,
+        })
 
 
 @login_required
@@ -294,8 +302,42 @@ def user_profile(request, user_id):
         "total": total,
         "user": request.user,
         "userInfo": UserProfile.objects.get(user=request.user)
-
     })
+
+
+def update_userInfo(request, user_id):
+    user = User.objects.get(id=user_id)
+    user_profile = UserProfile.objects.get(user=user)
+
+    firstName = request.POST.get('firstName')
+    lastName = request.POST.get('lastName')
+    phone = request.POST.get('UpdatePhone')
+    address = request.POST.get('UpdateAddress')
+    city = request.POST.get('UpdateCity')
+    state = request.POST.get('UpdateState')
+    zipcode = request.POST.get('UpdateZipcode')
+
+    if firstName:
+        user.first_name = firstName
+    if lastName:
+        user.last_name = lastName
+    user.save()
+
+    if phone:
+        user_profile.phone = phone
+    if address:
+        user_profile.address = address
+    if city:
+        user_profile.city = city
+    if state:
+        user_profile.state = state
+    if zipcode:
+        user_profile.zipcode = zipcode
+    user_profile.save()
+
+    messages.success(request, 'Success ✅: User info updated successfully!')
+
+    return HttpResponseRedirect(reverse('user_profile', args=[str(user_id)]))
 
 
 def categories(request):

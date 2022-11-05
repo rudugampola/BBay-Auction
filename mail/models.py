@@ -17,7 +17,8 @@ class Email(models.Model):
     subject = models.CharField(max_length=255)
     # body = models.TextField(blank=True)
     body = RichTextField(blank=True)
-    timestamp = models.DateTimeField(default=timezone.localtime())
+    # timestamp = models.DateTimeField(default=timezone.localtime())
+    timestamp = models.DateTimeField(default=timezone.now)
     read = models.BooleanField(default=False)
     archived = models.BooleanField(default=False)
 

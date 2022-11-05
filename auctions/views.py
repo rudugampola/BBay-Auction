@@ -72,7 +72,7 @@ def support(request):
 
 def agreement(request):
     return render(request, "auctions/agreement.html", {
-        "title": "User Agreement "
+        "title": "User Agreement"
     })
 
 

@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %} 
+{% block body %}
+{% load static %}
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5 align-self-center">
+            <img src="{% static 'img/check.png' %}" />
+            </div>
+                <div class="col-md-6 align-self-center">
+                <h1 class="display-1">Thank you!</h1>
+                <h2>Thank you for your payment!</h2>
+                <p>You should receive an automated email to confirm your payment.</p>
+                <a class="btn btn-success rounded-pill" type="button" href="{% url 'index' %}">HOME</a>
+            </div>
+      </div>
+    </div>
+  </main>
+
+  
+{% endblock %}

@@ -359,6 +359,8 @@ mark {
     color: black;
 }
 
-#listings-tab::after {
-    background-color: grey;
+/* when aria selected is false for listings-tab */
+#listings-tab[aria-selected="false"],
+#billing-tab[aria-selected="false"] {
+    background-color: #b1b1b1b2;
 }

@@ -1,3 +1,6 @@
+from mail.models import Email
+from .models import (Bid, Category, Comment, Expenses, Listing, ListingFilter, Profits, Sales,
+                     User, UserProfile)
 import base64
 import csv
 import io
@@ -13,9 +16,9 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.core.paginator import Paginator
 
-from .models import (Bid, Category, Comment, Expenses, Listing, ListingFilter, Profits, Sales,
-                     User, UserProfile)
-from mail.models import Email
+import stripe
+stripe.api_key = "sk_test_51M0Z0iAVXcXhXFdu5e2NEfPISaTOn4qw7GAiVyfjWlZvwXxJUtEz3DmIwakyoqHH1HEITTZS2n9T1EBRXz2gSX1a000uF27rfu"
+
 
 # TODO - Run a report on all listings and their bids and comments and watchers
 
@@ -72,6 +75,41 @@ def rate_listing(request):
         obj.save()
         return JsonResponse({'success': 'true', "score": val}, safe=False)
     return JsonResponse({'success': 'false'}, safe=False)
+
+
+def charge(request):
+    if request.method == 'POST':
+        print('Data:', request.POST)
+        total = 0
+
+        for sale in Sales.objects.filter(buyer=request.user):
+            if sale.listing.paid == False:
+                total += sale.price
+                sale.listing.paid = True
+                sale.listing.save()
+
+        customer = stripe.Customer.create(
+            email=request.POST.get('email'),
+            name=request.POST.get('name'),
+            source=request.POST.get('stripeToken'),
+        )
+
+        intent = stripe.PaymentIntent.create(
+            customer=customer['id'],
+            setup_future_usage='off_session',
+            amount=int(total * 100),
+            currency='usd',
+            # automatic_payment_methods={
+            #     'enabled': True,
+            # },
+            payment_method_types=['card'],
+            receipt_email=request.POST.get('email'),
+            description='Payment for purchases on Auctions',
+        )
+
+        return render(request, 'auctions/thanks.html')
+    else:
+        return render(request, "auctions/payments.html")
 
 
 @login_required
@@ -543,7 +581,7 @@ def update_watchlist(request, listing_id, reverse_method):
         return HttpResponseRedirect(reverse(reverse_method))
     else:  # reverse_method = "listing"
         request.session['watchlist_count'] = request.user.watchlist.count()
-        return HttpResponseRedirect(reverse(reverse_method, args=[listing_id]))
+        return HttpResponseRedirect(reverse(reverse_method, args=[request.user.id]))
 
 
 def login_view(request):

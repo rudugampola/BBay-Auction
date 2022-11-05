@@ -39,6 +39,7 @@ urlpatterns = [
     path('filter/', views.filter, name="filter"),
     path('like/<int:pk>', views.like, name='like_listing'),
     path('rate_listing', views.rate_listing, name='rate_listing'),
+    path('charge/', views.charge, name='charge'),
 ]
 
 if settings.DEBUG:

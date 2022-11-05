@@ -64,6 +64,18 @@ def index(request):
     })
 
 
+def support(request):
+    return render(request, "auctions/support.html", {
+        "title": "Support"
+    })
+
+
+def agreement(request):
+    return render(request, "auctions/agreement.html", {
+        "title": "User Agreement "
+    })
+
+
 def rate_listing(request):
     if request.method == 'POST':
         listing_id = request.POST.get('listing_id')

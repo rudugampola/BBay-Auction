@@ -1,0 +1,50 @@
+{% extends "auctions/layout.html" %} 
+{% block body %}
+{% load static %}
+
+  <main>
+
+    <div class=" text-center">
+        <h1 class="display-4">We've got your back!</h1>
+        <img class="d-block mx-auto mb-4" src="{% static 'img/customer_service.png' %}" alt="" width="50%">
+        
+        <p class="lead">Can't find what you need in our FAQs? 
+            Get in touch with a friendly member of our team. We're here to help you!</p>
+        <a type="button" href="#" class="mx-auto btn-contact">Contact Us</a>
+    </div>
+
+    
+  </main>
+
+  <style>
+
+    
+             
+    .btn-contact {
+        background-image: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+        margin: 10px;
+        padding: 15px 45px;
+        text-align: center;
+        text-transform: uppercase;
+        transition: 0.5s;
+        background-size: 200% auto;
+        color: white;            
+        box-shadow: 0 0 20px #eee;
+        border-radius: 10px;
+        display: block;
+        width: 200px;
+        text-decoration: none;
+      }
+
+      .btn-contact:hover {
+        background-position: right center; /* change the direction of the change here */
+        color: #fff;
+        text-decoration: none;
+      }
+     
+
+            
+
+    </style>
+
+{% endblock %}

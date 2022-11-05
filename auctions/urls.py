@@ -42,6 +42,8 @@ urlpatterns = [
     path('charge/', views.charge, name='charge'),
     path('update_userInfo/<int:user_id>',
          views.update_userInfo, name='update_userInfo'),
+    path('support/', views.support, name='support'),
+    path('agreement/', views.agreement, name='agreement'),
 ]
 
 if settings.DEBUG:

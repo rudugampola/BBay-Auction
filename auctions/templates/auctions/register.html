@@ -28,7 +28,17 @@
         <div class="form-group" style="width: 350px; margin-bottom: 10px">
             <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password" required>
         </div>
-        <input class="btn btn-primary rounded-pill" style="margin-bottom: 10px" type="submit" value="Register">
+        {% comment %} Add Check Box for User Agreement {% endcomment %}
+        
+        <div class="form-check ">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="margin-left: 5%" onchange="document.getElementById('registerButton').disabled = !this.checked;" >
+            <label class="form-check-label" for="flexCheckDefault" style="margin-right: 5%">
+                I agree to the <a href="{% url 'agreement' %}">User Agreement</a>
+            </label>
+          </div>
+
+
+        <input class="btn btn-primary rounded-pill" style="margin-bottom: 10px" type="submit" value="Register" id="registerButton" disabled>
         <p>Already have an account? <a href="{% url 'login' %}">Log In here.</a></p>
     </form>
 

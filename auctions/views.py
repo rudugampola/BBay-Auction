@@ -15,6 +15,8 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.html import format_html
 from django.core.paginator import Paginator
+from django.core.mail import send_mail
+from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 
 # Stripe Information
@@ -728,6 +730,13 @@ def register(request):
             user.first_name = first_name
             user.last_name = last_name
             user.save()
+            subject = 'Welcome to Bbay Auctions!'
+            message = f'Hello {first_name},\n\nThank you for registering with Bbay Auctions. We hope you enjoy your stay!\n\nBest regards,\nBbay Auctions Team'
+            from_email = settings.EMAIL_HOST_USER
+            recepient_list = [email]
+            send_mail(subject, message, from_email,
+                      recepient_list, fail_silently=False)
+
             # Create a profile for every user created, avatar will be default
             profile = UserProfile(user=user)
             profile.save()
@@ -735,6 +744,7 @@ def register(request):
             messages.error(request, "Error: Username already taken.")
             return HttpResponseRedirect(reverse("register"))
         login(request, user)
+        messages.success(request, "Success: User Registered successfully!")
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html", {

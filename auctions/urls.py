@@ -44,6 +44,8 @@ urlpatterns = [
          views.update_userInfo, name='update_userInfo'),
     path('support/', views.support, name='support'),
     path('agreement/', views.agreement, name='agreement'),
+    path('privacy/', views.privacy, name='privacy'),
+    path('shipping/', views.shipping, name='shipping'),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,88 @@
+{% extends "auctions/layout.html" %} 
+{% block body %}
+{% load static %}
+{% include 'auctions/messages.html' %}
+
+{% comment %} Show listings to ship in a table {% endcomment %}
+{% if ready_to_ship %}
+    <h2>Ready to Ship&nbsp - &nbsp
+        <i class="fa-brands fa-fedex"></i>
+        <i class="fa-brands fa-ups"></i>
+        <i class="fa-brands fa-dhl"></i>
+        <i class="fa-brands fa-usps"></i>
+    </h2>
+    
+<div style="padding: 0 100px 0 100px;">
+    <form  action="{% url 'shipping' %}" method="POST">
+        {% csrf_token %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Ship</th>
+                <th scope="col">Sale ID</th>
+                <th scope="col">Item</th>
+                <th scope="col">Seller</th>
+                <th scope="col">Buyer</th>
+                <th scope="col">Sell Price</th>
+                <th scope="col">Buyer's Shipping Address</th>
+                <th scope="col">Buyer's City</th>
+                <th scope="col">Buyer's State</th>
+                <th scope="col">Buyer's Zip Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for listing in ready_to_ship %}
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" value={{ listing.id }} id={{ listing.id }} name="listing-id"></td>
+                    <td>
+                        {% for key, value in sale_ID.items %} 
+                            {% if value == listing %}
+                                {{ key }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ listing.title }}</td>
+                    <td>{{ listing.creator }}</td>
+                    <td>{{ listing.buyer }}</td>
+                    <td>{{ listing.bid_current|floatformat:2 }}</td>
+                    <td>
+                        {% for key, value in buyers_address.items %} 
+                            {% if key == listing.buyer %}
+                                {{ value.address }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for key, value in buyers_address.items %} 
+                            {% if key == listing.buyer %}
+                                {{ value.city }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for key, value in buyers_address.items %} 
+                            {% if key == listing.buyer %}
+                                {{ value.state }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for key, value in buyers_address.items %} 
+                            {% if key == listing.buyer %}
+                                {{ value.zip_code }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-truck-fast"></i>&nbspShip Selected</button>
+    </form>
+</div>
+{% else %}
+    <p>No listings to ship.</p>
+{% endif %}
+
+{% endblock %}

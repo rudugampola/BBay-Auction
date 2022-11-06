@@ -61,6 +61,7 @@ class Listing(models.Model):
     score = models.IntegerField(default=0, validators=[
                                 MinValueValidator(0), MaxValueValidator(5)])
     paid = models.BooleanField(default=False)
+    shipped = models.BooleanField(default=False)
 
     def save(self, force_insert=False, force_update=False, using=None):
         super().save()  # saving image first

@@ -109,6 +109,10 @@ body {
     color: var(--clr-accent);
 }
 
+.footer_icons:hover {
+    color: var(--clr-primary);
+}
+
 .link {
     text-decoration: none;
     color: var(--clr-accent);
@@ -363,4 +367,14 @@ mark {
 #listings-tab[aria-selected="false"],
 #billing-tab[aria-selected="false"] {
     background-color: #b1b1b1b2;
+}
+
+td,
+th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+tr:hover {
+    background-color: lightyellow;
 }

@@ -1,7 +1,15 @@
 {% if messages %}
     {% for message in messages %}
         <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
-            {{ message }}
+        {% if message.tags == "alert-success" %}
+            <i class="fas fa-check-circle"></i>&nbsp{{ message }}
+        {% elif message.tags == "alert-danger" %}
+            <i class="fas fa-exclamation-circle"></i>&nbsp{{ message }}
+        {% elif message.tags == "alert-warning" %}
+            <i class="fas fa-exclamation-triangle"></i>&nbsp{{ message }}
+        {% elif message.tags == "alert-info" %}
+            <i class="fas fa-info-circle"></i>&nbsp{{ message }}
+        {% endif %}
         </div>
     {% endfor %}
 {% endif %} 

@@ -117,6 +117,11 @@
                 <li>
                   <a class="dropdown-item" href="{% url 'expenses' %}">Expenses 💸</a>
                 </li>
+                {% if request.user.is_superuser %}
+                  <li>
+                    <a class="dropdown-item" href="{% url 'shipping' %}">Shipping 🚚</a>
+                  </li>
+                {% endif %}
               </ul>
             </li>
 
@@ -125,7 +130,7 @@
             </li>
             {% endif %} 
 
-            <li class="nav-item">
+            {% comment %} <li class="nav-item">
               <a class="nav-link link" data-bs-toggle="modal" data-bs-target="#faqModal">
                 <i class="fa-solid fa-circle-question"></i>&nbspFAQ </a>
             </li>
@@ -136,7 +141,7 @@
             <li class="nav-item">
               <a class="nav-link link" href="{% url 'support' %}">
                 <i class="fa-solid fa-phone"></i>&nbspSupport</a>
-            </li>
+            </li> {% endcomment %}
             
           </ul>  
             
@@ -171,18 +176,25 @@
     <br />
     <div class="footer">
       <p class="text-center">
-        <a class="footer_text" href="{% url 'index' %}">Home 🏠</a>
+        <a class="footer_text footer_icons" href="{% url 'index' %}"><i class="fa-solid fa-house"></i>&nbspHome</a>
         |
         <a
-          class="footer_text"
+          class="footer_text footer_icons"
           data-bs-toggle="modal"
           data-bs-target="#aboutModal"
-          >About Us 👋</a
-        >
+          ><i class="fa-solid fa-circle-info"></i>&nbspAbout Us</a>
         |
-        <a class="footer_text" data-bs-toggle="modal" data-bs-target="#faqModal"
-          >FAQ ❔</a
-        >
+        <a class="footer_text footer_icons" data-bs-toggle="modal" data-bs-target="#faqModal"
+          ><i class="fa-solid fa-circle-question"></i>&nbspFAQ</a>
+        |
+        <a class="footer_text footer_icons" href="{% url 'support' %}">
+            <i class="fa-solid fa-phone"></i>&nbspSupport</a>
+          |
+          <a class="footer_text footer_icons" href="{% url 'privacy' %}">
+            <i class="fa-solid fa-user-lock"></i>&nbspPrivacy</a>
+            |
+            <a class="footer_text footer_icons" href="{% url 'agreement' %}">
+              <i class="fa-solid fa-file-contract"></i>&nbspTerms</a>
       </p>
       <p class="text-center footer_text">©Ravindu Udugampola 2022</p>
     </div>

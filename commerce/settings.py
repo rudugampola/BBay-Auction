@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'import_export',
     'storages',
     'ckeditor',
-    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -94,10 +93,6 @@ EMAIL_USE_TLS = True
 
 # 1 Hour to Reset Password
 PASSWORD_RESET_TIMEOUT = 3600
-
-# Recaptcha Configuration
-RECAPTCHA_PUBLIC_KEY = '6LdcteQiAAAAAKH4vYMc3YrtjIEh3YL4mBzSsVxj'
-RECAPTCHA_PRIVATE_KEY = '6LdcteQiAAAAAIeD5otfXq_qddG8ozD5m1A5feHP'
 
 ROOT_URLCONF = 'commerce.urls'
 

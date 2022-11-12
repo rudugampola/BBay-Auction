@@ -4,7 +4,7 @@
 
 <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-
+  <h2>{{ title }}</h2> 
   <div class="form-control" style="padding-top: 15px;">
         {{ form.title |as_crispy_field }} 
         <br>
@@ -15,9 +15,8 @@
         <br>
         {{ form.category |as_crispy_field }} 
         <br>
-        {{form.image|as_crispy_field }}
+        {{form.image |as_crispy_field }}
         <br>
-        
     
         <div>
             <input data-toggle="tooltip" data-placement="right" title="Submit a Listing."type="submit" class="btn btn-success rounded-pill" style="padding: 0.5em; margin: 5px"/> 

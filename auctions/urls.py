@@ -19,12 +19,12 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("user_profile/<int:user_id>", views.user_profile, name="user_profile"),
-    path("create", views.create, name="create"),
+    path("auction/create", views.create, name="create"),
     path("edit_listing/<int:listing_id>",
          views.edit_listing, name="edit_listing"),
     path("listing/<int:listing_id>", views.listing, name="listing"),
     path("import_csv", views.import_csv, name="import_csv"),
-    path("categories", views.categories, name="categories"),
+    path("auction/categories", views.categories, name="categories"),
     path("categories/<int:category_id>", views.categories, name="categories"),
     path("create_category", views.create_category, name="create_category"),
     path("auction/listing/<int:listing_id>/comment",
@@ -47,6 +47,7 @@ urlpatterns = [
     path('agreement/', views.agreement, name='agreement'),
     path('privacy/', views.privacy, name='privacy'),
     path('shipping/', views.shipping, name='shipping'),
+    path('accounts/login/', views.login_view, name='login'),
 
     # Password reset Views
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="auctions/password_reset.html",

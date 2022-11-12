@@ -2,3 +2,7 @@ __pycache__/
 commerce/__pycache__/
 auctions/__pycache__/
 auctions/migrations/__pycache__/
+*.log
+*.pot
+*.pyc
+__pycache__/

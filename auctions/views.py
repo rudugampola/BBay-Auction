@@ -39,11 +39,11 @@ class NewListingForm(forms.ModelForm):
 
         # Add placeholders to all fields
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Title of Listing'}),
-            'description': forms.Textarea(attrs={'placeholder': 'Description of Listing'}),
+            'title': forms.TextInput(attrs={'placeholder': 'Title of Listing', 'class': 'form-control', }),
+            'description': forms.Textarea(attrs={'placeholder': 'Description of Listing', 'class': 'form-control', }),
             'bid_start': forms.NumberInput(attrs={'placeholder': 'Starting Bid Price'}),
-            'image': forms.FileInput(attrs={'placeholder': 'Image'}),
-            'category': forms.Select(attrs={'placeholder': 'Category'}),
+            'image': forms.FileInput(attrs={'placeholder': 'Image', 'class': 'form-control', 'type': 'file', }),
+            'category': forms.Select(attrs={'placeholder': 'Category', 'class': 'form-control', 'type': 'select', 'required': 'true', }),
         }
 
         fields = ['title', 'description', 'bid_start', 'image', 'category']
@@ -62,6 +62,14 @@ class NewCommentForm(forms.ModelForm):
 
 
 def index(request):
+    # Update watchlist
+    count = 0
+    if request.user.is_authenticated:
+        for listing in Listing.objects.all():
+            if listing in request.user.watchlist.all():
+                count += 1
+        request.session['watchlist_count'] = count
+
     return render(request, "auctions/index.html", {
         "title": "Home"
     })
@@ -85,6 +93,7 @@ def privacy(request):
     })
 
 
+@ login_required
 def rate_listing(request):
     if request.method == 'POST':
         listing_id = request.POST.get('listing_id')
@@ -97,6 +106,7 @@ def rate_listing(request):
     return JsonResponse({'success': 'false'}, safe=False)
 
 
+@ login_required
 def charge(request):
     pendingPayments = []
     total = 0
@@ -156,10 +166,11 @@ def create(request):
     else:
         return render(request, "auctions/create.html", {
             "form": NewListingForm(),
-            "title": "Create Listing"
+            "title": "Create a New Listing"
         })
 
 
+@ login_required
 def edit_listing(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     # Prefill the form with the current listing data to be edited
@@ -168,10 +179,19 @@ def edit_listing(request, listing_id):
     if request.method == 'POST':
         listing.title = request.POST['title']
         listing.description = request.POST['description']
-        # Allow imagefield to be blank so that it doesn't have to be updated
-        request.FILES.getlist('image')
+        # Update the image if a new one is uploaded
+        if request.FILES.get('image'):
+            listing.image = request.FILES['image']
+        # image = form.cleaned_data.get('image')
+
         listing.bid_start = request.POST['bid_start']
-        listing.category = Category.objects.get(id=request.POST['category'])
+        if Category.objects.filter(id=request.POST['category']).exists():
+            listing.category = Category.objects.get(
+                id=request.POST['category'])
+        # else:
+        #     listing.category = Category.objects.create(
+        #         id=request.POST['category'])
+        # listing.category = Category.objects.get(id=request.POST['category'])
         listing.save()
 
         messages.success(
@@ -210,6 +230,7 @@ def listing(request, listing_id):
     })
 
 
+@ login_required
 def like(request, pk):
     listing = get_object_or_404(Listing, id=request.POST.get('listing_id'))
     liked = False
@@ -222,6 +243,7 @@ def like(request, pk):
     return HttpResponseRedirect(reverse('listing', args=[str(pk)]))
 
 
+@ login_required
 def delete_listing(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
 
@@ -236,6 +258,7 @@ def delete_listing(request, listing_id):
         return HttpResponseRedirect(reverse("listing", args=[listing_id]))
 
 
+@ login_required
 def import_csv(request):
     # Import CSV data that user uploads into Listings table
     if request.method == 'POST':
@@ -286,6 +309,7 @@ def search(request):
         })
 
 
+@ login_required
 def user_profile(request, user_id):
     user = User.objects.get(id=user_id)
     print(user)
@@ -326,6 +350,7 @@ def user_profile(request, user_id):
     })
 
 
+@ login_required
 def update_userInfo(request, user_id):
     user = User.objects.get(id=user_id)
     user_profile = UserProfile.objects.get(user=user)
@@ -383,6 +408,7 @@ def categories(request):
         })
 
 
+@ login_required
 def create_category(request):
     if request.method == 'POST':
         category = request.POST['category']
@@ -453,7 +479,7 @@ def comment(request, listing_id):
 def bid(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     offer = float(request.POST['offer'])
-
+    print(request.user)
     if bid_valid(offer, listing):
         listing.bid_current = offer
         form = NewBidForm(request.POST)
@@ -480,6 +506,7 @@ def bid_valid(offer, listing):
         return False
 
 
+@ login_required
 def close_listing(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     listing.active = False
@@ -533,6 +560,7 @@ def close_listing(request, listing_id):
 # Show all the items that have been paid for and ready to ship to buyers
 
 
+@ login_required
 @user_passes_test(lambda u: u.is_superuser)
 def shipping(request):
     ready_to_ship = Listing.objects.filter(paid=True, shipped=False)

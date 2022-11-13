@@ -17,4 +17,4 @@ s3transfer==0.6.0
 django-filter==2.4.0
 django-ckeditor==6.1.0
 stripe>=4.0.2
-rosetta==0.9.1
+rosetta==0.3

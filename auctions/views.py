@@ -18,6 +18,8 @@ from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import redirect
+
 
 # Stripe Information
 import stripe
@@ -59,6 +61,18 @@ class NewCommentForm(forms.ModelForm):
                 'placeholder': 'Leave your comment here',
             })
         }
+
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 
 def index(request):
@@ -116,8 +130,6 @@ def charge(request):
             total += sale.price
 
     if request.method == 'POST':
-        print('Data:', request.POST)
-
         for sale in Sales.objects.filter(buyer=request.user):
             if sale.listing.paid == False:
                 sale.listing.paid = True
@@ -204,6 +216,7 @@ def edit_listing(request, listing_id):
         })
 
 
+@ login_required
 def listing(request, listing_id):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('login'))
@@ -272,7 +285,8 @@ def import_csv(request):
         io_string = io.StringIO(data_set)
         next(io_string)
 
-        print("Importing CSV: " + csv_file.name)
+        print(bcolors.WARNING + "Importing CSV: " +
+              csv_file.name + bcolors.ENDC)
 
         for column in csv.reader(io_string, delimiter=',', quotechar="|"):
             _, created = Listing.objects.update_or_create(
@@ -312,7 +326,6 @@ def search(request):
 @ login_required
 def user_profile(request, user_id):
     user = User.objects.get(id=user_id)
-    print(user)
     listings = Listing.objects.filter(creator=user, active=True)
     paginator = Paginator(listings, PAGES)
     page_number = request.GET.get('page')
@@ -479,7 +492,6 @@ def comment(request, listing_id):
 def bid(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     offer = float(request.POST['offer'])
-    print(request.user)
     if bid_valid(offer, listing):
         listing.bid_current = offer
         form = NewBidForm(request.POST)
@@ -614,7 +626,7 @@ def profits(request):
     # file.close()
 
     # Write the JSON object to a file
-    print("Requesting data from Microservice... 🌎")
+    print(bcolors.HEADER + "Requesting data from Microservice... 🌎" + bcolors.ENDC)
     with open('auctions/graphs/data.txt', 'w+') as f:
         f.write(profitsJSON.content.decode('utf-8'))
 
@@ -644,7 +656,7 @@ def expenses(request):
     expensesJSON = (JsonResponse({'data': list(data), 'type': 'expense'}))
 
     # Write the JSON object to a file
-    print("Requesting data from Microservice... 🌎")
+    print(bcolors.HEADER + "Requesting data from Microservice... 🌎" + bcolors.ENDC)
     with open('auctions/graphs/data.txt', 'w+') as f:
         f.write(expensesJSON.content.decode('utf-8'))
 
@@ -675,7 +687,7 @@ def watchlist(request):
         else:
             listing.watched = False
     watchlistCount = listings.count()
-    print("Watchlist count: ", watchlistCount)
+    print(bcolors.OKGREEN + "Watchlist count: " + bcolors.ENDC, watchlistCount)
 
     return render(request, "auctions/listings.html", {
         "page_obj": page_obj,
@@ -712,6 +724,8 @@ def update_watchlist(request, listing_id, reverse_method):
 
 def login_view(request):
     if request.method == "POST":
+        # Get the query string parameter 'next' from the URL
+        nex = request.POST.get('next')
 
         # Attempt to sign user in
         username = request.POST["username"]
@@ -721,7 +735,14 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            print(bcolors.WARNING + "User logged in: " + bcolors.ENDC, user)
+            # return HttpResponseRedirect(reverse("index"))
+
+            if nex:
+                return HttpResponseRedirect(nex)
+            else:
+                return HttpResponseRedirect(reverse("index"))
+
         else:
             messages.error(
                 request, "Error: Invalid username and/or password.")

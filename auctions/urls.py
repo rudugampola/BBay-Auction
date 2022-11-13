@@ -22,7 +22,7 @@ urlpatterns = [
     path("auction/create", views.create, name="create"),
     path("edit_listing/<int:listing_id>",
          views.edit_listing, name="edit_listing"),
-    path("listing/<int:listing_id>", views.listing, name="listing"),
+    path("auction/listing/<int:listing_id>", views.listing, name="listing"),
     path("import_csv", views.import_csv, name="import_csv"),
     path("auction/categories", views.categories, name="categories"),
     path("categories/<int:category_id>", views.categories, name="categories"),

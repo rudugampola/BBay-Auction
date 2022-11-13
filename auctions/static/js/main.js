@@ -4,23 +4,32 @@ const data = document.getElementById('data-box');
 // console.log(spinnerBox);
 // console.log(data);
 
-if (spinnerBox) {
-  $.ajax({
-    type: 'GET',
-    url: '/expenses',
-    success: function (response) {
-      setTimeout(() => {
-        spinnerBox.classList.add('not-visible');
-        data.classList.remove('not-visible');
-      }, 500);
-    },
-    error: function (error) {
-      setTimeout(() => {
-        dataBox.innerHTML = '<b>Failed to load data</b>';
-      }, 500);
-    },
+if (spinnerBox && data) {
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(() => {
+      spinnerBox.classList.add('not-visible');
+      data.classList.remove('not-visible');
+    }, 1000);
   });
 }
+
+// if (spinnerBox) {
+//   $.ajax({
+//     // type: 'GET',
+//     // url: '/expenses',
+//     success: function (response) {
+//       setTimeout(() => {
+//         spinnerBox.classList.add('not-visible');
+//         data.classList.remove('not-visible');
+//       }, 500);
+//     },
+//     error: function (error) {
+//       setTimeout(() => {
+//         dataBox.innerHTML = '<b>Failed to load data</b>';
+//       }, 500);
+//     },
+//   });
+// }
 
 const spinnerLoading = document.getElementById('spinner-loading');
 const dataLoading = document.getElementById('data-loading');

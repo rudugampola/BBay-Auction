@@ -37,13 +37,13 @@
                 {% for profit in profits %}
                 <tr>
                     <td>{{ profit.user }}</td>
-                    <td>{{ profit.profit }}</td>
+                    <td>$ {{ profit.profit | floatformat:2}}</td>
                     <td>{{ profit.date }}</td>
                 </tr>
                 {% endfor %}
                 <tr>
                     <td><strong>Total Profits</strong></td>
-                    <td><strong> $ {{ total }} </strong></td>
+                    <td><strong> $ {{ total | floatformat:2}} </strong></td>
                     <td></td>
                 </tr>
             </tbody>

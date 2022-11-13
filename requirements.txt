@@ -18,3 +18,4 @@ django-filter==2.4.0
 django-ckeditor==6.1.0
 stripe>=4.0.2
 rosetta==0.3
+scipy==1.7.3

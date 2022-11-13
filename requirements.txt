@@ -19,3 +19,4 @@ django-ckeditor==6.1.0
 stripe>=4.0.2
 rosetta==0.3
 scipy==1.7.3
+nltk==3.6.5

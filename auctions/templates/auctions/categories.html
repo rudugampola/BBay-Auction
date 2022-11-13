@@ -7,7 +7,7 @@
     {% if user.is_superuser %}
 
     <div class="form-control" style="margin-bottom: 20px">
-      <form action="{% url 'create_category' %}" method="POST">
+      <form action="{% url 'auctions:create_category' %}" method="POST">
         {% csrf_token %}
         <div class="input-group form-group">
           <input
@@ -32,7 +32,7 @@
           <h5 class="card-title d-flex justify-content-center">
             <a
               class="link"
-              href="{% url 'categories' %}?category={{category.id}}"
+              href="{% url 'auctions:categories' %}?category={{category.id}}"
               >{{ category }}</a
             >
           </h5>

@@ -1,10 +1,12 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path
+from django.urls import path, include, re_path
 from django.contrib.auth import views as auth_views
+from django.conf.urls.i18n import i18n_patterns
 
 from . import views
 
+app_name = "auctions"
 
 urlpatterns = [
     path("", views.index, name="index"),

@@ -378,3 +378,8 @@ th {
 tr:hover {
     background-color: lightyellow;
 }
+
+::selection {
+    /* Change highlight background color to black */
+    background: #c9f0dd;
+}

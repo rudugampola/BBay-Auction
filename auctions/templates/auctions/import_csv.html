@@ -2,7 +2,7 @@
 {% block body %} 
 {% include 'auctions/messages.html' %}
 <form
-  action="{% url 'import_csv' %}"
+  action="{% url 'auctions:import_csv' %}"
   method="post"
   enctype="multipart/form-data"
   class="col-sm-4"

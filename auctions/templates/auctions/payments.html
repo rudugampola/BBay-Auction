@@ -179,7 +179,7 @@
   <div class="col-md-7 col-lg-8">
     
       <!-- Display a payment form -->
-      <form action="{% url 'charge' %}" method="POST" id="payment-form" style="margin-left: auto; margin-right: 0;">
+      <form action="{% url 'auctions:charge' %}" method="POST" id="payment-form" style="margin-left: auto; margin-right: 0;">
         
           {% csrf_token %}
           <div class="py-2 text-center">

@@ -12,7 +12,7 @@
         <div class="col-5" style="margin:0 auto;">
             <div class="card">
                 <div class="ms-auto">
-                    <a type="button" href="{% url 'charge' %}" data-bs-toggle="modal" data-bs-target="#userInfo" method="GET" style="padding: 0.5em; font-size: 10px; margin-top: 10px; margin-right: 10px" 
+                    <a type="button" href="{% url 'auctions:charge' %}" data-bs-toggle="modal" data-bs-target="#userInfo" method="GET" style="padding: 0.5em; font-size: 10px; margin-top: 10px; margin-right: 10px" 
                     class="ms-auto d-flex justify-content-between btn btn-success btn-sm"><i class="fa-solid fa-pen"></i>&nbspUpdate Information</a>
                 </div>
                 <div class="card-body">
@@ -29,7 +29,7 @@
                         <img src="{{ search_user.userprofile.avatar.url }}" alt="Avatar" class="rounded-circle float-right ms-auto" style="width: 100px; height: 100px; object-fit: cover;">
 
                         {% comment %} Give option to edit avatar upload image {% endcomment %}
-                        <form action="{% url 'user_profile' user.id %}" method="POST" enctype="multipart/form-data" id="avatar-form">
+                        <form action="{% url 'auctions:user_profile' user.id %}" method="POST" enctype="multipart/form-data" id="avatar-form">
                             {% csrf_token %}
                             <div class="form-group">
                                 {% if search_user == user %}
@@ -83,7 +83,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="card-body">
-                            <a href="{% url 'listing' listing.id %}" class="link">
+                            <a href="{% url 'auctions:listing' listing.id %}" class="link">
                                 <h5 class="card-title" style="text-transform: capitalize">{{ listing.title }} 
                                 {% if listing.active %}
                                     <span class="badge" style="background-color: #dff0d8; border-color: #d6e9c6; color: #3c763d;">NEW </span></h5>
@@ -105,9 +105,9 @@
                                 <div class="ms-auto">
                                     {% if user.is_authenticated %}
                                         <a data-toggle="tooltip" data-placement="top" title="Add this Listing to Watchlist." class="btn btn-danger btn-sm rounded-pill" style="padding: 0.5em"
-                                        href="{% url 'update_watchlist' listing.id 'user_profile' %}" role="button">
+                                        href="{% url 'auctions:update_watchlist' listing.id 'auctions:user_profile' %}" role="button">
                                     {% else %}
-                                        <a href="{% url 'login' %}" class="card-link">
+                                        <a href="{% url 'auctions:login' %}" class="card-link">
                                     {% endif %}
 
                                     {% if user.is_authenticated %}
@@ -189,7 +189,7 @@
                     </div>
                     
                     <div class="ms-auto">
-                        <a type="button" href="{% url 'charge' %}" method="GET" style="padding: 0.5em; width: 10%" 
+                        <a type="button" href="{% url 'auctions:charge' %}" method="GET" style="padding: 0.5em; width: 10%" 
                         class="ms-auto d-flex justify-content-between btn btn-success btn-sm">Make a Payment</a>
                     </div>
                 </div>
@@ -248,7 +248,7 @@
         </div>
 
         <div class="modal-body">
-            <form class="row g-3" action="{% url 'update_userInfo' user.id %}" method="POST">
+            <form class="row g-3" action="{% url 'auctions:update_userInfo' user.id %}" method="POST">
                 {% csrf_token %}
                 <div class="col-md-6" >
                     <div class="form-floating mb-3">
@@ -347,16 +347,16 @@
                         <label for="floatingZipInput">Zip Code</label>
                     </div>
                 </div>
-                <button role="button" type="submit" style="padding: 0.5em" class="btn btn-primary" href="{% url 'update_userInfo' user.id %}" method="POST">Submit Information</button>
+                <button role="button" type="submit" style="padding: 0.5em" class="btn btn-primary" href="{% url 'auctions:update_userInfo' user.id %}" method="POST">Submit Information</button>
               </form>
         </div>
   {% comment %}
         <div class="modal-footer">
           <button type="button" style="padding: 0.5em" class="btn btn-primary" data-bs-dismiss="modal">No</button>
-          <a role="button" type="submit" style="padding: 0.5em" class="btn btn-primary" href="{% url 'update_userInfo' user.id %}" method="POST">Submit Information</a>
+          <a role="button" type="submit" style="padding: 0.5em" class="btn btn-primary" href="{% url 'auctions:update_userInfo' user.id %}" method="POST">Submit Information</a>
 
          <a data-toggle="tooltip" data-placement="top" title="Delete this Listing from Bbay."class="btn btn-danger btn-sm" 
-          style="padding: 0.5em" href="{% url 'delete_listing' listing.id %}" role="button">Delete Listing</a> 
+          style="padding: 0.5em" href="{% url 'auctions:delete_listing' listing.id %}" role="button">Delete Listing</a> 
         </div>{% endcomment %}
       </div>
     </div>

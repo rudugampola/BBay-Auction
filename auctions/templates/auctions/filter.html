@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="card-body">
-                            <a href="{% url 'listing' listing.id %}" class="link">
+                            <a href="{% url 'auctions:listing' listing.id %}" class="link">
                                 <h5 class="card-title" style="text-transform: capitalize">{{ listing.title }} 
                                 {% if listing.active %}
                                     <span class="badge" style="background-color: #dff0d8; border-color: #d6e9c6; color: #3c763d;">NEW </span></h5>

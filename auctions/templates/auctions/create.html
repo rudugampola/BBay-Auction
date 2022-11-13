@@ -2,7 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %} {% block body %}
 
-<form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+<form action="{% url 'auctions:create' %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <h2>{{ title }}</h2> 
   <div class="form-control" style="padding-top: 15px;">
@@ -21,9 +21,9 @@
         <div>
             <input data-toggle="tooltip" data-placement="right" title="Submit a Listing."type="submit" class="btn btn-success rounded-pill" style="padding: 0.5em; margin: 5px"/> 
             {% comment %} Cancel button {% endcomment %}
-            <a href="{% url 'index' %}" class="btn btn-danger rounded-pill" data-toggle="tooltip" data-placement="right" title="Cancel" style="padding: 0.5em; ">Cancel</a>
+            <a href="{% url 'auctions:index' %}" class="btn btn-danger rounded-pill" data-toggle="tooltip" data-placement="right" title="Cancel" style="padding: 0.5em; ">Cancel</a>
             <a data-toggle="tooltip" data-placement="top" title="Import Listings from a CSV file. Use the predefined template." 
-                class="btn btn-primary btn-sm rounded-pill" href= "{% url 'import_csv' %}" style="padding: 0.5em; margin: 5px"> Import from a CSV  <i class="fa-solid fa-file-import"></i></a>
+                class="btn btn-primary btn-sm rounded-pill" href= "{% url 'auctions:import_csv' %}" style="padding: 0.5em; margin: 5px"> Import from a CSV  <i class="fa-solid fa-file-import"></i></a>
         </div>
         <br>
 

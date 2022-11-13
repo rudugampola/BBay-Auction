@@ -18,7 +18,8 @@ from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import redirect
+from django.utils.translation import gettext as _
+from django.utils.translation import get_language, activate, gettext
 
 
 # Stripe Information
@@ -27,6 +28,14 @@ stripe.api_key = "sk_test_51M0Z0iAVXcXhXFdu5e2NEfPISaTOn4qw7GAiVyfjWlZvwXxJUtEz3
 
 # Pagination page numbers
 PAGES = 5
+
+
+def translate(language):
+    cur_language = get_language()
+    try:
+        activate(language)
+    finally:
+        activate(cur_language)
 
 
 class NewBidForm(forms.ModelForm):
@@ -174,7 +183,7 @@ def create(request):
             newListing.save()
             messages.success(
                 request, 'Success: Listing was created successfully!')
-            return HttpResponseRedirect(reverse("listing", args=[newListing.id]))
+            return HttpResponseRedirect(reverse("auctions:listing", args=[newListing.id]))
     else:
         return render(request, "auctions/create.html", {
             "form": NewListingForm(),
@@ -208,7 +217,7 @@ def edit_listing(request, listing_id):
 
         messages.success(
             request, 'Success: Listing edited successfully!')
-        return HttpResponseRedirect(reverse("listing", args=[listing_id]))
+        return HttpResponseRedirect(reverse("auctions:listing", args=[listing_id]))
     else:
         return render(request, "auctions/edit_listing.html", {
             "listing": listing,
@@ -219,7 +228,7 @@ def edit_listing(request, listing_id):
 @ login_required
 def listing(request, listing_id):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('login'))
+        return HttpResponseRedirect(reverse('auctions:login'))
 
     listing = Listing.objects.get(id=listing_id)
 
@@ -253,7 +262,7 @@ def like(request, pk):
     else:
         listing.likes.add(request.user)
         liked = True
-    return HttpResponseRedirect(reverse('listing', args=[str(pk)]))
+    return HttpResponseRedirect(reverse('auctions:listing', args=[str(pk)]))
 
 
 @ login_required
@@ -264,22 +273,27 @@ def delete_listing(request, listing_id):
         listing.delete()
         messages.success(
             request, 'Success: Listing deleted successfully!')
-        return HttpResponseRedirect(reverse("listings"))
+        return HttpResponseRedirect(reverse("auctions:listings"))
     else:
         messages.error(
             request, 'Error: Listing was not closed!')
-        return HttpResponseRedirect(reverse("listing", args=[listing_id]))
+        return HttpResponseRedirect(reverse("auctions:listing", args=[listing_id]))
 
 
 @ login_required
 def import_csv(request):
     # Import CSV data that user uploads into Listings table
     if request.method == 'POST':
+
+        if len(request.FILES) == 0:
+            messages.error(request, 'Error: No file was uploaded!')
+            return HttpResponseRedirect(reverse("auctions:import_csv"))
+
         csv_file = request.FILES['csv_file']
 
         if not csv_file.name.endswith('.csv'):
             messages.error(request, 'Error: File is not CSV type!')
-            return HttpResponseRedirect(reverse("import_csv"))
+            return HttpResponseRedirect(reverse("auctions:import_csv"))
 
         data_set = csv_file.read().decode('UTF-8')
         io_string = io.StringIO(data_set)
@@ -347,7 +361,7 @@ def user_profile(request, user_id):
 
         messages.success(
             request, 'Success: Profile picture updated successfully!')
-        return HttpResponseRedirect(reverse("user_profile", args=[user_id]))
+        return HttpResponseRedirect(reverse("auctions:user_profile", args=[user_id]))
 
     return render(request, "auctions/user_profile.html", {
         "page_obj": page_obj,
@@ -396,7 +410,7 @@ def update_userInfo(request, user_id):
 
     messages.success(request, 'Success: User info updated successfully!')
 
-    return HttpResponseRedirect(reverse('user_profile', args=[str(user_id)]))
+    return HttpResponseRedirect(reverse('auctions:user_profile', args=[str(user_id)]))
 
 
 def categories(request):
@@ -428,7 +442,7 @@ def create_category(request):
         new_category = Category(category=category)
         new_category.save()
         messages.success(request, 'Success: Category created successfully!')
-        return HttpResponseRedirect(reverse("categories"))
+        return HttpResponseRedirect(reverse("auctions:categories"))
     else:
         return render(request, "auctions/create_category.html", {
             "title": "Create Category"
@@ -485,7 +499,7 @@ def comment(request, listing_id):
     messages.success(
         request, "Success: You\'ve commented successfully.")
 
-    return HttpResponseRedirect(reverse("listing", args=[listing_id]))
+    return HttpResponseRedirect(reverse("auctions:listing", args=[listing_id]))
 
 
 @ login_required
@@ -501,7 +515,7 @@ def bid(request, listing_id):
         new_bid.save()
         listing.save()
 
-        return HttpResponseRedirect(reverse("listing", args=[listing_id]))
+        return HttpResponseRedirect(reverse("auctions:listing", args=[listing_id]))
 
     else:
         return render(request, "auctions/listing.html", {
@@ -567,7 +581,7 @@ def close_listing(request, listing_id):
         messages.success(
             request, 'Success: Listing closed successfully!')
 
-        return HttpResponseRedirect(reverse("listing", args=[listing_id]))
+        return HttpResponseRedirect(reverse("auctions:listing", args=[listing_id]))
 
 # Show all the items that have been paid for and ready to ship to buyers
 
@@ -596,7 +610,7 @@ def shipping(request):
         messages.success(
             request, 'Success: Item(s) marked as shipped!')
 
-        return HttpResponseRedirect(reverse("shipping"))
+        return HttpResponseRedirect(reverse("auctions:shipping"))
 
     return render(request, "auctions/shipping.html", {
         "title": "Shipping",
@@ -706,7 +720,7 @@ def update_watchlist(request, listing_id, reverse_method):
     else:
         listing.watchers.add(request.user)
 
-    if reverse_method == "listings":
+    if reverse_method == "auctions:listings":
         # Updated watchlist_count for the navbar
         if request.user in listing.watchers.all():
             listing.watched = True
@@ -717,6 +731,11 @@ def update_watchlist(request, listing_id, reverse_method):
 
     # Stay on the same page, but update the watchlist_count for the navbar
         return HttpResponseRedirect(reverse(reverse_method))
+
+    if reverse_method == "auctions:listing":
+        request.session['watchlist_count'] = request.user.watchlist.count()
+        return HttpResponseRedirect(reverse(reverse_method, args=[listing_id]))
+
     else:  # reverse_method = "listing"
         request.session['watchlist_count'] = request.user.watchlist.count()
         return HttpResponseRedirect(reverse(reverse_method, args=[request.user.id]))
@@ -736,17 +755,17 @@ def login_view(request):
         if user is not None:
             login(request, user)
             print(bcolors.WARNING + "User logged in: " + bcolors.ENDC, user)
-            # return HttpResponseRedirect(reverse("index"))
+            # return HttpResponseRedirect(reverse("auctions:index"))
 
             if nex:
                 return HttpResponseRedirect(nex)
             else:
-                return HttpResponseRedirect(reverse("index"))
+                return HttpResponseRedirect(reverse("auctions:index"))
 
         else:
             messages.error(
                 request, "Error: Invalid username and/or password.")
-            return HttpResponseRedirect(reverse("login"))
+            return HttpResponseRedirect(reverse("auctions:login"))
     else:
         return render(request, "auctions/login.html", {
             "title": "Login"
@@ -757,7 +776,7 @@ def logout_view(request):
     logout(request)
     messages.success(
         request, "Success: Logged out successfully!")
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("auctions:index"))
 
 
 def register(request):
@@ -772,7 +791,7 @@ def register(request):
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             messages.error(request, "Error: Passwords must match.")
-            return HttpResponseRedirect(reverse("register"))
+            return HttpResponseRedirect(reverse("auctions:register"))
 
         try:
             user = User.objects.create_user(username, email, password)
@@ -791,10 +810,10 @@ def register(request):
             profile.save()
         except IntegrityError:
             messages.error(request, "Error: Username already taken.")
-            return HttpResponseRedirect(reverse("register"))
+            return HttpResponseRedirect(reverse("auctions:register"))
         login(request, user)
         messages.success(request, "Success: User Registered successfully!")
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("auctions:index"))
     else:
         return render(request, "auctions/register.html", {
             "title": "Register"

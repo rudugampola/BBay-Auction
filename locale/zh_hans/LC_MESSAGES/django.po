@@ -1,0 +1,62 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-13 09:22-0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+#: .\commerce\settings.py:209
+msgid "English"
+msgstr ""
+
+#: .\commerce\settings.py:210
+msgid "Spanish"
+msgstr ""
+
+#: .\commerce\settings.py:211
+msgid "French"
+msgstr ""
+
+#: .\commerce\settings.py:212
+msgid "German"
+msgstr ""
+
+#: .\commerce\settings.py:213
+msgid "Italian"
+msgstr ""
+
+#: .\commerce\settings.py:214
+msgid "Japanese"
+msgstr ""
+
+#: .\commerce\settings.py:215
+msgid "Korean"
+msgstr ""
+
+#: .\commerce\settings.py:216
+msgid "Russian"
+msgstr ""
+
+#: .\commerce\settings.py:217
+msgid "Simplified Chinese"
+msgstr ""
+
+#: .\commerce\settings.py:218
+msgid "Traditional Chinese"
+msgstr ""
+
+#: .\commerce\settings.py:219
+msgid "Arabic"
+msgstr ""

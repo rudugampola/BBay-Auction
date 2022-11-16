@@ -366,6 +366,7 @@ def user_profile(request, user_id):
     return render(request, "auctions/user_profile.html", {
         "page_obj": page_obj,
         "search_user": user,
+        "search_profile": UserProfile.objects.get(user=user),
         "listings": listings,
         "title": user.username.title(),
         "watchlist": watchlist,
@@ -390,6 +391,12 @@ def update_userInfo(request, user_id):
     state = request.POST.get('UpdateState')
     zipcode = request.POST.get('UpdateZipcode')
 
+    facebook = request.POST.get('facebook')
+    youtube = request.POST.get('youtube')
+    twitter = request.POST.get('twitter')
+    instagram = request.POST.get('instagram')
+    github = request.POST.get('github')
+
     if firstName:
         user.first_name = firstName
     if lastName:
@@ -406,6 +413,18 @@ def update_userInfo(request, user_id):
         user_profile.state = state
     if zipcode:
         user_profile.zipcode = zipcode
+
+    if facebook:
+        user_profile.facebook = facebook
+    if youtube:
+        user_profile.youtube = youtube
+    if twitter:
+        user_profile.twitter = twitter
+    if instagram:
+        user_profile.instagram = instagram
+    if github:
+        user_profile.github = github
+
     user_profile.save()
 
     messages.success(request, 'Success: User info updated successfully!')
@@ -750,6 +769,10 @@ def login_view(request):
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
+
+        # Remember user if checkbox is checked
+        if 'remember_me' in request.POST:
+            request.session.set_expiry(1209600)  # 2 weeks
 
         # Check if authentication successful
         if user is not None:

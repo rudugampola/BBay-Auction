@@ -97,6 +97,9 @@ EMAIL_USE_TLS = True
 # 1 Hour to Reset Password
 PASSWORD_RESET_TIMEOUT = 3600
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 24 * 60
+
 ROOT_URLCONF = 'commerce.urls'
 
 TEMPLATES = [
@@ -220,5 +223,9 @@ LANGUAGES = (
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'auctions/locale'),
 )
+
+ROSETTA_ENABLE_TRANSLATION_SUGGESTIONS = True
+ROSETTA_REQUIRES_AUTH = True
+ROSETTA_SHOW_AT_ADMIN_PANEL = True
 
 django_heroku.settings(locals())

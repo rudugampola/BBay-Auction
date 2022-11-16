@@ -24,6 +24,11 @@ class UserProfile(models.Model):
     zip_code = models.CharField(max_length=100, blank=True)
     avatar = models.ImageField(
         upload_to="profile/", default='profile/avatar.png')
+    facebook = models.CharField(max_length=100, blank=True)
+    twitter = models.CharField(max_length=100, blank=True)
+    youtube = models.CharField(max_length=100, blank=True)
+    instagram = models.CharField(max_length=100, blank=True)
+    github = models.CharField(max_length=100, blank=True)
 
     def __str__(self) -> str:
         return self.user.username

@@ -2,25 +2,36 @@
 {% load static %}
 
 {% block body %}
-<div style="margin:0 auto; text-align:center"> 
+<div style="margin:0 auto; text-align:center" > 
     <h2>Login</h2>
 
     {% include 'auctions/messages.html' %}
 
     <form id="login-form" class="form-control" style="width: 380px;" action="{% url 'auctions:login' %}" method="post">
         {% csrf_token %}
-        <div class="form-group" style="width: 350px">
+
+        <div class="form-group " style="width: 350px">
             <input autofocus class="form-control" style="margin-top: 15px" type="text" name="username" placeholder="Username">
         </div>
         <br>
         <div class="form-group" style="width: 350px">
             <input class="form-control" type="password" name="password" placeholder="Password">
         </div>
+        
+        <div class="form-check form-check-inline" style="margin-top: 10px; margin-bottom: 10px">
+            <input class="form-check-input" type="checkbox" id="remember_me" value="True" name="remember_me">
+            <label class="form-check-label" for="remember_me">Remember Me</label>
+        </div>
+        
         <br>
         <input type="hidden" name="next" value="{{ request.GET.next }}"/>
         <input class="btn btn-primary rounded-pill" style="margin-bottom: 15px" type="submit" value="Login">
+        {% comment %} Add Remember me Radio Button {% endcomment %}
+        
+
         <p>Don't have an account? <a href="{% url 'auctions:register' %}">Register here.</a></p>
         <p>Forgot password? <a href="{% url 'auctions:reset_password' %}">Reset password.</a></p>
+        
     </form>
 </div>
 

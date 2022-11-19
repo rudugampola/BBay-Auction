@@ -19,7 +19,7 @@ def index(request):
 
     # Everyone else is prompted to sign in
     else:
-        return HttpResponseRedirect(reverse("login"))
+        return HttpResponseRedirect(reverse("auctions:login"))
 
 
 @csrf_exempt

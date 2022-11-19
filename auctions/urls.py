@@ -50,6 +50,7 @@ urlpatterns = [
     path('privacy/', views.privacy, name='privacy'),
     path('shipping/', views.shipping, name='shipping'),
     path('accounts/login/', views.login_view, name='login'),
+    path('auction/tips/', views.tips, name='tips'),
 
     # Password reset Views
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="auctions/password_reset.html",

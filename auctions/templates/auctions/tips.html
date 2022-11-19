@@ -1,0 +1,129 @@
+{% extends "auctions/layout.html" %} 
+{% load static %}
+{% block body %}
+{% include 'auctions/messages.html' %}
+
+<div >
+    <h2>{{ title }}</h2> 
+</div>
+
+
+
+<div>
+    <div class="row">
+
+        <div class="col-4" style="width: 30%">
+          <div id="list-example" class="list-group">
+            <a class="list-group-item list-group-item-action" href="#list-item-1">Write a standout title</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-2">Take high-quality photos</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-3">Set the right price</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-4">Pick a purchase format</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-5">Ship with ease</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-6">Contacting buyers/sellers</a>
+          </div>
+        </div>
+
+        {% comment %} <div class="col-8" style="width: auto%; height: 400px; overflow: auto"> {% endcomment %}
+        <div class="col-8" style="width: auto%; overflow: auto">
+          <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+            <h4 id="list-item-1">Write a standout title</h4>
+            <p>
+                Your title is the first thing people see when they find your listing. It’s the first impression you make on potential buyers, so it’s important to make it count. 
+                A good title will help you sell your item faster and for more money. 
+                A bad title can make buyers think twice about your listing, or even skip it altogether.
+                <ul>
+                    <li>Include keywords that describe your item</li>
+                    <li>Be specific about the item you’re selling</li>
+                    <li>Use a title that will catch people’s attention</li>
+                    <li>We’ll recommend search terms that buyers often use, so be sure to add these in the title.</li>
+                    <li>Avoid all caps and focus on specific details like brand, model, size, and color.</li>
+                </ul>
+            </p>
+            <h4 id="list-item-2">Take high-quality photos
+            </h4>
+            <p>
+                High-quality photos are the best way to show off your item.
+                <ul>
+                    <li>Take photos in good lighting, preferably natural light.</li>
+                    <li>Take photos from multiple angles.</li>
+                    <li>Take photos of any defects or damage.</li>
+                    <li>Take photos of the item in action.</li>
+                    <li>Take photos of the item in its packaging.</li>
+                    <li>Take photos of the item with any accessories.</li>
+                    <li>Take photos of the item with any paperwork.</li>
+                    <li>Take photos of the item with any receipts.</li>
+                    <li>Take photos of the item with any tags.</li>
+                    <li>Take photos of the item with any manuals.</li>
+                    <li>Take photos of the item with any warranties.</li>
+                    <li>Take photos of the item with any certificates.</li>
+                    <li>Take photos of the item with any other items that come with it.</li>
+                    <li>Snap your items from multiple angles in a well-lit place, and capture any blemishes for transparency.</li>
+                </ul>
+            </p>
+            <h4 id="list-item-3">Set the right price</h4>
+            <p>
+                <ul>
+                    <li>We will recommend a price based on recent sales of similar items.</li>
+                    <li>Set a price that will attract buyers.</li>
+                    <li>Set a price that will make you money.</li>
+                    <li>You can even watch how other sellers are pricing their items, or use Best Offer to negotiate and sell faster.</li>
+                </ul>
+            </p>
+            <h4 id="list-item-4">Pick a purchase format</h4>
+            <p>
+                <ul>
+                    <li>Choose between Auction, Buy It Now, or Best Offer.</li>
+                    <li>Choose between Fixed Price or Auction.</li>
+                    <li>Choose between Fixed Price or Best Offer.</li>
+                    <li>Choose between Auction or Best Offer.</li>
+                    <li>Choose between Auction or Fixed Price.</li>
+                    <li>Choose between Buy It Now or Best Offer.</li>
+                    <li>Choose between Buy It Now or Fixed Price.</li>
+                </ul>
+            </p>
+            <h4 id="list-item-5">Ship with ease</h4>
+            <p>
+                <ul>
+                    <li>Choose a shipping method.</li>
+                    <li>Choose a shipping carrier.</li>
+                    <li>Choose a shipping service.</li>
+                    <li>Choose a shipping location.</li>
+                    <li>Choose a shipping cost.</li>
+                    <li>Choose a shipping time.</li>
+                    <li>Choose a shipping insurance.</li>
+                    <li>Choose a shipping tracking.</li>
+                    <li>Choose a shipping signature.</li>
+                    <li>Choose a shipping handling time.</li>
+                    <li>Choose a shipping return policy.</li>
+                    <li>Choose a shipping return cost.</li>
+                    <li>Choose a shipping return time.</li>
+                    <li>Choose a shipping return reason.</li>
+                    <li>Choose a shipping return description.</li>
+                    <li>Choose a shipping return instructions.</li>
+                    <li>Choose a shipping return shipping cost.</li>
+                    <li>Choose a shipping return shipping time.</li>
+                    <li>Choose a shipping return shipping tracking.</li>
+                    <li>Choose a shipping return shipping signature.</li>
+                    <li>Choose a shipping return shipping insurance.</li>
+                    <li>Choose a shipping return shipping location.</li>
+                    <li>Choose a shipping return shipping service.</li>
+                    <li>Choose a shipping return shipping carrier.</li>
+                    <li>Choose a shipping return shipping method.</li>
+                </ul>
+            </p>
+            <h4 id="list-item-6">Contacting buyers/sellers</h4>
+            <p>
+                <ul>
+                    <li>Choose a contact method.</li>
+                    <li>Choose a contact time.</li>
+                    <li>Choose a contact location.</li>
+                    <li>Choose a contact service.</li>
+                    <li>Choose a contact carrier.</li>
+                </ul>
+            </p>
+          </>
+        </div>
+      </div>
+</div>
+
+{% endblock %}

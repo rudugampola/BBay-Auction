@@ -1,6 +1,7 @@
 {% extends "auctions/layout.html" %} 
 {% load static %}
 {% load crispy_forms_tags %} {% block body %}
+{% include 'auctions/messages.html' %}
 
 <form action="{% url 'auctions:create' %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}

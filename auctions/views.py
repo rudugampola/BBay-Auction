@@ -105,12 +105,16 @@ def support(request):
 
 
 def agreement(request):
+    messages.warning(
+        request, "The User Agreement was recently updated. Please read it carefully.")
     return render(request, "auctions/agreement.html", {
         "title": "User Agreement"
     })
 
 
 def privacy(request):
+    messages.warning(
+        request, "The privacy policy was recently updated. Please read it carefully.")
     return render(request, "auctions/privacy.html", {
         "title": "Privacy Policy"
     })
@@ -172,6 +176,12 @@ def charge(request):
         })
 
 
+def tips(request):
+    return render(request, "auctions/tips.html", {
+        "title": "Tips"
+    })
+
+
 @login_required
 def create(request):
     if request.method == 'POST':
@@ -182,10 +192,14 @@ def create(request):
             newListing.bid_current = newListing.bid_start
             newListing.save()
             messages.success(
-                request, 'Success: Listing was created successfully!')
+                request, 'Listing was created successfully!')
             return HttpResponseRedirect(reverse("auctions:listing", args=[newListing.id]))
     else:
+        messages.info(
+            request, format_html("{} <a href='tips/'>{}</a>",
+                                 'See our tips for creating a great listing and ways to set yourself up for success', 'here!'))
         return render(request, "auctions/create.html", {
+
             "form": NewListingForm(),
             "title": "Create a New Listing"
         })
@@ -216,7 +230,7 @@ def edit_listing(request, listing_id):
         listing.save()
 
         messages.success(
-            request, 'Success: Listing edited successfully!')
+            request, 'Listing edited successfully!')
         return HttpResponseRedirect(reverse("auctions:listing", args=[listing_id]))
     else:
         return render(request, "auctions/edit_listing.html", {
@@ -272,11 +286,11 @@ def delete_listing(request, listing_id):
     if request.user == listing.creator:
         listing.delete()
         messages.success(
-            request, 'Success: Listing deleted successfully!')
+            request, 'Listing deleted successfully!')
         return HttpResponseRedirect(reverse("auctions:listings"))
     else:
         messages.error(
-            request, 'Error: Listing was not closed!')
+            request, 'Listing was not closed!')
         return HttpResponseRedirect(reverse("auctions:listing", args=[listing_id]))
 
 
@@ -286,13 +300,13 @@ def import_csv(request):
     if request.method == 'POST':
 
         if len(request.FILES) == 0:
-            messages.error(request, 'Error: No file was uploaded!')
+            messages.error(request, 'No file was uploaded!')
             return HttpResponseRedirect(reverse("auctions:import_csv"))
 
         csv_file = request.FILES['csv_file']
 
         if not csv_file.name.endswith('.csv'):
-            messages.error(request, 'Error: File is not CSV type!')
+            messages.error(request, 'File is not CSV type!')
             return HttpResponseRedirect(reverse("auctions:import_csv"))
 
         data_set = csv_file.read().decode('UTF-8')
@@ -360,7 +374,7 @@ def user_profile(request, user_id):
         user_profile.save()
 
         messages.success(
-            request, 'Success: Profile picture updated successfully!')
+            request, 'Profile picture updated successfully!')
         return HttpResponseRedirect(reverse("auctions:user_profile", args=[user_id]))
 
     return render(request, "auctions/user_profile.html", {
@@ -427,7 +441,7 @@ def update_userInfo(request, user_id):
 
     user_profile.save()
 
-    messages.success(request, 'Success: User info updated successfully!')
+    messages.success(request, 'User info updated successfully!')
 
     return HttpResponseRedirect(reverse('auctions:user_profile', args=[str(user_id)]))
 
@@ -460,7 +474,7 @@ def create_category(request):
         category = request.POST['category']
         new_category = Category(category=category)
         new_category.save()
-        messages.success(request, 'Success: Category created successfully!')
+        messages.success(request, 'Category created successfully!')
         return HttpResponseRedirect(reverse("auctions:categories"))
     else:
         return render(request, "auctions/create_category.html", {
@@ -488,7 +502,7 @@ def listings(request):
     # send a html message
     messages.info(
         request, format_html("{} <a href='/filter'>{}</a>",
-                             'Protip! For an advanced search, try using ', 'advanced filters.'))
+                             'For an advanced search, try using advanced filters ', 'here!'))
     return render(request, "auctions/listings.html", {
         'page_obj': page_obj,
         "listings": listings,
@@ -501,8 +515,7 @@ def filter(request):
     f = ListingFilter(request.GET, queryset=Listing.objects.all())
     # Show message when filter is submitted
     if request.GET:
-        messages.info(request, 'Success: ' +
-                      str(f.qs.count()) + ' listings found!')
+        messages.success(request, str(f.qs.count()) + ' listings found!')
 
     return render(request, 'auctions/filter.html', {'filter': f, 'title': 'Filter Results'})
 
@@ -516,7 +529,7 @@ def comment(request, listing_id):
     newComment.listing = listing
     newComment.save()
     messages.success(
-        request, "Success: You\'ve commented successfully.")
+        request, "You\'ve commented successfully.")
 
     return HttpResponseRedirect(reverse("auctions:listing", args=[listing_id]))
 
@@ -598,7 +611,7 @@ def close_listing(request, listing_id):
         receiver.save()
 
         messages.success(
-            request, 'Success: Listing closed successfully!')
+            request, 'Listing closed successfully!')
 
         return HttpResponseRedirect(reverse("auctions:listing", args=[listing_id]))
 
@@ -627,7 +640,7 @@ def shipping(request):
             listing.shipped = True
             listing.save()
         messages.success(
-            request, 'Success: Item(s) marked as shipped!')
+            request, 'Item(s) marked as shipped!')
 
         return HttpResponseRedirect(reverse("auctions:shipping"))
 
@@ -787,7 +800,7 @@ def login_view(request):
 
         else:
             messages.error(
-                request, "Error: Invalid username and/or password.")
+                request, "Invalid username and/or password.")
             return HttpResponseRedirect(reverse("auctions:login"))
     else:
         return render(request, "auctions/login.html", {
@@ -798,7 +811,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     messages.success(
-        request, "Success: Logged out successfully!")
+        request, "Logged out successfully!")
     return HttpResponseRedirect(reverse("auctions:index"))
 
 
@@ -813,7 +826,7 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            messages.error(request, "Error: Passwords must match.")
+            messages.error(request, "Passwords must match.")
             return HttpResponseRedirect(reverse("auctions:register"))
 
         try:
@@ -832,10 +845,10 @@ def register(request):
             profile = UserProfile(user=user)
             profile.save()
         except IntegrityError:
-            messages.error(request, "Error: Username already taken.")
+            messages.error(request, "Username already taken.")
             return HttpResponseRedirect(reverse("auctions:register"))
         login(request, user)
-        messages.success(request, "Success: User Registered successfully!")
+        messages.success(request, "User Registered successfully!")
         return HttpResponseRedirect(reverse("auctions:index"))
     else:
         return render(request, "auctions/register.html", {

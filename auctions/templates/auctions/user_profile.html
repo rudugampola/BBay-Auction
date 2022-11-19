@@ -289,7 +289,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="delete">Update User Information</h5>
+          <h5 class="modal-title" id="delete"><i class="fa-solid fa-user-pen"></i>&nbspUpdate User Information</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -298,25 +298,25 @@
                 {% csrf_token %}
                 <div class="col-md-6" >
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingFirstInput" placeholder="First Name" name="UpdateFirstName">
+                        <input type="text" class="form-control" id="floatingFirstInput" placeholder="First Name" name="UpdateFirstName" value="{{user.first_name}}"">
                         <label for="floatingFirstInput">First Name</label>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingLastInput" placeholder="Last Name" name="UpdateLastName">
+                        <input type="text" class="form-control" id="floatingLastInput" placeholder="Last Name" name="UpdateLastName" value="{{user.last_name}}"">
                         <label for="floatingLastInput">Last Name</label>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingPhoneInput" placeholder="Phone Number" name="UpdatePhone">
+                        <input type="text" class="form-control" id="floatingPhoneInput" placeholder="Phone Number" name="UpdatePhone" value={{userInfo.phone}}>
                         <label for="floatingPhoneInput">Phone Number</label>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingAddressInput" placeholder="Address" name="UpdateAddress">
+                        <input type="text" class="form-control" id="floatingAddressInput" placeholder="Address" name="UpdateAddress" value="{{userInfo.address}}">
                         <label for="floatingAddressInput">Address</label>
                     </div>
                 </div>
@@ -324,14 +324,14 @@
 
                 <div class="col-md-5">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingCityInput" placeholder="City" name="UpdateCity">
+                        <input type="text" class="form-control" id="floatingCityInput" placeholder="City" name="UpdateCity" value="{{userInfo.city}}">
                         <label for="floatingCityInput">City</label>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-floating mb-3">
                         
-                  <select class="form-select" id="floatingStateInput" placeholder="State" required name="UpdateState">
+                  <select class="form-select" id="floatingStateInput" placeholder="State" required name="UpdateState" value="{{userInfo.state}}">
                     <option value="AL" selected>Alabama</option>
                     <option value="AK">Alaska</option>
                     <option value="AZ">Arizona</option>
@@ -389,7 +389,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingZipInput" placeholder="Zip Code" name="UpdateZip">
+                        <input type="text" class="form-control" id="floatingZipInput" placeholder="Zip Code" name="UpdateZip" value={{userInfo.zip_code}}>
                         <label for="floatingZipInput">Zip Code</label>
                     </div>
                 </div>

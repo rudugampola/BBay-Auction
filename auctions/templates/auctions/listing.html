@@ -66,18 +66,18 @@
                         Add to watchlist&nbsp<i class="fa-regular fa-eye"></i>
                     {% endif %}
                 </a>
-
-                <form action= "{% url 'auctions:like_listing' listing.pk  %}" method="POST">
+                <form action= "{% url 'auctions:like_listing' listing.pk  %}" method="POST" style="margin-bottom: 10px; margin-top: 10px">
                     {% csrf_token %}
                     {% if liked%}
-                        <button class="like_dislike" type="submit" name="listing_id" value="{{ listing.id }}"><i class="fa-regular fa-thumbs-down"></i></i></button>
+                        {% comment %} <button class="like_dislike" type="submit" name="listing_id" value="{{ listing.id }}"><i class="fa-regular fa-thumbs-down"></i></i></button> {% endcomment %}
+                        <button class="like_dislike" type="submit" name="listing_id" value="{{ listing.id }}"><i class="fa fa-thumbs-down faa-bounce faa-reverse animated-hover faa-fast"></i></i></button>
                     {% else %}
-                        <button class="like_dislike" type="submit" name="listing_id" value="{{ listing.id }}"><i class="fa-regular fa-thumbs-up"></i></button>
+                        {% comment %} <button class="like_dislike" type="submit" name="listing_id" value="{{ listing.id }}"><i class="fa-regular fa-thumbs-up"></i></button> {% endcomment %}
+                        <button class="like_dislike" type="submit" name="listing_id" value="{{ listing.id }}"><i class="fa fa-thumbs-up faa-bounce animated-hover faa-fast"></i></button>
                     {% endif %}
                     {% comment %} <span class="badge">{{ total_likes }}</span> {% endcomment %}
                     - Likes: {{ total_likes }}
                 </form>
-
                 <div>
                     <div>
                         <form class="rate-form" action="" method="POST" id={{listing.pk}}>

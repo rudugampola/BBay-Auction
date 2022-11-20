@@ -1,1 +1,1 @@
-{"data": [], "type": "expense"}
+{"data": [{"user": 1, "expense": 150.5, "date": "2022-11-12T18:34:49.361Z"}, {"user": 1, "expense": 250.08, "date": "2022-11-12T19:10:26.339Z"}, {"user": 1, "expense": 123.0, "date": "2022-11-12T21:34:19.378Z"}], "type": "expense"}

@@ -8,7 +8,7 @@
     <title>{{ title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://kit.fontawesome.com/25ae4408a9.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -26,6 +26,14 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'css/font-awesome-animation.min.css' %}">
     <link rel="icon" href="{% static 'img/bbay.ico' %}" />
+    <!-- Basic stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+    
+    <!-- Default Theme -->
+    <link rel="stylesheet" href="{% static 'css/owl.theme.css' %}">
+
+    <!-- Include js plugin -->
+    <script src="{% static 'js/owl.carousel.js' %}"></script>
   </head>
 
   <div style="z-index: 1000">
@@ -41,14 +49,14 @@
       {% if user.is_authenticated %} Hi, &nbsp
         <a
         href="{% url 'auctions:user_profile' user.id %}"
-        class="btn btn-warning btn-sm rounded-pill"
+        class="btn btn-warning btn-sm rounded-pill faa-parent animated-hover"
         style="padding: 0.5em; margin-bottom: 0.5em"
-        role="button"
+        role="button" 
         ><b style="text-transform: capitalize; font-weight: bold"
           > {{ user.username }} &nbsp</b
-        ><i class="fa-solid fa-user"></i></a>
+        ><i class="fa-solid fa-user faa-float"></i></a>
         <p>
-        <a class="btn btn-danger btn-sm rounded-pill" style="padding: 0.5em" href="{% url 'auctions:logout' %}">Log Out <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+        <a class="btn btn-danger btn-sm rounded-pill " style="padding: 0.5em" href="{% url 'auctions:logout' %}">Log Out <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
       {% else %}
         <p>👋 Not Signed In.</p>
         <a class="btn btn-success btn-sm rounded-pill" style="padding: 0.5em" href="{% url 'auctions:login' %}">Log In <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
@@ -189,7 +197,7 @@
                   />
                   <button style="padding: 0.5em" class="btn btn-success rounded-pill" type="submit">Search</button>
                   <li class="nav-item ms-auto" style="padding-left: 50px">
-                    <img src="{% static 'img/moon.svg' %}" id="icon" />
+                    <img src="{% static 'img/moon.svg' %}" id="icon" style="width: 50px"/>
                   </li>
                 </form>
               </li>

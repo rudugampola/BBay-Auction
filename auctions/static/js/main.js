@@ -243,3 +243,19 @@ if (first) {
     });
   });
 }
+
+$('.custom-carousel').owlCarousel({
+  autoWidth: true,
+  loop: true,
+  items: 5,
+  itemsDesktop: [1000, 5], //5 items between 1000px and 901px
+  itemsDesktopSmall: [900, 3], // betweem 900px and 601px
+  itemsTablet: [600, 2], //2 items between 600 and 0;
+  itemsMobile: false, // itemsMobile disabled - inherit from itemsTablet option
+});
+$(document).ready(function () {
+  $('.custom-carousel .item').click(function () {
+    $('.custom-carousel .item').not($(this)).removeClass('active');
+    $(this).toggleClass('active');
+  });
+});

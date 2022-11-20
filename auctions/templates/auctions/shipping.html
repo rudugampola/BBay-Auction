@@ -5,12 +5,12 @@
 
 {% comment %} Show listings to ship in a table {% endcomment %}
 {% if ready_to_ship %}
-    <h2>Ready to Ship&nbsp - &nbsp
+    <h3>Ready to Ship&nbsp - &nbsp
         <i class="fa-brands fa-fedex"></i>
         <i class="fa-brands fa-ups"></i>
         <i class="fa-brands fa-dhl"></i>
         <i class="fa-brands fa-usps"></i>
-    </h2>
+    </h3>
     
 <div style="padding: 0 100px 0 100px;">
     <form  action="{% url 'auctions:shipping' %}" method="POST">

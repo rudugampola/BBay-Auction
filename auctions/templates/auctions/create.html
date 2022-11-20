@@ -5,7 +5,8 @@
 
 <form action="{% url 'auctions:create' %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <h2>{{ title }}</h2> 
+  <h3>{{ title }}</h3> 
+  <hr>
   <div class="form-control" style="padding-top: 15px;">
         {{ form.title |as_crispy_field }} 
         <br>

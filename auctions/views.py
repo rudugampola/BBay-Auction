@@ -1,3 +1,4 @@
+import numpy as np
 from mail.models import Email
 from .models import (Bid, Category, Comment, Expenses, Listing, ListingFilter, Profits, Sales,
                      User, UserProfile)
@@ -5,6 +6,7 @@ import base64
 import csv
 import io
 import time
+from datetime import datetime, timedelta
 from django import forms
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -28,6 +30,10 @@ stripe.api_key = "sk_test_51M0Z0iAVXcXhXFdu5e2NEfPISaTOn4qw7GAiVyfjWlZvwXxJUtEz3
 
 # Pagination page numbers
 PAGES = 5
+
+now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+today = datetime.today()
+long_ago = today + timedelta(days=-30)  # 30 days ago
 
 
 def translate(language):
@@ -85,6 +91,7 @@ class bcolors:
 
 
 def index(request):
+    listings = Listing.objects.filter(active=True)
     # Update watchlist
     count = 0
     if request.user.is_authenticated:
@@ -93,8 +100,11 @@ def index(request):
                 count += 1
         request.session['watchlist_count'] = count
 
+    trendingListings(request)
+
     return render(request, "auctions/index.html", {
-        "title": "Home"
+        "title": "Home",
+        "listings": listings
     })
 
 
@@ -245,6 +255,9 @@ def listing(request, listing_id):
         return HttpResponseRedirect(reverse('auctions:login'))
 
     listing = Listing.objects.get(id=listing_id)
+    # Increment the views count
+    listing.listing_views += 1
+    listing.save()
 
     liked = False
     if listing.likes.filter(id=request.user.id).exists():
@@ -509,6 +522,43 @@ def listings(request):
         "title": "Active Listings",
         "watchlist": watchlist
     })
+
+
+def trendingListings(request):
+    rdata = Listing.objects.filter(created_date__gte=long_ago)
+    likerate = []
+    # dislikerate = []
+    viewrate = []
+    for i in rdata:
+        lr = i.total_likes() + 1
+        vr = i.total_views() + 1
+        lr = lr / vr
+        likerate.append(lr)
+        u = User.objects.count()
+        vrt = vr / u
+        viewrate.append(vrt)
+    lr1 = np.array(likerate)
+    vr1 = np.array(viewrate)
+    lr = lr1.round(2)
+    vr = vr1.round(2)
+    for i in lr, vr:
+        a = lr + vr
+        a = a * 50
+    rdata = Listing.objects.filter(created_date__gte=long_ago)
+    trendingdata = a
+    j = 0
+    trendingdict = {}
+    for i in rdata:
+        trendingdict[i.id] = trendingdata[j]
+        j += 1
+    trend = {k: v for k, v in sorted(
+        trendingdict.items(), key=lambda item: item[1], reverse=True)}
+    # print('latest trending --', trend)
+    trendlist = []
+    for k in trend.keys():
+        trendlist.append(k)
+    print('trendlist --', trendlist)
+    return trendlist
 
 
 def filter(request):

@@ -3,7 +3,6 @@
 {% block body %}
 {% load humanize %}
 {% load auctions_extras %}
-
 {% include 'auctions/messages.html' %}
 
 {% comment %} Show user's first name, last name, email, date_joined. Give option to edit first name, last name and email. {% endcomment %}
@@ -114,9 +113,9 @@
 <div class="tab-pane fade show active" id="listings-tab-pane" role="tabpanel" aria-labelledby="listings-tab" tabindex="0">
         {% comment %} Show user's listings. {% endcomment %}
         {% if listings|length > 0 %}
-        <h2 style="text-transform: capitalize">{{ search_user }}'s Listings</h2>
+        <h3 style="text-transform: capitalize">{{ search_user }}'s Listings</h3>
         {% else %}
-        <h2>No Listings</h2>
+        <h3>No Listings</h3>
         {% endif %}
 
         <hr />

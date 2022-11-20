@@ -9,10 +9,26 @@ from django.core.files.storage import default_storage as storage
 import django_filters
 from crispy_forms.helper import FormHelper
 from ckeditor.fields import RichTextField
+import requests
 
 
 class User(AbstractUser):
     pass
+
+
+def removeBackground():
+    response = requests.post(
+        'https://api.remove.bg/v1.0/removebg',
+        # files={'image_file': open('/path/to/file.jpg', 'rb')},
+        data={'size': 'auto',
+              'image_url': 'https://tinypng.com/images/social/website.jpg'},
+        headers={'X-Api-Key': 'UKdAAGc7341VQSGKf8zYqZXi'},
+    )
+    if response.status_code == requests.codes.ok:
+        with open('no-bg.png', 'wb') as out:
+            out.write(response.content)
+    else:
+        print("Error:", response.status_code, response.text)
 
 
 class UserProfile(models.Model):
@@ -67,6 +83,7 @@ class Listing(models.Model):
                                 MinValueValidator(0), MaxValueValidator(5)])
     paid = models.BooleanField(default=False)
     shipped = models.BooleanField(default=False)
+    listing_views = models.IntegerField(default=0, blank=True, null=True)
 
     def save(self, force_insert=False, force_update=False, using=None):
         super().save()  # saving image first
@@ -80,9 +97,12 @@ class Listing(models.Model):
     def total_likes(self):
         return self.likes.count()
 
+    def total_views(self):
+        return self.listing_views
+
     def __str__(self):
         # Show in admin panel
-        return f"{self.title} - {self.creator} - {self.created_date} - {self.category} - {self.active} - {self.score}"
+        return f"{self.title} - {self.creator} - {self.created_date} - {self.category} - {self.active} - {self.score} - {self.id}"
 
 
 class ListingFilter(django_filters.FilterSet):

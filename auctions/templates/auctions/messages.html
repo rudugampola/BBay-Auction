@@ -4,11 +4,11 @@
         {% if message.tags == "alert-success" %}
             <i class="fas fa-check-circle faa-tada animated"></i><strong>&nbsp&nbspSuccess!</strong>&nbsp{{ message }}
         {% elif message.tags == "alert-danger" %}
-            <i class="fas fa-times-circle faa-pulse animated"></i><strong>&nbsp&nbspError!</strong>&nbsp{{ message }}
+            <i class="fas fa-times-circle fa-beat-fade"></i><strong>&nbsp&nbspError!</strong>&nbsp{{ message }}
         {% elif message.tags == "alert-warning" %}
-            <i class="fas fa-exclamation-triangle faa-flash animated"></i><strong>&nbsp&nbspWarning!</strong>&nbsp{{ message }}
+            <i class="fa-solid fa-triangle-exclamation fa-fade"></i><strong>&nbsp&nbspWarning!</strong>&nbsp{{ message }}
         {% elif message.tags == "alert-info" %}
-        <i class="fas fa-info-circle faa-shake animated"></i><strong>&nbsp&nbspProtip!</strong>&nbsp{{ message }}
+        <i class="fa-solid fa-circle-info fa-beat-fade"></i><strong>&nbsp&nbspProtip!</strong>&nbsp{{ message }}
         {% endif %}
         </div>
     {% endfor %}

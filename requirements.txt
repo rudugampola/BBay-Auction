@@ -27,5 +27,4 @@ absl-py==1.3.0
 flatbuffers==22.10.26
 opencv-python==4.6.0.66
 opencv-contrib-python==4.6.0.66
-protobuf==3.20.3
-django_resized==0.3.13
+django_resized==1.0.2

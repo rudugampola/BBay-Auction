@@ -8,6 +8,14 @@
     {% if listings|length > 0 %}
         <div >
             <h3>{{ title }}</h3> 
+            {% if category_count %}
+            <div class="d-flex p-2 text-white rounded shadow-lg">
+                <div class="lh-1">
+                    <h1 class="h6 mb-0 text-white lh-1"><a href="{% url 'auctions:listings' %}">All</a> <strong>></strong> {{title}}</h1>
+                    <small>({{category_count}} results)</small>
+                </div>
+            </div>
+            {% endif %}
         </div>
     {% else %}
         <div>
@@ -15,6 +23,15 @@
         </div>
     {% endif %}
 </div>
+
+{% comment %} {% if category_count %}
+<div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+    <div class="lh-1">
+      <h1 class="h6 mb-0 text-white lh-1">Bootstrap</h1>
+      <small>({{category_count}} results)</small>
+    </div>
+  </div>
+{% endif %} {% endcomment %}
 
 <hr />
     {% for listing in page_obj %}

@@ -2,7 +2,7 @@
 
 <form action="{% url 'auctions:edit_listing' listing.id %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-
+    <h3>Edit: {{listing.title}}</h3>
   <div class="form-control" style="padding-top: 15px;">
         {{ form.title |as_crispy_field  }} 
         <br>
@@ -14,6 +14,7 @@
         {{ form.category |as_crispy_field }} 
         <br>
         {{form.image|as_crispy_field }}
+        <p>Note: The background of the image will be removed.</p>
         <br>
         
     

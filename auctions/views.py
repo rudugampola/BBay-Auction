@@ -195,6 +195,10 @@ def tips(request):
 @login_required
 def create(request):
     if request.method == 'POST':
+        # if not request.FILES['image'].name.endswith('.jpg' or '.png' or '.jpeg'):
+        #     messages.error(request, 'File is not Image type!')
+        #     return HttpResponseRedirect(reverse("auctions:create"))
+
         form = NewListingForm(request.POST, request.FILES)
         if form.is_valid():
             newListing = form.save(commit=False)
@@ -220,6 +224,11 @@ def edit_listing(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     # Prefill the form with the current listing data to be edited
     form = NewListingForm(instance=listing)
+
+    # print(request.FILES.get('image').endswith('.jpg' or '.png' or '.jpeg'))
+    # if not str(request.FILES.get('image')).endswith('.jpg' or '.png' or '.jpeg'):
+    #     messages.error(request, 'File is not Image type!')
+    #     return HttpResponseRedirect(reverse("auctions:edit_listing", args=[listing_id]))
 
     if request.method == 'POST':
         listing.title = request.POST['title']
@@ -463,6 +472,8 @@ def categories(request):
     all_categories = Category.objects.all()
     category_id = request.GET.get("category", None)
     listings = Listing.objects.filter(category=category_id, active=True)
+    # category = Category.objects.get(id=category_id)
+    category_count = listings.count()
 
     paginator = Paginator(listings, PAGES)
     page_number = request.GET.get('page')
@@ -477,7 +488,8 @@ def categories(request):
         return render(request, "auctions/listings.html", {
             "page_obj": page_obj,
             "listings": listings,
-            "title": Category.objects.get(id=category_id)
+            "title": Category.objects.get(id=category_id),
+            "category_count": category_count
         })
 
 

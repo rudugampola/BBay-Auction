@@ -780,7 +780,7 @@ ol {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: underline;
     color: inherit;
     outline: none;
     transition: all 0.4s ease-in-out;

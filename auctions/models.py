@@ -11,33 +11,13 @@ import django_filters
 from crispy_forms.helper import FormHelper
 from ckeditor.fields import RichTextField
 
-import numpy as np
 import requests
-import PIL
-from cvzone.SelfiSegmentationModule import SelfiSegmentation
-from io import BytesIO
 from django.core.files.base import ContentFile
 from django_resized import ResizedImageField
 
 
 class User(AbstractUser):
     pass
-
-
-def removeBackground():
-    response = requests.post(
-        'https://api.remove.bg/v1.0/removebg',
-        # files={'image_file': open('/path/to/file.jpg', 'rb')},
-        data={'size': 'auto',
-              'image_url': 'https://tinypng.com/images/social/website.jpg'},
-        headers={'X-Api-Key': 'UKdAAGc7341VQSGKf8zYqZXi'},
-    )
-    if response.status_code == requests.codes.ok:
-        with open('no-bg.png', 'wb') as out:
-            out.write(response.content)
-    else:
-        print("Error:", response.status_code, response.text)
-
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

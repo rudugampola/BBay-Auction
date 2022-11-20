@@ -139,8 +139,8 @@ body {
 }
 
 .item_image {
-    width: auto;
-    height: 100;
+    /* width: auto;
+    height: 100; */
     object-fit: cover;
     padding: 5%;
     padding-left: 20%;

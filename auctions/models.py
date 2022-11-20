@@ -1,15 +1,23 @@
+import os
 from wsgiref.validate import validator
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
-from PIL import Image
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from django.core.files.storage import default_storage as storage
 import django_filters
 from crispy_forms.helper import FormHelper
 from ckeditor.fields import RichTextField
+
+import numpy as np
 import requests
+import PIL
+from cvzone.SelfiSegmentationModule import SelfiSegmentation
+from io import BytesIO
+from django.core.files.base import ContentFile
+from django_resized import ResizedImageField
 
 
 class User(AbstractUser):
@@ -70,8 +78,8 @@ class Listing(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE,
                                  blank=True, null=True, related_name="listings_same_category")
     # Image is saved to aws s3 bucket
-    image = models.ImageField(
-        upload_to="upload/", default='upload/placeholder.png')
+    image = ResizedImageField(
+        size=[300, 300], quality=100, upload_to='upload/', default='upload/placeholder.png')
     buyer = models.ForeignKey(
         User, blank=True, null=True, on_delete=models.PROTECT, )
     active = models.BooleanField(default=True)
@@ -85,14 +93,21 @@ class Listing(models.Model):
     shipped = models.BooleanField(default=False)
     listing_views = models.IntegerField(default=0, blank=True, null=True)
 
-    def save(self, force_insert=False, force_update=False, using=None):
-        super().save()  # saving image first
-        # Use aws for storage
-        img = storage.open(self.image.name)  # Open image using self
-        # if img.height > 300 or img.width > 300:
-        #     new_img = (300, 300)
-        #     img.thumbnail(new_img)
-        #     img.save(self.image.path)  # saving image at the same path
+    def save(self, *args, **kwargs):
+        response = requests.post(
+            'https://api.remove.bg/v1.0/removebg',
+            data={'size': 'auto',
+                  'image_url': self.image.url},
+            headers={'X-Api-Key': 'UKdAAGc7341VQSGKf8zYqZXi'},
+        )
+        if response.status_code == requests.codes.ok:
+            self.image.save(f"rmbg/{self.image.name}",
+                            ContentFile(response.content),
+                            save=False,
+                            )
+        else:
+            print("Error:", response.status_code, response.text)
+        super().save(*args, **kwargs)
 
     def total_likes(self):
         return self.likes.count()

@@ -56,12 +56,6 @@ INSTALLED_APPS = [
     'ckeditor',
     'rosetta',
     'django_resized',
-    'cvzone',
-    'mediapipe',
-    'absl-py',
-    'flatbuffers',
-    'opencv-python',
-    'opencv-contrib-python',
 ]
 
 MIDDLEWARE = [

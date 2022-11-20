@@ -1,4 +1,3 @@
-import os
 from wsgiref.validate import validator
 
 from django.contrib.auth.models import AbstractUser
@@ -18,6 +17,7 @@ from django_resized import ResizedImageField
 
 class User(AbstractUser):
     pass
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

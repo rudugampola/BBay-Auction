@@ -141,14 +141,14 @@
                 aria-labelledby="navbarDarkDropdownMenuLink"
                 >
                 <li>
-                  <a class="dropdown-item" href="{% url 'auctions:profits' %}">Profits 💰</a>
+                  <a class="dropdown-item" href="{% url 'auctions:profits' %}">💰 Profits</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'auctions:expenses' %}">Expenses 💸</a>
+                  <a class="dropdown-item" href="{% url 'auctions:expenses' %}">💸 Expenses</a>
                 </li>
                 {% if request.user.is_superuser %}
                   <li>
-                    <a class="dropdown-item" href="{% url 'auctions:shipping' %}">Shipping 🚚</a>
+                    <a class="dropdown-item" href="{% url 'auctions:shipping' %}">🚚 Shipping</a>
                   </li>
                 {% endif %}
               </ul>

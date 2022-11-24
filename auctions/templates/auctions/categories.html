@@ -24,7 +24,8 @@
       </form>
     </div>
 
-    {% endif %} {% for category in all_categories %}
+    {% endif %} 
+    {% for category in all_categories %}
     <div class="col-sm-4">
       <div class="card" style="margin-bottom: 20px">
         {% comment %} Admin user can make categories {% endcomment %}
@@ -35,8 +36,15 @@
             data-toggle="tooltip" data-placement="top" title="Click to View Category {{category}}" 
               class="link"
               href="{% url 'auctions:categories' %}?category={{category.id}}"
-              >{{ category }}</a
+              >{{ category }}
+              <img
+              src="{{ category.image.url }}"
+              class="rounded-circle"
+              style="width: 80px; height: 80px; margin-left: 10px; object-fit: cover; border: 1px solid black; padding: 2px"
+            /></a
             >
+            {% comment %} Show image in a circle {% endcomment %}
+            
           </h5>
         </div>
       </div>

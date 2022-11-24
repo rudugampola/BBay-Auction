@@ -24,6 +24,12 @@
   </div>
 </div>
 
+<section class="hexagon-gallery">
+      {% for category in categories %}
+      <div class="hex" data-toggle="tooltip" data-placement="center" title="{{category.category}}"><img src="{{ category.image.url }}"></div>
+      {% endfor %}
+  </section>
+
 
 <section class="game-section">
   <h2 class="line-title">trending listings</h2>

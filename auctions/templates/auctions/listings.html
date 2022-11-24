@@ -7,11 +7,19 @@
 <div >
     {% if listings|length > 0 %}
         <div >
-            <h3>{{ title }}</h3> 
+            <h3>{{ category.category }}
+                {% if category_count %}
+                <img
+              src="{{ category.image.url }}"
+              class="rounded-circle"
+              style="width: 80px; height: 80px; margin-left: 10px; object-fit: cover; border: 1px solid black; padding: 2px"
+            />{% endif %}
+            </h3> 
             {% if category_count %}
+            
             <div class="d-flex p-2 text-white rounded shadow-lg">
                 <div class="lh-1">
-                    <h1 class="h6 mb-0 text-white lh-1"><a href="{% url 'auctions:listings' %}">All</a> <strong>></strong> {{title}}</h1>
+                    <h1 class="h6 mb-0 text-white lh-1"><a href="{% url 'auctions:listings' %}">All</a> <strong>></strong> {{category.category}}</h1>
                     <small>({{category_count}} results)</small>
                 </div>
             </div>

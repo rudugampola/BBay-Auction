@@ -40,6 +40,8 @@ class UserProfile(models.Model):
 
 class Category(models.Model):
     category = models.CharField(max_length=30)
+    image = models.ImageField(
+        upload_to='upload/category/', blank=True, null=True, default='upload/placeholder.png')
 
     def __str__(self):
         return f"{self.category}"

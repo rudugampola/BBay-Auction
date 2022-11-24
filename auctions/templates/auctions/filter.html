@@ -11,26 +11,27 @@
         {% csrf_token %}
 
         <div class="row g-3" style="margin-bottom: 15px; margin-top: 0px">
-            <div class="col">
+            <div class="col" data-toggle="tooltip" data-placement="top" title="Search Listings: Starting Bid Less Than" >
+                
                 {{filter.form.bid_start__lte | as_crispy_field}} 
             </div>
-            <div class="col">
+            <div class="col" data-toggle="tooltip" data-placement="top" title="Search Listings: Starting Bid Greater Than">
                 {{filter.form.bid_start__gte | as_crispy_field}}
             </div>
         </div>
         <div class="row g-3" style="margin-bottom: 15px">
-            <div class="col">
+            <div class="col" data-toggle="tooltip" data-placement="top" title="Search Listings: Current Bid Less Than">
                 {{filter.form.bid_current__lte | as_crispy_field}} 
             </div>
-            <div class="col">
+            <div class="col" data-toggle="tooltip" data-placement="top" title="Search Listings: Current Bid Greater Than">
                 {{filter.form.bid_current__gte | as_crispy_field}}
             </div>
         </div>
         <div class="row g-3" style="margin-bottom: 15px">
-            <div class="col">
+            <div class="col" data-toggle="tooltip" data-placement="top" title="Search Listings: Created Year Less Than">
                 {{filter.form.created_date__year__lte | as_crispy_field}}
             </div>
-            <div class="col">
+            <div class="col" data-toggle="tooltip" data-placement="top" title="Search Listings: Created Year Greater Than">
                 {{filter.form.created_date__year__gte | as_crispy_field}}
             </div>
         </div>

@@ -11,6 +11,7 @@
         {% csrf_token %}
         <div class="input-group form-group">
           <input
+          data-toggle="tooltip" data-placement="top" title="Add a New Category" 
             type="text"
             class="form-control"
             id="category"
@@ -31,6 +32,7 @@
         <div class="card-body shadow bg-body rounded">
           <h5 class="card-title d-flex justify-content-center">
             <a
+            data-toggle="tooltip" data-placement="top" title="Click to View Category {{category}}" 
               class="link"
               href="{% url 'auctions:categories' %}?category={{category.id}}"
               >{{ category }}</a

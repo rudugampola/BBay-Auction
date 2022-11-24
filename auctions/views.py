@@ -169,9 +169,6 @@ def charge(request):
             setup_future_usage='off_session',
             amount=int(total * 100),
             currency='usd',
-            # automatic_payment_methods={
-            #     'enabled': True,
-            # },
             payment_method_types=['card'],
             receipt_email=request.POST.get('email'),
             description='Payment for purchases on Auctions',
@@ -195,10 +192,6 @@ def tips(request):
 @login_required
 def create(request):
     if request.method == 'POST':
-        # if not request.FILES['image'].name.endswith('.jpg' or '.png' or '.jpeg'):
-        #     messages.error(request, 'File is not Image type!')
-        #     return HttpResponseRedirect(reverse("auctions:create"))
-
         form = NewListingForm(request.POST, request.FILES)
         if form.is_valid():
             newListing = form.save(commit=False)
@@ -208,6 +201,13 @@ def create(request):
             messages.success(
                 request, 'Listing was created successfully!')
             return HttpResponseRedirect(reverse("auctions:listing", args=[newListing.id]))
+        else:  # If form is invalid
+            messages.error(
+                request, 'There was an error creating your listing.')
+            return render(request, "auctions/create.html", {
+                "form": form,
+                "title": "Create a New Listing"
+            })
     else:
         messages.info(
             request, format_html("{} <a href='tips/'>{}</a>",
@@ -225,27 +225,17 @@ def edit_listing(request, listing_id):
     # Prefill the form with the current listing data to be edited
     form = NewListingForm(instance=listing)
 
-    # print(request.FILES.get('image').endswith('.jpg' or '.png' or '.jpeg'))
-    # if not str(request.FILES.get('image')).endswith('.jpg' or '.png' or '.jpeg'):
-    #     messages.error(request, 'File is not Image type!')
-    #     return HttpResponseRedirect(reverse("auctions:edit_listing", args=[listing_id]))
-
     if request.method == 'POST':
         listing.title = request.POST['title']
         listing.description = request.POST['description']
         # Update the image if a new one is uploaded
         if request.FILES.get('image'):
             listing.image = request.FILES['image']
-        # image = form.cleaned_data.get('image')
 
         listing.bid_start = request.POST['bid_start']
         if Category.objects.filter(id=request.POST['category']).exists():
             listing.category = Category.objects.get(
                 id=request.POST['category'])
-        # else:
-        #     listing.category = Category.objects.create(
-        #         id=request.POST['category'])
-        # listing.category = Category.objects.get(id=request.POST['category'])
         listing.save()
 
         messages.success(
@@ -472,7 +462,6 @@ def categories(request):
     all_categories = Category.objects.all()
     category_id = request.GET.get("category", None)
     listings = Listing.objects.filter(category=category_id, active=True)
-    # category = Category.objects.get(id=category_id)
     category_count = listings.count()
 
     paginator = Paginator(listings, PAGES)
@@ -524,7 +513,7 @@ def listings(request):
         else:
             listing.watched = False
         request.session['watchlist_count'] = count
-    # send a html message
+    # Send a html message
     messages.info(
         request, format_html("{} <a href='/filter'>{}</a>",
                              'For an advanced search, try using advanced filters ', 'here!'))
@@ -539,7 +528,6 @@ def listings(request):
 def trendingListings(request):
     rdata = Listing.objects.filter(created_date__gte=long_ago)
     likerate = []
-    # dislikerate = []
     viewrate = []
     for i in rdata:
         lr = i.total_likes() + 1
@@ -565,7 +553,6 @@ def trendingListings(request):
         j += 1
     trend = {k: v for k, v in sorted(
         trendingdict.items(), key=lambda item: item[1], reverse=True)}
-    # print('latest trending --', trend)
     trendlist = []
     for k in trend.keys():
         trendlist.append(k)
@@ -677,10 +664,9 @@ def close_listing(request, listing_id):
 
         return HttpResponseRedirect(reverse("auctions:listing", args=[listing_id]))
 
-# Show all the items that have been paid for and ready to ship to buyers
-
 
 @ login_required
+# Show all the items that have been paid for and ready to ship to buyers
 @user_passes_test(lambda u: u.is_superuser)
 def shipping(request):
     ready_to_ship = Listing.objects.filter(paid=True, shipped=False)
@@ -726,15 +712,9 @@ def profits(request):
     data = profits.values('user', 'profit', 'date')
     profitsJSON = (JsonResponse({'data': list(data), 'type': 'profit'}))
 
-    # TODO - Make the Report Microservice work for Profit and Expenses using AWS S3
-    # Storing data.txt in AWS S3
-    # file_storage = FileStorage()
-    # file = file_storage.open('data.txt', 'w')
-    # file.write(profitsJSON.content)
-    # file.close()
-
     # Write the JSON object to a file
-    print(bcolors.HEADER + "Requesting data from Microservice... 🌎" + bcolors.ENDC)
+    print(bcolors.HEADER +
+          "\nRequesting data from Microservice... 🌎\n" + bcolors.ENDC)
     with open('auctions/graphs/data.txt', 'w+') as f:
         f.write(profitsJSON.content.decode('utf-8'))
 
@@ -764,7 +744,7 @@ def expenses(request):
     expensesJSON = (JsonResponse({'data': list(data), 'type': 'expense'}))
 
     # Write the JSON object to a file
-    print(bcolors.HEADER + "Requesting data from Microservice... 🌎" + bcolors.ENDC)
+    print(bcolors.HEADER + "\nRequesting data from Microservice... 🌎\n" + bcolors.ENDC)
     with open('auctions/graphs/data.txt', 'w+') as f:
         f.write(expensesJSON.content.decode('utf-8'))
 
@@ -852,9 +832,8 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            print(bcolors.WARNING + "User logged in: " + bcolors.ENDC, user)
-            # return HttpResponseRedirect(reverse("auctions:index"))
-
+            print(bcolors.WARNING + "\nUser logged in: " +
+                  bcolors.ENDC + str(user) + "\n")
             if nex:
                 return HttpResponseRedirect(nex)
             else:

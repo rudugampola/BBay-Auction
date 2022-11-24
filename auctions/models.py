@@ -97,7 +97,7 @@ class Listing(models.Model):
 
     def __str__(self):
         # Show in admin panel
-        return f"{self.title} - {self.creator} - {self.created_date} - {self.category} - {self.active} - {self.score} - {self.id}"
+        return f"{self.title}"
 
 
 class ListingFilter(django_filters.FilterSet):

@@ -20,6 +20,7 @@ from django.conf.urls.i18n import i18n_patterns
 
 
 urlpatterns = [
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
     path("admin/", admin.site.urls),
     path("", include("auctions.urls", namespace="auctions")),
     path("mail/", include("mail.urls", namespace="mail")),

@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'rosetta',
     'django_resized',
+    'django.contrib.admindocs',
 ]
 
 MIDDLEWARE = [

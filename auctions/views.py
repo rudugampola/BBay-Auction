@@ -21,7 +21,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 from django.utils.translation import gettext as _
-from django.utils.translation import get_language, activate, gettext
+from django.utils.translation import get_language, activate
 
 
 # Stripe Information
@@ -37,6 +37,7 @@ long_ago = today + timedelta(days=-30)  # 30 days ago
 
 
 def translate(language):
+    """Translate the page to the selected language"""
     cur_language = get_language()
     try:
         activate(language)
@@ -91,6 +92,7 @@ class bcolors:
 
 
 def index(request):
+    """Show all active listings"""
     listings = Listing.objects.filter(active=True)
     # Update watchlist
     count = 0
@@ -109,12 +111,14 @@ def index(request):
 
 
 def support(request):
+    """Show the support page"""
     return render(request, "auctions/support.html", {
         "title": "Support"
     })
 
 
 def agreement(request):
+    """Show the agreement page"""
     messages.warning(
         request, "The User Agreement was recently updated. Please read it carefully.")
     return render(request, "auctions/agreement.html", {
@@ -123,6 +127,7 @@ def agreement(request):
 
 
 def privacy(request):
+    """Show the privacy page"""
     messages.warning(
         request, "The privacy policy was recently updated. Please read it carefully.")
     return render(request, "auctions/privacy.html", {
@@ -132,6 +137,7 @@ def privacy(request):
 
 @ login_required
 def rate_listing(request):
+    """Rate a listing"""
     if request.method == 'POST':
         listing_id = request.POST.get('listing_id')
 
@@ -145,6 +151,7 @@ def rate_listing(request):
 
 @ login_required
 def charge(request):
+    """ Charge the user for the listing"""
     pendingPayments = []
     total = 0
     for sale in Sales.objects.filter(buyer=request.user):
@@ -184,6 +191,7 @@ def charge(request):
 
 
 def tips(request):
+    """Show the tips page"""
     return render(request, "auctions/tips.html", {
         "title": "Tips"
     })
@@ -191,6 +199,7 @@ def tips(request):
 
 @login_required
 def create(request):
+    """Create a new listing"""
     if request.method == 'POST':
         form = NewListingForm(request.POST, request.FILES)
         if form.is_valid():
@@ -221,6 +230,7 @@ def create(request):
 
 @ login_required
 def edit_listing(request, listing_id):
+    """Edit a listing"""
     listing = Listing.objects.get(id=listing_id)
     # Prefill the form with the current listing data to be edited
     form = NewListingForm(instance=listing)
@@ -250,6 +260,7 @@ def edit_listing(request, listing_id):
 
 @ login_required
 def listing(request, listing_id):
+    """Show a listing"""
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('auctions:login'))
 
@@ -280,6 +291,7 @@ def listing(request, listing_id):
 
 @ login_required
 def like(request, pk):
+    """Like a listing and add it to the user's liked listings"""
     listing = get_object_or_404(Listing, id=request.POST.get('listing_id'))
     liked = False
     if listing.likes.filter(id=request.user.id).exists():
@@ -293,6 +305,7 @@ def like(request, pk):
 
 @ login_required
 def delete_listing(request, listing_id):
+    """Delete a listing"""
     listing = Listing.objects.get(id=listing_id)
 
     if request.user == listing.creator:
@@ -308,6 +321,7 @@ def delete_listing(request, listing_id):
 
 @ login_required
 def import_csv(request):
+    """Import a CSV file of listings"""
     # Import CSV data that user uploads into Listings table
     if request.method == 'POST':
 
@@ -348,6 +362,7 @@ def import_csv(request):
 
 
 def search(request):
+    """Search for listings"""
     query = request.GET.get('q')
     listings = Listing.objects.filter(title__icontains=query, active=True)
     paginator = Paginator(listings, PAGES)
@@ -365,6 +380,7 @@ def search(request):
 
 @ login_required
 def user_profile(request, user_id):
+    """Show a user's profile"""
     user = User.objects.get(id=user_id)
     listings = Listing.objects.filter(creator=user, active=True)
     paginator = Paginator(listings, PAGES)
@@ -406,6 +422,7 @@ def user_profile(request, user_id):
 
 @ login_required
 def update_userInfo(request, user_id):
+    """Update a user's profile"""
     user = User.objects.get(id=user_id)
     user_profile = UserProfile.objects.get(user=user)
 
@@ -459,6 +476,7 @@ def update_userInfo(request, user_id):
 
 
 def categories(request):
+    "Show all categories"
     all_categories = Category.objects.all()
     category_id = request.GET.get("category", None)
     listings = Listing.objects.filter(category=category_id, active=True)
@@ -484,6 +502,7 @@ def categories(request):
 
 @ login_required
 def create_category(request):
+    """Create a new category"""
     if request.method == 'POST':
         category = request.POST['category']
         new_category = Category(category=category)
@@ -497,6 +516,7 @@ def create_category(request):
 
 
 def listings(request):
+    """Show all listings"""
     listings = Listing.objects.filter(active=True)
     count = 0
     paginator = Paginator(listings, PAGES)
@@ -526,6 +546,7 @@ def listings(request):
 
 
 def trendingListings(request):
+    """Show all trending listings, calculate a score for each listing"""
     rdata = Listing.objects.filter(created_date__gte=long_ago)
     likerate = []
     viewrate = []
@@ -561,6 +582,7 @@ def trendingListings(request):
 
 
 def filter(request):
+    """Filter listings"""
     f = ListingFilter(request.GET, queryset=Listing.objects.all())
     # Show message when filter is submitted
     if request.GET:
@@ -571,6 +593,7 @@ def filter(request):
 
 @ login_required
 def comment(request, listing_id):
+    """Add a comment to a listing"""
     listing = Listing.objects.get(id=listing_id)
     form = NewCommentForm(request.POST)
     newComment = form.save(commit=False)
@@ -585,6 +608,7 @@ def comment(request, listing_id):
 
 @ login_required
 def bid(request, listing_id):
+    """Add a bid to a listing"""
     listing = Listing.objects.get(id=listing_id)
     offer = float(request.POST['offer'])
     if bid_valid(offer, listing):
@@ -607,6 +631,7 @@ def bid(request, listing_id):
 
 
 def bid_valid(offer, listing):
+    """Check if bid is valid"""
     if offer >= listing.bid_start and (listing.bid_current is None or offer > listing.bid_current):
         return True
     else:
@@ -615,6 +640,7 @@ def bid_valid(offer, listing):
 
 @ login_required
 def close_listing(request, listing_id):
+    """Close a listing"""
     listing = Listing.objects.get(id=listing_id)
     listing.active = False
     if Bid.objects.filter(auction_list=listing).last() is not None:
@@ -669,6 +695,7 @@ def close_listing(request, listing_id):
 # Show all the items that have been paid for and ready to ship to buyers
 @user_passes_test(lambda u: u.is_superuser)
 def shipping(request):
+    """Show all the items that have been paid for and ready to ship to buyers"""
     ready_to_ship = Listing.objects.filter(paid=True, shipped=False)
     buyers_address = {}
     for listing in ready_to_ship:
@@ -702,6 +729,7 @@ def shipping(request):
 
 @ login_required
 def profits(request):
+    """Show all the profits"""
     profits = Profits.objects.filter(user=request.user)
     #  Sum all profits
     total = 0
@@ -733,6 +761,7 @@ def profits(request):
 
 @ login_required
 def expenses(request):
+    """Show all the expenses"""
     expenses = Expenses.objects.filter(user=request.user)
     #  Sum all expenses
     total = 0
@@ -763,6 +792,7 @@ def expenses(request):
 
 @ login_required
 def watchlist(request):
+    """Show all the items in the user's watchlist"""
     listings = request.user.watchlist.all()
     paginator = Paginator(listings, PAGES)
     page_number = request.GET.get('page')
@@ -788,6 +818,7 @@ def watchlist(request):
 
 @ login_required
 def update_watchlist(request, listing_id, reverse_method):
+    """Add or remove an item from the user's watchlist"""
     listing = Listing.objects.get(id=listing_id)
     if request.user in listing.watchers.all():
         listing.watchers.remove(request.user)
@@ -817,6 +848,7 @@ def update_watchlist(request, listing_id, reverse_method):
 
 def login_view(request):
     if request.method == "POST":
+        """Log user in"""
         # Get the query string parameter 'next' from the URL
         nex = request.POST.get('next')
 
@@ -850,6 +882,7 @@ def login_view(request):
 
 
 def logout_view(request):
+    """Log user out"""
     logout(request)
     messages.success(
         request, "Logged out successfully!")
@@ -857,6 +890,7 @@ def logout_view(request):
 
 
 def register(request):
+    """Register user"""
     if request.method == "POST":
         first_name = request.POST["first_name"]
         last_name = request.POST["last_name"]

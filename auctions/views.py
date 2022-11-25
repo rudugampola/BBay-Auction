@@ -483,6 +483,10 @@ def categories(request):
     category_id = request.GET.get("category", None)
     listings = Listing.objects.filter(category=category_id, active=True)
     category_count = listings.count()
+    if request.user.is_authenticated:
+        watchlist = request.user.watchlist.all()
+    else:
+        watchlist = None
 
     paginator = Paginator(listings, PAGES)
     page_number = request.GET.get('page')
@@ -499,7 +503,7 @@ def categories(request):
             "listings": listings,
             "category_count": category_count,
             "category": Category.objects.get(id=category_id),
-            "watchlist": request.user.watchlist.all(),
+            "watchlist": watchlist,
         })
 
 

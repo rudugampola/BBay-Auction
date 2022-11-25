@@ -86,7 +86,7 @@ if (document.getElementById('login-form')) {
 document.onkeyup = function (e) {
   if (e.ctrlKey && e.which == 67 && e.altKey) {
     // Redirect to create page
-    window.location.href = '/create';
+    window.location.href = '/auction/create';
   }
 };
 
@@ -259,4 +259,3 @@ $(document).ready(function () {
     $(this).toggleClass('active');
   });
 });
-

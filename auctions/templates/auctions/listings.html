@@ -7,8 +7,8 @@
 <div >
     {% if listings|length > 0 %}
         <div >
-            <h3>{{ category.category }}
-                {% if category_count %}
+            <h3>{{ title}}
+                {% if category_count %}{{ category.category }}
                 <img
               src="{{ category.image.url }}"
               class="rounded-circle"

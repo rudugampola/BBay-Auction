@@ -91,19 +91,6 @@ body {
     color: var(--foreground);
 }
 
-/*
-.btn::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: -4px;
-    top: 4px;
-    border-radius: inherit;
-    z-index: -1;
-}
-*/
-
 .footer_text {
     text-decoration: none;
     color: var(--clr-accent);

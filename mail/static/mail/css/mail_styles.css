@@ -100,6 +100,11 @@ body {
     cursor: auto;
 }
 
+.footer_icons:hover {
+    color: white;
+    cursor: pointer;
+}
+
 #toolbar {
     display: none !important;
 }

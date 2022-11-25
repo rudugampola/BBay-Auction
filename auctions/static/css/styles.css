@@ -111,6 +111,8 @@ body {
 
 .footer_icons:hover {
     color: var(--clr-primary);
+    cursor: pointer !important;
+    transition: none;
 }
 
 .link {
@@ -769,17 +771,17 @@ strong {
     clear: both;
 }
 
-img {
+.game-section img {
     max-width: 100%;
     border: 0px;
 }
 
-ul,
-ol {
+.game-section ul,
+.game-section ol {
     list-style: none;
 }
 
-a {
+.game-section a {
     text-decoration: underline;
     color: inherit;
     outline: none;
@@ -787,16 +789,12 @@ a {
     -webkit-transition: all 0.4s ease-in-out;
 }
 
-a:focus,
-a:active,
-a:visited,
-a:hover {
+.game-section a:focus,
+.game-section a:active,
+.game-section a:visited,
+.game-section a:hover {
     text-decoration: none;
     outline: none;
-}
-
-a:hover {
-    /* color: #e73700; */
 }
 
 h2 {

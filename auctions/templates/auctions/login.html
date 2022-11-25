@@ -26,11 +26,10 @@
         <br>
         <input type="hidden" name="next" value="{{ request.GET.next }}"/>
         <input class="btn btn-primary rounded-pill" style="margin-bottom: 15px" type="submit" value="Login">
-        {% comment %} Add Remember me Radio Button {% endcomment %}
         
 
         <p>Don't have an account? <a href="{% url 'auctions:register' %}">Register here.</a></p>
-        <p>Forgot password? <a href="{% url 'auctions:reset_password' %}">Reset password.</a></p>
+        <p>Forgot password? <a href="{% url 'reset_password' %}">Reset password.</a></p>
         
     </form>
 </div>

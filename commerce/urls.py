@@ -17,6 +17,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.conf.urls.i18n import i18n_patterns
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -24,6 +25,17 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("auctions.urls", namespace="auctions")),
     path("mail/", include("mail.urls", namespace="mail")),
+
+
+    # Password reset Views
+    path('reset_password/', auth_views.PasswordResetView.as_view(template_name="auctions/password_reset.html",
+         html_email_template_name='auctions/password_reset_email.html'), name="reset_password"),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="auctions/password_reset_sent.html"),
+         name="password_reset_done"),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="auctions/password_reset_form.html"),
+         name="password_reset_confirm"),
+    path('reset_password_complete/',
+         auth_views.PasswordResetCompleteView.as_view(template_name="auctions/password_reset_done.html"), name="password_reset_complete"),
 ]
 
 urlpatterns += i18n_patterns(

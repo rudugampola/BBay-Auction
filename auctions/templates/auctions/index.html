@@ -26,7 +26,17 @@
 
 <section class="hexagon-gallery">
       {% for category in categories %}
-      <div class="hex" data-toggle="tooltip" data-placement="center" title="{{category.category}}"><img src="{{ category.image.url }}"></div>
+      
+
+        <div class="hex">
+          <a  href="{% url 'auctions:categories' %}?category={{category.id}}"><img id="hex-img" src="{{ category.image.url }}"></a>
+          <div class="hex-content">
+            <h3>{{category.category}}</h3>
+          
+          </div>
+        </div>
+      
+   
       {% endfor %}
   </section>
 

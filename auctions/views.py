@@ -488,7 +488,7 @@ def categories(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    if category_id is None:
+    if category_id is None and page_number is None:
         return render(request, "auctions/categories.html", {
             "all_categories": all_categories,
             "title": "Categories"
@@ -498,7 +498,8 @@ def categories(request):
             "page_obj": page_obj,
             "listings": listings,
             "category_count": category_count,
-            "category": Category.objects.get(id=category_id)
+            "category": Category.objects.get(id=category_id),
+            "watchlist": request.user.watchlist.all(),
         })
 
 

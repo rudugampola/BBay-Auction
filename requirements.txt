@@ -23,4 +23,4 @@ stripe>=4.0.2
 django-rosetta==0.9.8
 django_resized==1.0.2
 django-taggit==3.1.0
-django-axes==6.5.0
+django-axes==5.40.1

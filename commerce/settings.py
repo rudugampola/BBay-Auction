@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'rosetta',
     'django_resized',
     'django.contrib.admindocs',
+    'taggit',
+    'axes',
 ]
 
 MIDDLEWARE = [
@@ -71,7 +73,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # AxesMiddleware should be the last middleware in the MIDDLEWARE list.
+    'axes.middleware.AxesMiddleware',
 ]
+
+AXES_ENABLED = True
+AXES_FAILURE_LIMIT = 3
+AXES_LOCK_OUT_AT_FAILURE = True
+
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
@@ -81,6 +90,9 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
+TAGGIT_CASE_INSENSITIVE = True
+
+
 # Gmail SMTP Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -88,14 +100,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'bbayauctions@gmail.com'
 EMAIL_HOST_PASSWORD = 'lqpdavnjfbgsndgs'
 EMAIL_USE_TLS = True
-
-# Email Configuration for Twilio SendGrid
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'apikey'
-# EMAIL_HOST_PASSWORD = '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'
-# EMAIL_USE_TLS = True
 
 # 1 Hour to Reset Password
 PASSWORD_RESET_TIMEOUT = 3600
@@ -107,6 +111,14 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'commerce.urls'
+
+AUTHENTICATION_BACKENDS = [
+    # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesStandaloneBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 TEMPLATES = [
     {

@@ -12,11 +12,38 @@ from .models import (Bid, Category, Comment, Expenses, Listing, Profits, Sales,
 class ListingAdmin(admin.ModelAdmin):
     model = Listing
     list_display = ('title', 'creator', 'created_date', 'bid_start', 'bid_current',
-                    'category', 'active', 'listing_views', 'score', 'id')
+                    'category', 'active', 'listing_views', 'score', 'paid', 'shipped', 'id')
     list_filter = ('title', 'creator', 'created_date',
                    'category', 'active', 'score', 'id')
     search_fields = ('title', 'creator', 'created_date',
                      'category', 'active', 'score', 'id')
+
+    actions = ['make_active', 'make_inactive',
+               'paid', 'unpaid', 'shipped', 'unshipped']
+
+    @admin.action(description='Mark selected Listings as Active')
+    def make_active(self, request, queryset):
+        queryset.update(active=True)
+
+    @admin.action(description='Mark selected Listings as Inactive')
+    def make_inactive(self, request, queryset):
+        queryset.update(active=False)
+
+    @admin.action(description='Mark selected Listings as Paid')
+    def paid(self, request, queryset):
+        queryset.update(paid=True)
+
+    @admin.action(description='Mark selected Listings as Unpaid')
+    def unpaid(self, request, queryset):
+        queryset.update(paid=False)
+
+    @admin.action(description='Mark selected Listings as Shipped')
+    def shipped(self, request, queryset):
+        queryset.update(shipped=True)
+
+    @admin.action(description='Mark selected Listings as Unshipped')
+    def unshipped(self, request, queryset):
+        queryset.update(shipped=False)
 
 
 class UserAdmin(admin.ModelAdmin):

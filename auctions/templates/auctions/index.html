@@ -122,7 +122,7 @@
       </div>
     </div>
 
-    {% for listing in listings%}   
+    {% comment %} {% for listing in listings%}   
       <div class="item" style="background-image: url('{{listing.image.url}}'); background-size: auto;">
         <div class="item-desc">
           <h3>{{ listing.title }} </h3>
@@ -130,11 +130,29 @@
           <p>{{ listing.description | safe}}</p>
         </div>
       </div>
+      {% endfor %} {% endcomment %}
+
+
+  </div>
+  </div>
+</section>
+
+<section class="game-section">
+  <h2 class="line-title">What's New?</h2>
+  <div class="owl-carousel custom-carousel owl-theme">
+
+    {% for listing in listings%}   
+      <div class="item" style="background-image: url('{{listing.image.url}}'); background-size: auto;">
+        <div class="item-desc">
+          <h3>{{ listing.title | safe}} </h3>
+          <hr/>
+          <p>{{ listing.description | safe}}</p>
+        </div>
+      </div>
       {% endfor %}
 
 
-  </div>
-  </div>
+</div>
 </section>
 
 

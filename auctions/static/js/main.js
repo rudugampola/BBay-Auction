@@ -43,16 +43,43 @@ if (spinnerLoading && dataLoading) {
   });
 }
 
-var icon = document.getElementById('icon');
-icon.onclick = function () {
-  document.body.classList.toggle('darkmode');
-  if (document.body.classList.contains('darkmode')) {
-    // icon.src = "{% static 'img/sun.svg' %}";
-    icon.src = '/static/img/sun.svg';
-  } else {
-    // icon.src = "{% static 'img/moon.svg' %}";
-    icon.src = '/static/img/moon.svg';
+var dark_light = document.getElementById('icon');
+document.addEventListener('DOMContentLoaded', function () {
+  // Use darkmode from localStorage if it exists
+  if (localStorage.getItem('darkmode') === 'true') {
+    document.body.classList.add('darkmode');
+    dark_light.src = '/static/img/sun.svg';
+  } else if (localStorage.getItem('darkmode') === 'false') {
+    document.body.classList.remove('darkmode');
+    dark_light.src = '/static/img/moon.svg';
   }
+});
+
+dark_light.onclick = function () {
+  if (localStorage.getItem('darkmode') === 'false') {
+    localStorage.setItem('darkmode', 'true');
+    document.body.classList.add('darkmode');
+    dark_light.src = '/static/img/sun.svg';
+  } else if (localStorage.getItem('darkmode') === 'true') {
+    localStorage.setItem('darkmode', 'false');
+    document.body.classList.remove('darkmode');
+    dark_light.src = '/static/img/moon.svg';
+  }
+
+  // document.body.classList.toggle('darkmode');
+  // if (document.body.classList.contains('darkmode')) {
+  //   // icon.src = "{% static 'img/sun.svg' %}";
+  //   icon.src = '/static/img/sun.svg';
+  // } else {
+  //   // icon.src = "{% static 'img/moon.svg' %}";
+  //   icon.src = '/static/img/moon.svg';
+  // }
+
+  // Save the preference to local storage
+  localStorage.setItem(
+    'darkmode',
+    document.body.classList.contains('darkmode')
+  );
 };
 
 $(function () {

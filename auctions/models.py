@@ -13,6 +13,7 @@ from ckeditor.fields import RichTextField
 import requests
 from django.core.files.base import ContentFile
 from django_resized import ResizedImageField
+from taggit.managers import TaggableManager
 
 
 class User(AbstractUser):
@@ -74,6 +75,7 @@ class Listing(models.Model):
     paid = models.BooleanField(default=False)
     shipped = models.BooleanField(default=False)
     listing_views = models.IntegerField(default=0, blank=True, null=True)
+    tags = TaggableManager()
 
     def save(self, *args, **kwargs):
         response = requests.post(
@@ -100,6 +102,9 @@ class Listing(models.Model):
     def __str__(self):
         # Show in admin panel
         return f"{self.title}"
+
+    class Meta:
+        ordering = ['-id']
 
 
 class ListingFilter(django_filters.FilterSet):

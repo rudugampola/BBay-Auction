@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-13 09:20-0800\n"
+"POT-Creation-Date: 2022-11-25 13:48-0800\n"
 "PO-Revision-Date: 2022-11-24 15:58-0800\n"
 "Last-Translator: Admin Admin <admin@example.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,90 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
-#: .\auctions\templates\auctions\layout.html:32
+#: .\auctions\templates\auctions\layout.html:37
 msgid "Site Administration"
 msgstr "Site-Administration"
+
+#: .\auctions\templates\auctions\layout.html:45
+msgid "Hi"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:56
+msgid "Log Out"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:59
+msgid "Log In"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:60
+msgid "Register"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:89
+msgid "Language"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:107
+msgid "Home"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:110
+msgid "Active Listings"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:113
+msgid "Categories"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:118
+msgid "Watchlist"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:133
+msgid "Create Listing"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:144
+msgid "Reports"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:150
+msgid "Profits"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:153
+msgid "Expenses"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:157
+msgid "Shipping"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:164
+msgid "Mail"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:194
+msgid "Search"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:220
+msgid "About Us"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:223
+msgid "FAQ"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:226
+msgid "Support"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:229
+msgid "Privacy"
+msgstr ""
+
+#: .\auctions\templates\auctions\layout.html:232
+msgid "Terms"
+msgstr ""

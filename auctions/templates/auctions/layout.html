@@ -19,6 +19,7 @@
     
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'css/font-awesome-animation.min.css' %}">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <link rel="icon" href="{% static 'img/bbay.ico' %}" />
     <!-- Basic stylesheet -->
     <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
@@ -40,7 +41,7 @@
     <div class="ms-auto" style="color: white; margin-top: 0px">
 
       
-      {% if user.is_authenticated %} Hi, &nbsp
+      {% if user.is_authenticated %} {% translate "Hi" %}, &nbsp
         <a
         data-toggle="tooltip" data-placement="top" title="Go to Profile Page" 
         href="{% url 'auctions:user_profile' user.id %}"
@@ -51,11 +52,11 @@
           > {{ user.username }} &nbsp</b
         ><i class="fa-solid fa-user faa-float"></i></a>
         <p>
-        <a data-toggle="tooltip" data-placement="top" title="Logout User"   class="btn btn-danger btn-sm rounded-pill " style="padding: 0.5em" href="{% url 'auctions:logout' %}">Log Out <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+        <a data-toggle="tooltip" data-placement="top" title="Logout User"   class="btn btn-danger btn-sm rounded-pill " style="padding: 0.5em" href="{% url 'auctions:logout' %}"> {% translate "Log Out" %} <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
       {% else %}
         <p>👋 Not Signed In.</p>
-        <a data-toggle="tooltip" data-placement="top" title="Login User"  class="btn btn-success btn-sm rounded-pill" style="padding: 0.5em" href="{% url 'auctions:login' %}">Log In <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
-        <a data-toggle="tooltip" data-placement="top" title="Register New User"  class="btn btn-primary btn-sm rounded-pill" style="padding: 0.5em" href="{% url 'auctions:register' %}">Register <i class="fa-solid fa-user-plus"></i></a>
+        <a data-toggle="tooltip" data-placement="top" title="Login User"  class="btn btn-success btn-sm rounded-pill" style="padding: 0.5em" href="{% url 'auctions:login' %}">{% translate "Log In" %} <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+        <a data-toggle="tooltip" data-placement="top" title="Register New User"  class="btn btn-primary btn-sm rounded-pill" style="padding: 0.5em" href="{% url 'auctions:register' %}">{% translate "Register" %} <i class="fa-solid fa-user-plus"></i></a>
         </p>
       {% endif %}
 
@@ -84,7 +85,7 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-              <i class="fa-solid fa-globe"></i></i>&nbspLanguage
+              <i class="fa-solid fa-globe"></i></i>&nbsp{% translate "Language" %}
               </a>
               <ul class="dropdown-menu dropdown-menu-dark"
               aria-labelledby="navbarDarkDropdownMenuLink">
@@ -102,28 +103,33 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link link" href="{% url 'auctions:index' %}"><i class="fa-solid fa-house"></i> &nbspHome </a>
+              <a class="nav-link link" href="{% url 'auctions:index' %}"><i class="fa-solid fa-house"></i> &nbsp{% translate "Home" %} </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link link" href="{% url 'auctions:listings' %}"><i class="fa-solid fa-list"></i>&nbspActive Listings </a>
+              <a class="nav-link link" href="{% url 'auctions:listings' %}"><i class="fa-solid fa-list"></i>&nbsp{% translate "Active Listings" %} </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link link" href="{% url 'auctions:categories' %}"><i class="fa-solid fa-tags"></i>&nbspCategories </a>
+              <a class="nav-link link" href="{% url 'auctions:categories' %}"><i class="fa-solid fa-tags"></i>&nbsp{% translate "Categories" %} </a>
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link link" href="{% url 'auctions:watchlist' %}"
-                ><i class="fa-solid fa-binoculars"></i> &nbspWatchlist 
+                ><i class="fa-solid fa-binoculars"></i> &nbsp{% translate "Watchlist" %}
                 <span
-                  style="margin-left: 9px"
-                  class="position-absolute top-10 start-30 translate-middle badge rounded-circle bg-danger"
-                  >{{ request.session.watchlist_count }}
+                  style="margin-left: 10px; padding: 0.4em"
+                  class="position-absolute top-10 start-30 translate-middle  badge rounded-pill bg-danger"
+                  >
+                  {% if request.session.watchlist_count > 20 %}
+                  20+
+                  {% else %}
+                    {{ request.session.watchlist_count }}
+                  {% endif %}
                 </span> 
               </a>
             </li>
       
             <li class="nav-item">
-              <a class="nav-link link" style="margin-left: 10px" href="{% url 'auctions:create' %}"><i class="fa-solid fa-circle-plus"></i>&nbspCreate Listing </a>
+              <a class="nav-link link" style="margin-left: 10px" href="{% url 'auctions:create' %}"><i class="fa-solid fa-circle-plus"></i>&nbsp{% translate "Create Listing" %} </a>
             </li>
       
             <li class="nav-item dropdown link" style="z-index: 1000">
@@ -134,35 +140,47 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-              <i class="fa-solid fa-chart-column"></i>&nbspReports </a>
+              <i class="fa-solid fa-chart-column"></i>&nbsp{% translate "Reports" %} </a>
               <ul
                 class="dropdown-menu dropdown-menu-dark"
                 aria-labelledby="navbarDarkDropdownMenuLink"
                 >
                 <li>
-                  <a class="dropdown-item" href="{% url 'auctions:profits' %}">💰 Profits</a>
+                  <a class="dropdown-item" href="{% url 'auctions:profits' %}">💰 {% translate "Profits" %}</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'auctions:expenses' %}">💸 Expenses</a>
+                  <a class="dropdown-item" href="{% url 'auctions:expenses' %}">💸 {% translate "Expenses" %}</a>
                 </li>
                 {% if request.user.is_superuser %}
                   <li>
-                    <a class="dropdown-item" href="{% url 'auctions:shipping' %}">🚚 Shipping</a>
+                    <a class="dropdown-item" href="{% url 'auctions:shipping' %}">🚚 {% translate "Shipping" %}</a>
                   </li>
                 {% endif %}
               </ul>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link link" href="{% url 'mail:mail-index' %}"><i class="fa-solid fa-envelope"></i>&nbspMail </a>
+              <a class="nav-link link" target="_blank" rel="noopener noreferrer" href="{% url 'mail:mail-index' %}"><i class="fa-solid fa-envelope"></i>&nbsp{% translate "Mail" %}
+                <span
+                style="margin-left: 10px; padding: 0.4em"
+                class="position-absolute top-10 start-30 translate-middle  badge rounded-pill bg-danger"
+                >
+                {% if request.session.email_count > 20 %}
+                  20+
+                {% else %}
+                  {{ request.session.email_count }}
+                {% endif %}
+              </span>
+              </a>
             </li>
             {% endif %} 
             
           </ul>  
             
-            {% if not request.path == '/' %}
+            
             <ul class="navbar-nav">
               <li class="nav-item" >
+              {% if not request.path == '/' %}
                 <form class="d-flex" action="{% url 'auctions:search' %}" method="GET" >
                   <input
                   data-toggle="tooltip" data-placement="top" title="Search for a Listing" 
@@ -173,14 +191,16 @@
                     name="q"
                     style="padding: 0.5em; margin: 5px;"
                   />
-                  <button style="padding: 0.5em; margin: 5px;" class="btn btn-success rounded-pill"  type="submit">Search</button>
+                  <button style="padding: 0.5em; margin: 5px;" class="btn btn-success rounded-pill"  type="submit">{% translate "Search" %}</button>
+                </form>
+                {% endif %}
                   <li class="nav-item ms-auto" style="padding-left: 50px">
                     <img data-toggle="tooltip" data-placement="top" title="Dark Mode/Light Mode"  src="{% static 'img/moon.svg' %}" id="icon" style="width: 50px"/>
                   </li>
-                </form>
+                
               </li>
             </ul>
-            {% endif %}
+            
           
         </div>
       </div>
@@ -199,19 +219,19 @@
           class="footer_text footer_icons"
           data-bs-toggle="modal"
           data-bs-target="#aboutModal"
-          ><i class="fa-solid fa-circle-info"></i>&nbspAbout Us</a>
+          ><i class="fa-solid fa-circle-info"></i>&nbsp{% translate "About Us" %}</a>
         |
         <a class="footer_text footer_icons" data-bs-toggle="modal" data-bs-target="#faqModal"
-          ><i class="fa-solid fa-circle-question"></i>&nbspFAQ</a>
+          ><i class="fa-solid fa-circle-question"></i>&nbsp{% translate "FAQ" %}</a>
         |
         <a class="footer_text footer_icons" href="{% url 'auctions:support' %}">
-            <i class="fa-solid fa-phone"></i>&nbspSupport</a>
+            <i class="fa-solid fa-phone"></i>&nbsp{% translate "Support" %}</a>
           |
           <a class="footer_text footer_icons" href="{% url 'auctions:privacy' %}">
-            <i class="fa-solid fa-user-lock"></i>&nbspPrivacy</a>
+            <i class="fa-solid fa-user-lock"></i>&nbsp{% translate "Privacy" %}</a>
             |
             <a class="footer_text footer_icons" href="{% url 'auctions:agreement' %}">
-              <i class="fa-solid fa-file-contract"></i>&nbspTerms</a>
+              <i class="fa-solid fa-file-contract"></i>&nbsp{% translate "Terms" %}</a>
       </p>
       <p class="text-center footer_text">©Ravindu Udugampola 2022</p>
     </div>
@@ -293,7 +313,6 @@
           ></button>
         </div>
         <div class="modal-body">
-          {% comment %} <ul> {% endcomment %}
               <p>
                 <a class="btn btn-light btn-sm shadow bg-body rounded rounded-pill" style="padding: 0.5em; margin: 5px;" data-bs-toggle="collapse" href="#create" role="button" aria-expanded="false" aria-controls="collapseExample">
                   How do I create a listing?

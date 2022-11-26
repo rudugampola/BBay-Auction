@@ -22,6 +22,8 @@ from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 from django.utils.translation import gettext as _
 from django.utils.translation import get_language, activate
+from mail.models import Email
+from django.db.models import Q
 
 
 # Stripe Information
@@ -62,9 +64,11 @@ class NewListingForm(forms.ModelForm):
             'bid_start': forms.NumberInput(attrs={'placeholder': 'Starting Bid Price'}),
             'image': forms.FileInput(attrs={'placeholder': 'Image', 'class': 'form-control', 'type': 'file', }),
             'category': forms.Select(attrs={'placeholder': 'Category', 'class': 'form-control', 'type': 'select', 'required': 'true', }),
+            'tags': forms.TextInput(attrs={'placeholder': 'Tags', 'class': 'form-control', 'type': 'text', }),
         }
 
-        fields = ['title', 'description', 'bid_start', 'image', 'category']
+        fields = ['title', 'description',
+                  'bid_start', 'image', 'category', 'tags']
 
 
 class NewCommentForm(forms.ModelForm):
@@ -103,6 +107,7 @@ def index(request):
                 count += 1
         request.session['watchlist_count'] = count
 
+    request.session['email_count'] = updateMail(request)
     trendingListings(request)
 
     return render(request, "auctions/index.html", {
@@ -209,6 +214,7 @@ def create(request):
             newListing.creator = request.user
             newListing.bid_current = newListing.bid_start
             newListing.save()
+            form.save_m2m()
             messages.success(
                 request, 'Listing was created successfully!')
             return HttpResponseRedirect(reverse("auctions:listing", args=[newListing.id]))
@@ -366,7 +372,12 @@ def import_csv(request):
 def search(request):
     """Search for listings"""
     query = request.GET.get('q')
-    listings = Listing.objects.filter(title__icontains=query, active=True)
+
+    if query:
+        listings = Listing.objects.filter(
+            Q(title__icontains=query) | Q(tags__name__icontains=query), active=True).order_by('-listing_views')
+        # Q(title__icontains=query) | Q(description__icontains=query) | Q(tags__name__icontains=query), active=True).order_by('-listing_views')
+
     paginator = Paginator(listings, PAGES)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -389,6 +400,7 @@ def user_profile(request, user_id):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     watchlist = request.user.watchlist.all()
+    request.session['email_count'] = updateMail(request)
 
     pendingPayments = []
     total = 0
@@ -487,6 +499,7 @@ def categories(request):
         watchlist = request.user.watchlist.all()
     else:
         watchlist = None
+    request.session['email_count'] = updateMail(request)
 
     paginator = Paginator(listings, PAGES)
     page_number = request.GET.get('page')
@@ -532,6 +545,7 @@ def listings(request):
     watchlist = []
     if request.user.is_authenticated:
         watchlist = request.user.watchlist.all()
+    request.session['email_count'] = updateMail(request)
 
     for listing in listings:
         if request.user in listing.watchers.all():
@@ -805,6 +819,7 @@ def watchlist(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     watchlist = request.user.watchlist.all()
+    request.session['email_count'] = updateMail(request)
 
     for listing in listings:
         if request.user in listing.watchers.all():
@@ -851,6 +866,12 @@ def update_watchlist(request, listing_id, reverse_method):
     else:  # reverse_method = "listing"
         request.session['watchlist_count'] = request.user.watchlist.count()
         return HttpResponseRedirect(reverse(reverse_method, args=[request.user.id]))
+
+
+def updateMail(request):
+    if request.user.is_authenticated:
+        emails = Email.objects.filter(user=request.user, read=False).count()
+        return emails
 
 
 def login_view(request):

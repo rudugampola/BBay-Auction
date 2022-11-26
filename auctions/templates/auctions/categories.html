@@ -27,11 +27,10 @@
     {% endif %} 
     {% for category in all_categories %}
     <div class="col-sm-4">
-      <div class="card" style="margin-bottom: 20px">
+      <div class="card" style="margin-bottom: 20px;">
         <div class="card-body shadow bg-body rounded">
           <h5 class="card-title d-flex justify-content-center">
             <a
-            data-toggle="tooltip" data-placement="top" title="Click to View Category {{category}}" 
               class="link"
               href="{% url 'auctions:categories' %}?category={{category.id}}"
               >{{ category }}

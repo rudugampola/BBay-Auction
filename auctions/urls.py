@@ -51,16 +51,6 @@ urlpatterns = [
     path('shipping/', views.shipping, name='shipping'),
     path('accounts/login/', views.login_view, name='login'),
     path('auction/tips/', views.tips, name='tips'),
-
-    #     # Password reset Views
-    #     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="auctions/password_reset.html",
-    #          html_email_template_name='auctions/password_reset_email.html'), name="reset_password"),
-    #     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="auctions/password_reset_sent.html"),
-    #          name="password_reset_done"),
-    #     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="auctions/password_reset_form.html"),
-    #          name="password_reset_confirm"),
-    #     path('reset_password_complete/',
-    #          auth_views.PasswordResetCompleteView.as_view(template_name="auctions/password_reset_done.html"), name="password_reset_complete"),
 ]
 
 if settings.DEBUG:

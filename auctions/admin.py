@@ -12,11 +12,12 @@ from .models import (Bid, Category, Comment, Expenses, Listing, Profits, Sales,
 class ListingAdmin(admin.ModelAdmin):
     model = Listing
     list_display = ('title', 'creator', 'created_date', 'bid_start', 'bid_current',
-                    'category', 'active', 'listing_views', 'score', 'paid', 'shipped', 'id')
+                    'category', 'active', 'listing_views', 'score', 'paid', 'shipped', 'reported', 'id')
     list_filter = ('title', 'creator', 'created_date',
-                   'category', 'active', 'score', 'id')
+                   'category', 'active', 'score', 'reported', 'id')
     search_fields = ('title', 'creator', 'created_date',
                      'category', 'active', 'score', 'id')
+    list_editable = ('bid_start', 'bid_current', 'active')
 
     actions = ['make_active', 'make_inactive',
                'paid', 'unpaid', 'shipped', 'unshipped']

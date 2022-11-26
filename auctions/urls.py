@@ -1,8 +1,6 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, include, re_path
-from django.contrib.auth import views as auth_views
-from django.conf.urls.i18n import i18n_patterns
+from django.urls import path
 
 from . import views
 
@@ -51,6 +49,8 @@ urlpatterns = [
     path('shipping/', views.shipping, name='shipping'),
     path('accounts/login/', views.login_view, name='login'),
     path('auction/tips/', views.tips, name='tips'),
+    path('auction/report_listing/<int:listing_id>',
+         views.reportListing, name='reportListing'),
 ]
 
 if settings.DEBUG:

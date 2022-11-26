@@ -1,8 +1,10 @@
 {% extends "auctions/layout.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% load humanize %}
 {% block body %}
 {% include 'auctions/messages.html' %}
+
         <div class="card">
             
             <div class="card-body">
@@ -36,20 +38,20 @@
                                 <li><a class="dropdown-item" data-toggle="tooltip" data-placement="top" data-bs-toggle="modal" 
                                     data-bs-target="#closer" title="Close this Listing."  
                                     href="{% url 'auctions:close_listing' listing.id %}"><i class="fa-solid fa-check"></i>&nbsp&nbspClose Listing</a></li>
-                                {% endif %}
-                
-                                {% if listing.creator == user and listing.active %}
+
                                 <li><a data-toggle="tooltip" data-bs-toggle="modal" data-bs-target="#delete" data-placement="top" title="Delete this Listing." 
                                     class="dropdown-item" href="{% url 'auctions:delete_listing' listing.id %}"> <i class="fa-solid fa-trash"></i>&nbsp&nbspDelete Listing</a></li>
-                                {% endif %} 
 
-                                {% if listing.creator == user and listing.active %}
                                 <li><a data-toggle="tooltip" data-placement="top" title="Edit this Listing." 
                                     class="dropdown-item" href="{% url 'auctions:edit_listing' listing.id %}"><i class="fa-solid fa-pen-to-square"></i>&nbsp&nbspEdit Listing</a></li>
                                 {% endif %}
-
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Separated link</a></li>
+                            
+                                {% if  listing.creator != user and listing.active %}
+                                    <li>
+                                        <a data-toggle="tooltip" data-placement="top" title="Report this Listing." 
+                                        class="dropdown-item" href="{% url 'auctions:reportListing' listing.id %}"><i class="fa-solid fa-flag"></i>&nbsp&nbspReport Listing</a>
+                                    </li>
+                                {% endif %}
                             </ul>
                           </div>
                     </div>
@@ -137,7 +139,7 @@
                     <div class="form-group form-control" style="width: 370px">
                         <form action="{% url 'auctions:bid' listing.id %}" method="post">
                             {% csrf_token %}
-                            {{ form }}        
+                            {{ form_bid }}        
                             <input type = submit value="Bid Now!" class="btn btn-warning btn-sm rounded-pill" style="padding: 0.5em">
                         </form>                    
                     </div>            
@@ -195,33 +197,120 @@
         </div>
         
 
-        <div class="card" style="width: 95%; margin: 0.5% auto; padding: 0.5%" >
-            <h4>Comments <i class="fa-regular fa-comment"></i></h4>
+        {% comment %} <div class="card" style="width: 95%; margin: 0.5% auto; padding: 0.5%" > {% endcomment %}
+            
             {% if listing.active %}
-                <div class="form-group">
-                    <form action="{% url 'auctions:comment' listing.id %}" method="post">
-                        {% csrf_token %}
-                        {{ form_comment }}       
-                        <br> 
-                        <input type="submit" value="Comment">
-                    </form> 
-                </div>   
-            {% endif %}         
-            <hr/>
-        
-            {% for comment in comments %}   
-            <div class="card" >     
-                    <div class="card-header">
-                        {{ comment.user|default:"Unknown auctor" }} commented:
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title"> {{ comment.comment }}</h5>                        
-                    </div>
+
+                  <div class="row d-flex justify-content-center">
                     
-                    <footer class="footer_text card-footer"><small>Created on {{ comment.created_date|date:"M, d, Y g:i a" }}</small></footer>
-                <hr/>
-            </div>
-            {% endfor %}
+                    <div class="col-md-10 col-lg-8 col-xl-6">
+                        <h4>Comments <i class="fa-regular fa-comment"></i></h4>
+                      <div class="card">
+                        
+                        <div class="card-body p-4">
+                          <div class="d-flex flex-start w-100">
+                            <img class="rounded-circle shadow-1-strong me-3"
+                            src="{{ userProfile.avatar.url }}" alt="avatar" width="65"
+                              height="65" />
+                            <div class="w-100">
+                              <h5>Add a comment</h5>
+                              <div class="form-outline">
+                                <form action="{% url 'auctions:comment' listing.id %}" method="post">
+                                    {% csrf_token %}
+                                    {{ form_comment.comment | as_crispy_field }}       
+                                    <br> 
+                                    <button type="submit" value="Comment" class="btn btn-success" style="padding: 0.5em; margin-bottom: 10px">
+                                        Send <i class="fas fa-long-arrow-alt-right ms-1"></i>
+                                    </button>
+                                </form> 
+                              </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {% if comments %}
+                      <div class="container my-2 py-2">
+                        <div class="row d-flex justify-content-center">
+                          <div class="col-md-12 col-lg-10">
+                            <div class="card text-dark">
+                              
+                                
+                              <div class="card-body p-4">
+                                <h4 class="mb-0">Recent comments</h4>
+                                <p class="fw-light mb-4 pb-2">Latest Comments Section by Users</p>
+                    
+                                <div class="d-flex flex-start">
+                                  <img class="rounded-circle shadow-1-strong me-3"
+                                    src="{{ comments.0.get_user_profile_avatar.url }}" alt="avatar" width="65"
+                                    height="60" /> 
+                                  <div>
+                                    <h6 class="fw-bold mb-1">{{ comments.0.user|default:"Unknown auctor" }}</h6>
+                                    <div class="d-flex align-items-center mb-3">
+                                      <p class="mb-0">
+                                        {{ comments.0.created_date|date:"M, d, Y g:i a" }}
+                                      </p>
+                                      <a href="#!" class="link-danger"><i class="fas fa-heart ms-2"></i></a>
+                                    </div>
+                                    <p class="mb-0">
+                                        {{ comments.0.comment }}
+                                    </p>
+                                    
+                                    <div class="comment-options d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                          <a href="#!" class="comment-options link-muted me-2"><i class="fas fa-thumbs-up me-1"></i>132</a>
+                                          <a href="#!" class="comment-options link-muted"><i class="fas fa-thumbs-down me-1"></i>15</a>
+                                        </div>
+                                        <a href="#!" class="comment-options link-muted"><i class="fas fa-reply me-1"></i> Reply</a>
+                                    </div>
+                                    </div>
+
+                                </div>
+                                
+                              </div>
+
+                              
+                    
+                              <hr class="my-0" />
+                              {% for comment in comments|slice:"1:" %}   
+                              <div class="card-body p-4">
+                                <div class="d-flex flex-start">
+                                  <img class="rounded-circle shadow-1-strong me-3"
+                                  src="{{ comment.get_user_profile_avatar.url }}" alt="avatar" width="60"
+                                    height="60" /> 
+                                  <div>
+                                    <h6 class="fw-bold mb-1">{{ comment.user|default:"Unknown auctor" }}</h6>
+                                    <div class="d-flex align-items-center mb-3">
+                                      <p class="mb-0">
+                                        {{ comment.created_date|date:"M, d, Y g:i a" }}
+                                      </p>
+                                      <a href="#!" class="link-danger"><i class="fas fa-heart ms-2"></i></a>
+                                    </div>
+                                    <p class="mb-0">
+                                        {{ comment.comment }}
+                                    </p>
+                                    <div class="comment-options d-flex">
+                                        <div class="d-flex align-items-center">
+                                            <a href="#!" class="comment-options link-muted me-2"><i class="fas fa-thumbs-up me-1"></i>132</a>
+                                            <a href="#!" class="comment-options link-muted"><i class="fas fa-thumbs-down me-1"></i>15</a>
+                                        </div>
+                                        <a href="#!" class="comment-options link-muted"><i class="fas fa-reply me-1"></i> Reply</a>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                              </div>
+                              <hr class="my-0" />
+                              {% endfor %}
+                              
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              {% endif %}         
+            {% endif %}         
+          </div>
         </div>
     </div>
 {% endblock %}

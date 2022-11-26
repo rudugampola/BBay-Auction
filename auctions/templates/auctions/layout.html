@@ -209,33 +209,63 @@
 {% block body %} {% endblock %}
   </body>
 
-  <footer class="footer_text">
-    <br />
-    <div class="footer">
-      <p class="text-center">
-        <a class="footer_text footer_icons" href="{% url 'auctions:index' %}"><i class="fa-solid fa-house"></i>&nbspHome</a>
-        |
-        <a
-          class="footer_text footer_icons"
-          data-bs-toggle="modal"
-          data-bs-target="#aboutModal"
-          ><i class="fa-solid fa-circle-info"></i>&nbsp{% translate "About Us" %}</a>
-        |
-        <a class="footer_text footer_icons" data-bs-toggle="modal" data-bs-target="#faqModal"
-          ><i class="fa-solid fa-circle-question"></i>&nbsp{% translate "FAQ" %}</a>
-        |
-        <a class="footer_text footer_icons" href="{% url 'auctions:support' %}">
-            <i class="fa-solid fa-phone"></i>&nbsp{% translate "Support" %}</a>
+
+  <section class="">
+    <!-- Footer -->
+    <footer class="text-center text-white" style="margin-top: 20px; background-color: rgba(0, 0, 0, 0.1);">
+      <!-- Grid container -->
+      <div class="container p-4 pb-0">
+        <!-- Section: CTA -->
+        <section class="">
+          {% if not request.user.is_authenticated %}
+          <p class="d-flex justify-content-center align-items-center">
+            <span class="me-3">Register for free</span>
+            <a href="{% url 'auctions:register' %}">
+            <button type="button" class="btn btn-outline-light btn-rounded">
+              Sign Up!
+              
+            </button></a>
+          </p>
+          {% endif %}
+        </section>
+        <!-- Section: CTA -->
+      </div>
+      <!-- Grid container -->
+      <div class="footer">
+        <p class="text-center">
+          <a class="footer_text footer_icons" href="{% url 'auctions:index' %}"><i class="fa-solid fa-house"></i>&nbspHome</a>
           |
-          <a class="footer_text footer_icons" href="{% url 'auctions:privacy' %}">
-            <i class="fa-solid fa-user-lock"></i>&nbsp{% translate "Privacy" %}</a>
+          <a
+            class="footer_text footer_icons"
+            data-bs-toggle="modal"
+            data-bs-target="#aboutModal"
+            ><i class="fa-solid fa-circle-info"></i>&nbsp{% translate "About Us" %}</a>
+          |
+          <a class="footer_text footer_icons" data-bs-toggle="modal" data-bs-target="#faqModal"
+            ><i class="fa-solid fa-circle-question"></i>&nbsp{% translate "FAQ" %}</a>
+          |
+          <a class="footer_text footer_icons" href="{% url 'auctions:support' %}">
+              <i class="fa-solid fa-phone"></i>&nbsp{% translate "Support" %}</a>
             |
-            <a class="footer_text footer_icons" href="{% url 'auctions:agreement' %}">
-              <i class="fa-solid fa-file-contract"></i>&nbsp{% translate "Terms" %}</a>
-      </p>
-      <p class="text-center footer_text">©Ravindu Udugampola 2022</p>
-    </div>
-  </footer>
+            <a class="footer_text footer_icons" href="{% url 'auctions:privacy' %}">
+              <i class="fa-solid fa-user-lock"></i>&nbsp{% translate "Privacy" %}</a>
+              |
+              <a class="footer_text footer_icons" href="{% url 'auctions:agreement' %}">
+                <i class="fa-solid fa-file-contract"></i>&nbsp{% translate "Terms" %}</a>
+        </p>
+      </div>
+      <!-- Copyright -->
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2022 Copyright:
+        <a class="text-white" href="#">Ravindu Udugampola</a>
+      </div>
+      <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+  </section>
+
+
+
 
   <div
     class="modal fade"

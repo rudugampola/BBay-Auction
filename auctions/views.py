@@ -76,9 +76,10 @@ class NewCommentForm(forms.ModelForm):
         model = Comment
         fields = ['comment']
         widgets = {
-            'comment': forms.TextInput(attrs={
+            'comment': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Leave your comment here',
+                'type': 'text',
             })
         }
 
@@ -271,7 +272,7 @@ def listing(request, listing_id):
     """Show a listing"""
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('auctions:login'))
-
+    userProfile = UserProfile.objects.get(user=request.user)
     listing = Listing.objects.get(id=listing_id)
     # Increment the views count
     listing.listing_views += 1
@@ -288,13 +289,24 @@ def listing(request, listing_id):
 
     return render(request, "auctions/listing.html", {
         "listing": listing,
-        "form": NewBidForm(),
+        "form_bid": NewBidForm(),
         "comments": listing.user_comment.all(),
         "form_comment": NewCommentForm(),
+        "userProfile": userProfile,
         "title": listing.title.title(),
         "liked": liked,
         "total_likes": listing.total_likes()
     })
+
+
+def reportListing(request, listing_id):
+    """Report a listing"""
+    listing = Listing.objects.get(id=listing_id)
+    listing.reported = True
+    listing.save()
+    messages.success(
+        request, 'Listing reported successfully! We will review it shortly.')
+    return HttpResponseRedirect(reverse("auctions:listing", args=[listing_id]))
 
 
 @ login_required
@@ -617,14 +629,19 @@ def comment(request, listing_id):
     """Add a comment to a listing"""
     listing = Listing.objects.get(id=listing_id)
     form = NewCommentForm(request.POST)
-    newComment = form.save(commit=False)
-    newComment.user = request.user
-    newComment.listing = listing
-    newComment.save()
-    messages.success(
-        request, "You\'ve commented successfully.")
-
-    return HttpResponseRedirect(reverse("auctions:listing", args=[listing_id]))
+    if form.is_valid():
+        newComment = form.save(commit=False)
+        newComment.user = request.user
+        newComment.listing = listing
+        newComment.profile = UserProfile.objects.get(user=request.user)
+        newComment.save()
+        messages.success(
+            request, "You\'ve commented successfully.")
+        return HttpResponseRedirect(reverse('auctions:listing', args=[str(listing_id)]))
+    else:
+        messages.error(
+            request, 'There was an error posting your comment. ' + str(form.errors.as_data().get('comment')[0]).split('[')[1].split(']')[0])
+        return HttpResponseRedirect(reverse("auctions:listing", args=[listing_id]))
 
 
 @ login_required
@@ -646,7 +663,7 @@ def bid(request, listing_id):
     else:
         return render(request, "auctions/listing.html", {
             "listing": listing,
-            "form": NewBidForm(),
+            "form_bid": NewBidForm(),
             "min_error": True
         })
 

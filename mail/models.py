@@ -1,12 +1,8 @@
 from django.utils import timezone
-# from django.contrib.auth.models import AbstractUser
 from django.db import models
 from auctions.models import User
 from ckeditor.fields import RichTextField
 
-
-# class User(AbstractUser):
-#     pass
 
 class Email(models.Model):
     user = models.ForeignKey(
@@ -17,7 +13,6 @@ class Email(models.Model):
     subject = models.CharField(max_length=255)
     # body = models.TextField(blank=True)
     body = RichTextField(blank=True)
-    # timestamp = models.DateTimeField(default=timezone.localtime())
     timestamp = models.DateTimeField(default=timezone.now)
     read = models.BooleanField(default=False)
     archived = models.BooleanField(default=False)

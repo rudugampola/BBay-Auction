@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   email_content = document.querySelector('#email_content');
   footer_content = document.querySelector('#footer_content');
   mail_image = document.querySelector('#mail_image');
-  
+
   setTimeout(() => {
     preloader.classList.add('not-visible');
     email_content.classList.remove('not-visible');
@@ -179,7 +179,7 @@ function one_email(id) {
       to.innerHTML = email.recipients;
       body.innerHTML = email.body;
       // Convert time to PST time
-      timestamp.innerHTML = '⏰ ' + email.timestamp + ' UTC';
+      timestamp.innerHTML = '⏰ ' + email.timestamp + ' PST';
 
       const reply = document.createElement('button');
       reply.className = 'btn btn-success btn-sm right_align reply rounded-pill';

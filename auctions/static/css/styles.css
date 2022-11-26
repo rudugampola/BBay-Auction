@@ -848,8 +848,7 @@ h3 {
     display: -webkit-flex;
     align-items: flex-end;
     -webkit-align-items: flex-end;
-    /* background: #bbbbbb no-repeat center center / cover; */
-    background: #78d3c5 no-repeat center center / cover;
+    background: rgb(248, 248, 220) no-repeat center center / cover;
     border-radius: 16px;
     overflow: hidden;
     position: relative;
@@ -1232,4 +1231,14 @@ h3 {
 
 .tag:hover::after {
     border-left-color: crimson;
+}
+
+.link-muted {
+    text-decoration: none;
+}
+
+.comment-options {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }

@@ -50,11 +50,9 @@ class Category(models.Model):
 
 class Listing(models.Model):
     title = models.CharField(max_length=64)
-    # description = models.TextField(max_length=1024, null=True)
     description = RichTextField(max_length=1024, null=True, blank=True)
     bid_start = models.FloatField()
     bid_current = models.FloatField(blank=True, null=True)
-    # created_date = models.DateTimeField(default=timezone.localtime())
     created_date = models.DateTimeField(default=timezone.now)
     creator = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="all_listings")
@@ -76,6 +74,7 @@ class Listing(models.Model):
     shipped = models.BooleanField(default=False)
     listing_views = models.IntegerField(default=0, blank=True, null=True)
     tags = TaggableManager()
+    reported = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         response = requests.post(
@@ -139,12 +138,17 @@ class Bid(models.Model):
 
 
 class Comment(models.Model):
-    comment = models.CharField(max_length=100)
-    # created_date = models.DateTimeField(default=timezone.localtime())
+    comment = models.CharField(max_length=1000)
     created_date = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     listing = models.ForeignKey(
         Listing, on_delete=models.CASCADE, related_name="user_comment")
+    profile = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE)
+
+    # Return the avatar of the user who commented from UserProfile model
+    def get_user_profile_avatar(self):
+        return self.profile.avatar
 
     def get_date(self):
         return self.created_date.strftime('%B %d %Y')
@@ -156,7 +160,6 @@ class Sales(models.Model):
         User, on_delete=models.CASCADE, related_name="sale_buyer")
     seller = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="sale_seller")
-    # date = models.DateTimeField(default=timezone.localtime())
     date = models.DateTimeField(default=timezone.now)
     price = models.FloatField()
 
@@ -164,7 +167,6 @@ class Sales(models.Model):
 class Profits(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     profit = models.FloatField(default=0)
-    # date = models.DateTimeField(default=timezone.localtime())
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -177,7 +179,6 @@ class Profits(models.Model):
 class Expenses(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     expense = models.FloatField(default=0)
-    # date = models.DateTimeField(default=timezone.localtime())
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

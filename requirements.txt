@@ -22,4 +22,4 @@ django-ckeditor==6.1.0
 stripe>=4.0.2
 django-rosetta==0.9.8
 django_resized==1.0.2
-
+django-taggit==1.6.0

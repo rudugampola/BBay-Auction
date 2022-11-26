@@ -390,17 +390,19 @@ def search(request):
             Q(title__icontains=query) | Q(tags__name__icontains=query), active=True).order_by('-listing_views')
         # Q(title__icontains=query) | Q(description__icontains=query) | Q(tags__name__icontains=query), active=True).order_by('-listing_views')
 
-    paginator = Paginator(listings, PAGES)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    if not listings:
-        return render(request, "auctions/nosearch.html",)
+        paginator = Paginator(listings, PAGES)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        if not listings:
+            return render(request, "auctions/nosearch.html",)
+        else:
+            return render(request, "auctions/listings.html", {
+                "page_obj": page_obj,
+                "listings": listings,
+                "title": "Search Results for \"{query}\"".format(query=query)
+            })
     else:
-        return render(request, "auctions/listings.html", {
-            "page_obj": page_obj,
-            "listings": listings,
-            "title": "Search Results for \"{query}\"".format(query=query)
-        })
+        return render(request, "auctions/nosearch.html",)
 
 
 @ login_required

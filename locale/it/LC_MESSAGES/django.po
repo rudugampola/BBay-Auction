@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-25 13:48-0800\n"
+"POT-Creation-Date: 2022-11-26 09:08-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,46 +18,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\commerce\settings.py:208
+#: .\commerce\settings.py:228
 msgid "English"
 msgstr ""
 
-#: .\commerce\settings.py:209
+#: .\commerce\settings.py:229
 msgid "Spanish"
 msgstr ""
 
-#: .\commerce\settings.py:210
+#: .\commerce\settings.py:230
 msgid "French"
 msgstr ""
 
-#: .\commerce\settings.py:211
+#: .\commerce\settings.py:231
 msgid "German"
 msgstr ""
 
-#: .\commerce\settings.py:212
+#: .\commerce\settings.py:232
 msgid "Italian"
 msgstr ""
 
-#: .\commerce\settings.py:213
+#: .\commerce\settings.py:233
 msgid "Japanese"
 msgstr ""
 
-#: .\commerce\settings.py:214
+#: .\commerce\settings.py:234
 msgid "Korean"
 msgstr ""
 
-#: .\commerce\settings.py:215
+#: .\commerce\settings.py:235
 msgid "Russian"
 msgstr ""
 
-#: .\commerce\settings.py:216
+#: .\commerce\settings.py:236
 msgid "Simplified Chinese"
 msgstr ""
 
-#: .\commerce\settings.py:217
+#: .\commerce\settings.py:237
 msgid "Traditional Chinese"
 msgstr ""
 
-#: .\commerce\settings.py:218
+#: .\commerce\settings.py:238
 msgid "Arabic"
 msgstr ""

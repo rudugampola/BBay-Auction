@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-25 13:48-0800\n"
-"PO-Revision-Date: 2022-11-24 15:57-0800\n"
+"POT-Creation-Date: 2022-11-26 09:08-0800\n"
+"PO-Revision-Date: 2022-11-26 09:27-0800\n"
 "Last-Translator: Admin Admin <admin@example.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,90 +19,90 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
-#: .\auctions\templates\auctions\layout.html:37
+#: .\auctions\templates\auctions\layout.html:59
 msgid "Site Administration"
 msgstr "Administración del sitio"
 
-#: .\auctions\templates\auctions\layout.html:45
+#: .\auctions\templates\auctions\layout.html:67
 msgid "Hi"
-msgstr ""
+msgstr "Hola"
 
-#: .\auctions\templates\auctions\layout.html:56
+#: .\auctions\templates\auctions\layout.html:78
 msgid "Log Out"
-msgstr ""
+msgstr "Cerrar sesión"
 
-#: .\auctions\templates\auctions\layout.html:59
+#: .\auctions\templates\auctions\layout.html:81
 msgid "Log In"
-msgstr ""
+msgstr "Iniciar sesión"
 
-#: .\auctions\templates\auctions\layout.html:60
+#: .\auctions\templates\auctions\layout.html:82
 msgid "Register"
-msgstr ""
+msgstr "Registro"
 
-#: .\auctions\templates\auctions\layout.html:89
+#: .\auctions\templates\auctions\layout.html:111
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
-#: .\auctions\templates\auctions\layout.html:107
+#: .\auctions\templates\auctions\layout.html:155
 msgid "Home"
-msgstr ""
+msgstr "Inicio"
 
-#: .\auctions\templates\auctions\layout.html:110
+#: .\auctions\templates\auctions\layout.html:158
 msgid "Active Listings"
-msgstr ""
+msgstr "Listados activos"
 
-#: .\auctions\templates\auctions\layout.html:113
+#: .\auctions\templates\auctions\layout.html:161
 msgid "Categories"
-msgstr ""
+msgstr "Categorías"
 
-#: .\auctions\templates\auctions\layout.html:118
+#: .\auctions\templates\auctions\layout.html:166
 msgid "Watchlist"
-msgstr ""
+msgstr "Lista de Seguimiento"
 
-#: .\auctions\templates\auctions\layout.html:133
+#: .\auctions\templates\auctions\layout.html:181
 msgid "Create Listing"
-msgstr ""
+msgstr "Crear listado"
 
-#: .\auctions\templates\auctions\layout.html:144
+#: .\auctions\templates\auctions\layout.html:192
 msgid "Reports"
-msgstr ""
+msgstr "Reporte"
 
-#: .\auctions\templates\auctions\layout.html:150
+#: .\auctions\templates\auctions\layout.html:198
 msgid "Profits"
-msgstr ""
+msgstr "Beneficios"
 
-#: .\auctions\templates\auctions\layout.html:153
+#: .\auctions\templates\auctions\layout.html:201
 msgid "Expenses"
-msgstr ""
+msgstr "Gastos"
 
-#: .\auctions\templates\auctions\layout.html:157
+#: .\auctions\templates\auctions\layout.html:205
 msgid "Shipping"
-msgstr ""
+msgstr "Envío"
 
-#: .\auctions\templates\auctions\layout.html:164
+#: .\auctions\templates\auctions\layout.html:212
 msgid "Mail"
-msgstr ""
+msgstr "Correo"
 
-#: .\auctions\templates\auctions\layout.html:194
+#: .\auctions\templates\auctions\layout.html:243
 msgid "Search"
-msgstr ""
+msgstr "Búsqueda"
 
-#: .\auctions\templates\auctions\layout.html:220
+#: .\auctions\templates\auctions\layout.html:290
 msgid "About Us"
-msgstr ""
+msgstr "Sobre Nosotros"
 
-#: .\auctions\templates\auctions\layout.html:223
+#: .\auctions\templates\auctions\layout.html:293
 msgid "FAQ"
-msgstr ""
+msgstr "Preguntas Frecuentes"
 
-#: .\auctions\templates\auctions\layout.html:226
+#: .\auctions\templates\auctions\layout.html:296
 msgid "Support"
-msgstr ""
+msgstr "Apoyo"
 
-#: .\auctions\templates\auctions\layout.html:229
+#: .\auctions\templates\auctions\layout.html:299
 msgid "Privacy"
-msgstr ""
+msgstr "Política de privacidad"
 
-#: .\auctions\templates\auctions\layout.html:232
+#: .\auctions\templates\auctions\layout.html:302
 msgid "Terms"
-msgstr ""
+msgstr "Términos de Uso"

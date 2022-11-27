@@ -651,6 +651,7 @@ def bid(request, listing_id):
     """Add a bid to a listing"""
     listing = Listing.objects.get(id=listing_id)
     offer = float(request.POST['offer'])
+    userProfile = UserProfile.objects.get(user=request.user)
     if bid_valid(offer, listing):
         listing.bid_current = offer
         form = NewBidForm(request.POST)
@@ -666,7 +667,10 @@ def bid(request, listing_id):
         return render(request, "auctions/listing.html", {
             "listing": listing,
             "form_bid": NewBidForm(),
-            "min_error": True
+            "min_error": True,
+            "comments": listing.user_comment.all(),
+            "form_comment": NewCommentForm(),
+            "userProfile": userProfile,
         })
 
 

@@ -217,7 +217,7 @@
                               <div class="form-outline">
                                 <form action="{% url 'auctions:comment' listing.id %}" method="post">
                                     {% csrf_token %}
-                                    {{ form_comment.comment | as_crispy_field }}       
+                                    {{ form_comment.comment }}       
                                     <br> 
                                     <button type="submit" value="Comment" class="btn btn-success" style="padding: 0.5em; margin-bottom: 10px">
                                         Send <i class="fas fa-long-arrow-alt-right ms-1"></i>

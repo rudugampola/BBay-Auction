@@ -1,4 +1,4 @@
-BBay Auction
+#BBay Auction
 <h3>About Us 🌤️</h3>
 <img align="right" src="https://user-images.githubusercontent.com/28117713/194800101-8d524efe-ed34-48f2-9a77-cb3b51c5bfd1.png" alt="My Image" width="400">
 

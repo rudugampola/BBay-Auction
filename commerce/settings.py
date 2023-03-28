@@ -191,8 +191,8 @@ TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'auctions/templates'), )
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # AWS Access Settings
-AWS_ACCESS_KEY_ID = 'AKIAUMUGV5ILFY3HZSTI'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = 'ACCESS_KEY'
+AWS_SECRET_ACCESS_KEY = 'SECRET_ACCESS_KEY'
 AWS_STORAGE_BUCKET_NAME = 'bbay-auction'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
